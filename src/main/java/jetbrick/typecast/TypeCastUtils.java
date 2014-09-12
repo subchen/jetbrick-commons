@@ -27,6 +27,10 @@ public final class TypeCastUtils {
         resolver.register(type, convertor);
     }
 
+    public static boolean support(Class<?> type) {
+        return resolver.lookup(type) != null;
+    }
+
     public static <T> Convertor<T> lookup(Class<T> type) {
         return resolver.lookup(type);
     }

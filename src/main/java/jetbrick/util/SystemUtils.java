@@ -19,6 +19,8 @@
 package jetbrick.util;
 
 import java.io.File;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public final class SystemUtils {
 
@@ -33,4 +35,34 @@ public final class SystemUtils {
     public static final boolean IS_OS_WINDOWS = (File.separatorChar == '\\');
     public static final boolean IS_OS_UNIX = (File.separatorChar == '/');
 
+    public static void die() {
+        die(null, null);
+    }
+
+    public static void die(String message, Throwable cause) {
+        if (message == null) {
+            message = "die";
+        }
+        Throwable ex = new Exception(message, cause);
+
+        Logger log = LoggerFactory.getLogger(SystemUtils.class);
+        log.error("***************************************************");
+        log.error("!!! SYSTEM DEAD !!!");
+
+        log.error("------Exception------");
+        log.error(message, ex);
+
+        log.error("------System.getProperties------");
+        log.error(System.getProperties().toString());
+
+        log.error("------System.getenv------");
+        log.error(System.getenv().toString());
+
+        log.error("------Threads------");
+        log.error(VMUtils.getThreadDump());
+
+        log.error("***************************************************");
+
+        System.exit(1);
+    }
 }

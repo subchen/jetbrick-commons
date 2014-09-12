@@ -191,11 +191,16 @@ public final class StringUtils {
         return s == null ? "" : s.trim();
     }
 
-    public static void trimAll(String[] ss) {
-        for (int i = 0; i < ss.length; i++) {
-            String string = ss[i];
-            if (string != null) ss[i] = string.trim();
+    public static String[] trim(String[] ss) {
+        if (ss != null) {
+            for (int i = 0; i < ss.length; i++) {
+                String string = ss[i];
+                if (string != null) {
+                    ss[i] = string.trim();
+                }
+            }
         }
+        return ss;
     }
 
     // Defaults
