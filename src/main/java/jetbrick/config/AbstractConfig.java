@@ -18,8 +18,6 @@
  */
 package jetbrick.config;
 
-import java.io.File;
-import java.nio.charset.Charset;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -52,7 +50,7 @@ public abstract class AbstractConfig {
     public boolean isEmpty() {
         return config.isEmpty();
     }
-    
+
     public int size() {
         return config.size();
     }
@@ -97,7 +95,7 @@ public abstract class AbstractConfig {
         }
         return results;
     }
-    
+
     protected <T> T doGetObject(String name, ObjectBuilder builder) {
         String value = config.get(name);
         return newInstance(value, builder);
@@ -128,7 +126,7 @@ public abstract class AbstractConfig {
         if (value == null) {
             value = defaultValue;
         }
-        
+
         if (value == null) {
             value = null;
         }
@@ -214,7 +212,7 @@ public abstract class AbstractConfig {
 
         // 4. init
         builder.initialize(obj);
-        
+
         // 5. return
         return (T) obj;
     }
@@ -249,12 +247,12 @@ public abstract class AbstractConfig {
         matcher.appendTail(sb);
         return sb.toString();
     }
-    
+
     // -----------------------------------------------------------------
-    static interface ObjectBuilder {
-        
+    public static interface ObjectBuilder {
+
         public <T> T newInstance(Class<T> cls) throws Exception;
-        
+
         public void initialize(Object object);
 
     }

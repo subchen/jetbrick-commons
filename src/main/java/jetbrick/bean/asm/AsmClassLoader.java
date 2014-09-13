@@ -66,7 +66,7 @@ final class AsmClassLoader extends ClassLoader {
     protected Class<?> defineClass(String qualifiedClassName, byte[] bytes, ProtectionDomain protectionDomain) throws ClassFormatError {
         // method 1:
         return super.defineClass(qualifiedClassName, bytes, 0, bytes.length, protectionDomain);
-        
+
         // method 2:
         /*
         try {
