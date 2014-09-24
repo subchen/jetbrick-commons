@@ -488,7 +488,7 @@ public final class KlassInfo {
     private AsmAccessor asmAccessor; // ASM 生成的类的实例
     private int asmCallNumber = 0; //  反射调用计数器，超过阈值，则使用 ASM 字节码增强技术
 
-    protected AsmAccessor getASMAccessor() {
+    protected AsmAccessor getAsmAccessor() {
         if (asmAccessor == null) {
             if (asmCallNumber >= AsmFactory.getThreshold()) {
                 asmAccessor = AsmFactory.generateAccessor(this);
@@ -506,7 +506,7 @@ public final class KlassInfo {
      * @throws IllegalStateException - 如果找不到默认的构造函数或者没有访问权限，那么抛出该异常.
      */
     public Object newInstance() throws IllegalStateException {
-        AsmAccessor accessor = getASMAccessor();
+        AsmAccessor accessor = getAsmAccessor();
         if (accessor == null) {
             ConstructorInfo ctor = getDefaultConstructor();
             if (ctor != null) {

@@ -121,7 +121,7 @@ public final class ConstructorInfo extends Executable implements Creater, Compar
 
     @Override
     public Object newInstance(Object... args) {
-        AsmAccessor accessor = declaringKlass.getASMAccessor();
+        AsmAccessor accessor = declaringKlass.getAsmAccessor();
         if (accessor == null) {
             try {
                 return constructor.newInstance(args);

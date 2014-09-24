@@ -27,12 +27,11 @@ public class AsmFactoryTest {
     @Before
     public void setup() {
         AsmFactory.setThreshold(0);
-        AsmFactory.setDebugEnabled(true);
     }
 
     @After
     public void cleanup() {
-        AsmFactory.setDebugEnabled(false);
+        AsmFactory.setThreshold(5);
     }
 
     @Test

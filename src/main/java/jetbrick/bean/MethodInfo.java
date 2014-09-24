@@ -185,7 +185,7 @@ public final class MethodInfo extends Executable implements Invoker, Comparable<
 
     @Override
     public Object invoke(Object object, Object... args) {
-        AsmAccessor accessor = declaringKlass.getASMAccessor();
+        AsmAccessor accessor = declaringKlass.getAsmAccessor();
         if (accessor == null) {
             try {
                 return method.invoke(object, args);

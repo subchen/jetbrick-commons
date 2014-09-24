@@ -123,7 +123,7 @@ public final class FieldInfo implements Comparable<FieldInfo>, Getter, Setter {
 
     @Override
     public Object get(Object object) {
-        AsmAccessor accessor = declaringKlass.getASMAccessor();
+        AsmAccessor accessor = declaringKlass.getAsmAccessor();
         if (accessor == null) {
             try {
                 return field.get(object);
@@ -137,7 +137,7 @@ public final class FieldInfo implements Comparable<FieldInfo>, Getter, Setter {
 
     @Override
     public void set(Object object, Object value) {
-        AsmAccessor accessor = declaringKlass.getASMAccessor();
+        AsmAccessor accessor = declaringKlass.getAsmAccessor();
         if (accessor == null) {
             try {
                 field.set(object, value);
