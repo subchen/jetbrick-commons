@@ -230,7 +230,7 @@ public abstract class AbstractConfig {
         while (matcher.find()) {
             String name = matcher.group(1);
             String val = null;
-            if (name.startsWith("ENV.")) {
+            if (name.startsWith("env:")) {
                 name = name.substring(4);
                 val = System.getenv(name);
             } else {

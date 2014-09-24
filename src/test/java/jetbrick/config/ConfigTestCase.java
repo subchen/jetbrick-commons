@@ -32,6 +32,7 @@ public class ConfigTestCase {
         Config c = loader.asConfig();
         Assert.assertEquals(Charset.forName("utf-8"), c.asCharset("web.http.encoding"));
         Assert.assertEquals(Boolean.TRUE, c.asBoolean("web.development"));
+        Assert.assertEquals("/bin/bash", c.resolve("${env:SHELL}"));
     }
 
 }
