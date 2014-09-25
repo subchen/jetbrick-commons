@@ -217,8 +217,8 @@ public abstract class AbstractConfig {
         // 2. set properties
         if (propNames != null && propNames.size() > 0) {
             KlassInfo klass = KlassInfo.create(cls);
-            for (String name : propNames) {
-                name = name.substring(aliasName.length() + 1); // get setter name
+            for (String propName : propNames) {
+                String name = propName.substring(aliasName.length() + 1); // get setter name
                 PropertyInfo p = klass.getProperty(name);
                 if (p == null || !p.writable()) {
                     throw new IllegalStateException("No set" + IdentifiedNameUtils.capitalize(name) + " found in " + cls);
@@ -234,14 +234,14 @@ public abstract class AbstractConfig {
                         elementType = p.getRawComponentType(cls, 0);
                     }
 
-                    value = doGetList(name, elementType, null);
+                    value = doGetList(propName, elementType, null);
 
                     // convert list to array
                     if (type.isArray()) {
                         value = TypeCastUtils.convertToArray(value, elementType);
                     }
                 } else {
-                    value = doGetValue(name, type, null);
+                    value = doGetValue(propName, type, null);
                 }
 
                 p.set(obj, value);
