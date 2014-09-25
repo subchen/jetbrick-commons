@@ -167,10 +167,19 @@ public final class Config extends AbstractConfig {
         return (T) doGetValue(name, Object.class, null);
     }
 
+    @SuppressWarnings("unchecked")
+    public <T> T asObject(String name, String defaultValue) {
+        return (T) doGetValue(name, Object.class, defaultValue);
+    }
+
     public <T> T asObject(String name, Class<T> targetClass) {
         return doGetValue(name, targetClass, null);
     }
 
+    public <T> T asObject(String name, Class<T> targetClass, String defaultValue) {
+        return doGetValue(name, targetClass, defaultValue);
+    }
+    
     @SuppressWarnings("unchecked")
     public <T> List<T> asObjectList(String name) {
         return (List<T>) doGetList(name, Object.class, null);
