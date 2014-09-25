@@ -1,7 +1,8 @@
+<a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=c81a8f922d2b00422761558c4c547a4c4af778edcb0a70c99aadf9e33d80cb11"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="QQ群:310491655" title="QQ群:310491655"></a>
+
+
 jetbrick-commons
 ==================
-
-<a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=c81a8f922d2b00422761558c4c547a4c4af778edcb0a70c99aadf9e33d80cb11"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="QQ群:310491655" title="QQ群:310491655"></a>
 
 This is a utility classes project for jetbrick, **Support JDK6+**.
 
@@ -36,8 +37,10 @@ License
 ==================
 
 ```
-Copyright 2013-2014 Guoqiang Chen. All rights reserved. 
-Email: subchen@gmail.com
+Copyright 2013-2014 Jetbrick organization. All rights reserved. 
+
+    Author: Guoqiang Chen
+     Email: subchen@gmail.com
 
 Licensed under the Apache License, Version 2.0 (the "License"); 
 you may not use this file except in compliance with the License. 
