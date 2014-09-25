@@ -48,7 +48,7 @@ public final class Config extends AbstractConfig {
     }
 
     public List<String> asStringList(String name) {
-        return doGetValueList(name, String.class);
+        return doGetList(name, String.class, null);
     }
 
     public Integer asInteger(String name) {
@@ -60,7 +60,7 @@ public final class Config extends AbstractConfig {
     }
 
     public List<Integer> asIntegerList(String name) {
-        return doGetValueList(name, Integer.class);
+        return doGetList(name, Integer.class, null);
     }
 
     public Long asLong(String name) {
@@ -72,7 +72,7 @@ public final class Config extends AbstractConfig {
     }
 
     public List<Long> asLongList(String name) {
-        return doGetValueList(name, Long.class);
+        return doGetList(name, Long.class, null);
     }
 
     public Double asDouble(String name) {
@@ -84,7 +84,7 @@ public final class Config extends AbstractConfig {
     }
 
     public List<Double> asDoubleList(String name) {
-        return doGetValueList(name, Double.class);
+        return doGetList(name, Double.class, null);
     }
 
     public Boolean asBoolean(String name) {
@@ -96,7 +96,7 @@ public final class Config extends AbstractConfig {
     }
 
     public List<Boolean> asBooleanList(String name) {
-        return doGetValueList(name, Boolean.class);
+        return doGetList(name, Boolean.class, null);
     }
 
     public Date asDate(String name) {
@@ -108,7 +108,7 @@ public final class Config extends AbstractConfig {
     }
 
     public List<Date> asDateList(String name) {
-        return doGetValueList(name, Date.class);
+        return doGetList(name, Date.class, null);
     }
 
     public Charset asCharset(String name) {
@@ -120,7 +120,7 @@ public final class Config extends AbstractConfig {
     }
 
     public List<Charset> asCharsetList(String name) {
-        return doGetValueList(name, Charset.class);
+        return doGetList(name, Charset.class, null);
     }
 
     public File asFile(String name) {
@@ -132,7 +132,7 @@ public final class Config extends AbstractConfig {
     }
 
     public List<File> asFileList(String name) {
-        return doGetValueList(name, File.class);
+        return doGetList(name, File.class, null);
     }
 
     public Resource asResource(String name) {
@@ -144,7 +144,7 @@ public final class Config extends AbstractConfig {
     }
 
     public List<Resource> asResourceList(String name) {
-        return doGetValueList(name, Resource.class);
+        return doGetList(name, Resource.class, null);
     }
 
     @SuppressWarnings("unchecked")
@@ -159,29 +159,24 @@ public final class Config extends AbstractConfig {
 
     @SuppressWarnings("rawtypes")
     public List<Class> asClassList(String name) {
-        return doGetValueList(name, Class.class);
+        return doGetList(name, Class.class, null);
     }
 
-    // --------------------------------------------------------------------
+    @SuppressWarnings("unchecked")
     public <T> T asObject(String name) {
-        return doGetObject(name, DEFAULT_OBJECT_BUILDER);
+        return (T) doGetValue(name, Object.class, null);
     }
 
+    public <T> T asObject(String name, Class<T> targetClass) {
+        return doGetValue(name, targetClass, null);
+    }
+
+    @SuppressWarnings("unchecked")
     public <T> List<T> asObjectList(String name) {
-        return doGetObjectList(name, DEFAULT_OBJECT_BUILDER);
+        return (List<T>) doGetList(name, Object.class, null);
     }
 
-    // --------------------------------------------------------------------
-    static final ObjectBuilder DEFAULT_OBJECT_BUILDER = new DefaultObjectBuilder();
-
-    static class DefaultObjectBuilder implements ObjectBuilder {
-
-        public <T> T newInstance(Class<T> cls) throws Exception {
-            return cls.newInstance();
-        }
-
-        public void initialize(Object object) {
-        }
+    public <T> List<T> asObjectList(String name, Class<T> elementType) {
+        return doGetList(name, elementType, null);
     }
-
 }

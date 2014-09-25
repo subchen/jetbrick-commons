@@ -69,21 +69,49 @@ public abstract class AbstractConfig {
         return keys.isEmpty() ? Collections.<String> emptySet() : keys;
     }
 
-    public Map<String, String> toMap() {
+    public Map<String, String> asMap() {
         return Collections.unmodifiableMap(config);
     }
 
     // -----------------------------------------------------------------
+
+    /**
+     * 获取属性值.
+     *
+     * @param name              键值
+     * @param targetClass       目标类(不允许为空)，
+     *                          如果 targetClass 为 Object.class，那么自动将 classname 转换为 instance.
+     *                          如果 value 是 "$" 开头的引用，则返回引用对象 instance
+     * @param defaultValue      默认值
+     * @return                  属性值对象
+     */
     protected <T> T doGetValue(String name, Class<T> targetClass, String defaultValue) {
         String value = config.get(name);
         return stringAsObject(value, targetClass, defaultValue);
     }
 
-    protected <T> List<T> doGetValueList(String name, Class<T> elementType) {
+    /**
+     * 获取属性值，将逗号分隔的属性值转换为 List 对象.
+     *
+     * @param name              键值
+     * @param elementType       目标类(不允许为空)，
+     *                          如果 elementType 为 Object.class，那么自动将 classname 转换为 instance.
+     *                          如果 value 是 "$" 开头的引用，则返回引用对象 instance
+     * @param defaultValue      默认值
+     * @return                  属性值对象 List
+     */
+    protected <T> List<T> doGetList(String name, Class<T> elementType, String defaultValues) {
         String valueList = config.get(name);
+
+        valueList = StringUtils.trimToNull(valueList);
+        if (valueList == null) {
+            valueList = defaultValues;
+        }
         if (valueList == null || valueList.length() == 0) {
             return Collections.<T> emptyList();
         }
+
+        valueList = resolve(valueList);
 
         String[] values = StringUtils.split(valueList, ',');
         List<T> results = new ArrayList<T>(values.length);
@@ -96,39 +124,15 @@ public abstract class AbstractConfig {
         return results;
     }
 
-    protected <T> T doGetObject(String name, ObjectBuilder builder) {
-        String value = config.get(name);
-        return newInstance(value, builder);
-    }
-
-    protected <T> List<T> doGetObjectList(String name, ObjectBuilder builder) {
-        String valueList = config.get(name);
-        if (valueList == null || valueList.length() == 0) {
-            return Collections.<T> emptyList();
-        }
-
-        String[] values = StringUtils.split(valueList, ',');
-        List<T> results = new ArrayList<T>(values.length);
-        for (String value : values) {
-            T object = newInstance(value, builder);
-            if (object != null) {
-                results.add(object);
-            }
-        }
-        return results;
-    }
-
     // -----------------------------------------------------------------
     @SuppressWarnings("unchecked")
     private <T> T stringAsObject(String value, Class<T> targetClass, String defaultValue) {
         value = StringUtils.trimToNull(value);
-
         if (value == null) {
             value = defaultValue;
         }
-
-        if (value == null) {
-            value = null;
+        if (value == null || value.length() == 0) {
+            return null;
         }
 
         value = resolve(value);
@@ -137,42 +141,80 @@ public abstract class AbstractConfig {
             return (T) value;
         }
 
-        return TypeCastUtils.convert(value, targetClass);
-    }
-
-    @SuppressWarnings("unchecked")
-    private <T> T newInstance(String aliasName, ObjectBuilder builder) {
-        aliasName = StringUtils.trimToNull(aliasName);
-        if (aliasName == null) {
-            return null;
+        if (value.startsWith("$")) {
+            // this is a reference name
+            return aliasNameAsObject(value, targetClass);
         }
 
+        if (targetClass == Object.class) {
+            return aliasNameAsObject(value, targetClass);
+        }
+
+        if (TypeCastUtils.support(targetClass)) {
+            return TypeCastUtils.convert(value, targetClass);
+        }
+
+        if (ClassUtils.available(value)) {
+            // this is a class name
+            return aliasNameAsObject(value, targetClass);
+        }
+
+        throw new IllegalStateException("Cannot convert to " + targetClass + " from `" + value + "`");
+    }
+
+    private <T> T aliasNameAsObject(String aliasName, Class<T> targetClass) {
         // 1. get class name and props
         String className;
         Set<String> propNames;
 
         if (aliasName.startsWith("$")) {
-            // this is a reference object
+            // this is a reference name
             className = doGetValue(aliasName, String.class, null);
             propNames = keySet(aliasName.concat("."));
         } else {
-            // this is a classname
+            // this is a class name
             className = aliasName;
             propNames = null;
         }
 
-        // 2. create instance
-        Object obj;
+        // 2. load class
         Class<?> cls;
 
         try {
             cls = ClassLoaderUtils.loadClassEx(className);
-            obj = builder.newInstance(cls);
+        } catch (ClassNotFoundException e) {
+            throw new IllegalStateException(e);
+        }
+        if (!targetClass.isAssignableFrom(cls)) {
+            throw new IllegalStateException("cannot convert `" + className + "` to " + targetClass);
+        }
+
+        // 3. create instance
+        return newInstance(aliasName, cls, propNames);
+    }
+
+    // -----------------------------------------------------------------
+
+    /**
+     * 根据类名或者别名，创建对象.
+     *
+     * @param aliasName     别名
+     * @param cls           类名
+     * @param propNames     要设置的属性名称
+     * @return              创建的对象
+     */
+    @SuppressWarnings("unchecked")
+    protected <T> T newInstance(String aliasName, Class<?> cls, Set<String> propNames) {
+        // 1. create instance
+        Object obj;
+
+        try {
+            obj = objectNewInstance(cls);
         } catch (Exception e) {
             throw new IllegalStateException(e);
         }
 
-        // 3. set properties
+        // 2. set properties
         if (propNames != null && propNames.size() > 0) {
             KlassInfo klass = KlassInfo.create(cls);
             for (String name : propNames) {
@@ -192,13 +234,9 @@ public abstract class AbstractConfig {
                         elementType = p.getRawComponentType(cls, 0);
                     }
 
-                    if (TypeCastUtils.support(elementType)) {
-                        value = doGetValueList(name, elementType);
-                    } else {
-                        value = doGetObjectList(name, builder);
-                    }
+                    value = doGetList(name, elementType, null);
 
-                    // list to array
+                    // convert list to array
                     if (type.isArray()) {
                         value = TypeCastUtils.convertToArray(value, elementType);
                     }
@@ -210,16 +248,40 @@ public abstract class AbstractConfig {
             }
         }
 
-        // 4. init
-        builder.initialize(obj);
+        // 3. init
+        objectInitialize(obj);
 
-        // 5. return
+        // 4. return
         return (T) obj;
+    }
+
+    /**
+     * 根据类名，创建对象.
+     *
+     * @param cls   类名
+     * @return      创建的对象
+     */
+    protected <T> T objectNewInstance(Class<T> cls) throws Exception {
+        return cls.newInstance();
+    }
+
+    /**
+     * 对象创建后，进行初始化.
+     *
+     * @param object    要初始化的对象
+     */
+    protected void objectInitialize(Object object) {
     }
 
     // -----------------------------------------------------------------
     private static final Pattern PLACE_HOLDER_PATTERN = Pattern.compile("\\$\\{([^}]*)\\}");
 
+    /**
+     * 根据 Config 的内容，自动解析 ${...} 的内容.
+     *
+     * @param value     要解析的内容
+     * @return          返回解析后的内容
+     */
     public String resolve(String value) {
         if (value == null || !value.contains("${")) {
             return value;
@@ -246,15 +308,6 @@ public abstract class AbstractConfig {
         }
         matcher.appendTail(sb);
         return sb.toString();
-    }
-
-    // -----------------------------------------------------------------
-    public static interface ObjectBuilder {
-
-        public <T> T newInstance(Class<T> cls) throws Exception;
-
-        public void initialize(Object object);
-
     }
 
 }
