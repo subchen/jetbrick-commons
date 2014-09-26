@@ -51,6 +51,10 @@ public final class Config extends AbstractConfig {
         return doGetList(name, String.class, null);
     }
 
+    public List<String> asStringList(String name, String defaultValue) {
+        return doGetList(name, String.class, defaultValue);
+    }
+
     public Integer asInteger(String name) {
         return doGetValue(name, Integer.class, null);
     }
@@ -61,6 +65,10 @@ public final class Config extends AbstractConfig {
 
     public List<Integer> asIntegerList(String name) {
         return doGetList(name, Integer.class, null);
+    }
+
+    public List<Integer> asIntegerList(String name, String defaultValue) {
+        return doGetList(name, Integer.class, defaultValue);
     }
 
     public Long asLong(String name) {
@@ -75,6 +83,10 @@ public final class Config extends AbstractConfig {
         return doGetList(name, Long.class, null);
     }
 
+    public List<Long> asLongList(String name, String defaultValue) {
+        return doGetList(name, Long.class, defaultValue);
+    }
+
     public Double asDouble(String name) {
         return doGetValue(name, Double.class, null);
     }
@@ -85,6 +97,10 @@ public final class Config extends AbstractConfig {
 
     public List<Double> asDoubleList(String name) {
         return doGetList(name, Double.class, null);
+    }
+
+    public List<Double> asDoubleList(String name, String defaultValue) {
+        return doGetList(name, Double.class, defaultValue);
     }
 
     public Boolean asBoolean(String name) {
@@ -99,6 +115,10 @@ public final class Config extends AbstractConfig {
         return doGetList(name, Boolean.class, null);
     }
 
+    public List<Boolean> asBooleanList(String name, String defaultValue) {
+        return doGetList(name, Boolean.class, defaultValue);
+    }
+
     public Date asDate(String name) {
         return doGetValue(name, Date.class, null);
     }
@@ -109,6 +129,10 @@ public final class Config extends AbstractConfig {
 
     public List<Date> asDateList(String name) {
         return doGetList(name, Date.class, null);
+    }
+
+    public List<Date> asDateList(String name, String defaultValue) {
+        return doGetList(name, Date.class, defaultValue);
     }
 
     public Charset asCharset(String name) {
@@ -123,6 +147,10 @@ public final class Config extends AbstractConfig {
         return doGetList(name, Charset.class, null);
     }
 
+    public List<Charset> asCharsetList(String name, String defaultValue) {
+        return doGetList(name, Charset.class, defaultValue);
+    }
+
     public File asFile(String name) {
         return doGetValue(name, File.class, null);
     }
@@ -135,6 +163,10 @@ public final class Config extends AbstractConfig {
         return doGetList(name, File.class, null);
     }
 
+    public List<File> asFileList(String name, String defaultValue) {
+        return doGetList(name, File.class, defaultValue);
+    }
+
     public Resource asResource(String name) {
         return doGetValue(name, Resource.class, null);
     }
@@ -145,6 +177,10 @@ public final class Config extends AbstractConfig {
 
     public List<Resource> asResourceList(String name) {
         return doGetList(name, Resource.class, null);
+    }
+
+    public List<Resource> asResourceList(String name, String defaultValue) {
+        return doGetList(name, Resource.class, defaultValue);
     }
 
     @SuppressWarnings("unchecked")
@@ -160,6 +196,11 @@ public final class Config extends AbstractConfig {
     @SuppressWarnings("rawtypes")
     public List<Class> asClassList(String name) {
         return doGetList(name, Class.class, null);
+    }
+
+    @SuppressWarnings("rawtypes")
+    public List<Class> asClassList(String name, String defaultValue) {
+        return doGetList(name, Class.class, defaultValue);
     }
 
     @SuppressWarnings("unchecked")
@@ -179,13 +220,23 @@ public final class Config extends AbstractConfig {
     public <T> T asObject(String name, Class<T> targetClass, String defaultValue) {
         return doGetValue(name, targetClass, defaultValue);
     }
-    
+
     @SuppressWarnings("unchecked")
     public <T> List<T> asObjectList(String name) {
         return (List<T>) doGetList(name, Object.class, null);
     }
 
+    @SuppressWarnings("unchecked")
+    public <T> List<T> asObjectList(String name, String defaultValue) {
+        return (List<T>) doGetList(name, Object.class, defaultValue);
+    }
+
     public <T> List<T> asObjectList(String name, Class<T> elementType) {
         return doGetList(name, elementType, null);
     }
+
+    public <T> List<T> asObjectList(String name, Class<T> elementType, String defaultValue) {
+        return doGetList(name, elementType, defaultValue);
+    }
+
 }
