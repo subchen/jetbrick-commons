@@ -121,7 +121,7 @@ public abstract class AbstractConfig {
                 results.add(object);
             }
         }
-        return results;
+        return Collections.unmodifiableList(results);
     }
 
     // -----------------------------------------------------------------

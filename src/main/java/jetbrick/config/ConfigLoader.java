@@ -88,7 +88,7 @@ public final class ConfigLoader {
         try {
             return loadInputStream(new FileInputStream(file), file.getName());
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException(e);
         }
     }
 
@@ -127,7 +127,7 @@ public final class ConfigLoader {
                 load(config);
                 return this;
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                throw new IllegalStateException(e);
             } finally {
                 IoUtils.closeQuietly(is);
             }
