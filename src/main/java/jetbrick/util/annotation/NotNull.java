@@ -20,7 +20,7 @@ package jetbrick.util.annotation;
 
 import java.lang.annotation.*;
 
-@Target({ ElementType.FIELD, ElementType.PARAMETER })
+@Target({ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE})
 @Retention(RetentionPolicy.CLASS)
 @Documented
 public @interface NotNull {
