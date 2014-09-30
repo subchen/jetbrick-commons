@@ -22,17 +22,9 @@ import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.*;
 import java.util.LinkedList;
+import jetbrick.io.resource.Resource;
 
 public final class PathUtils {
-    public static final String FILE_PROTOCOL = "file";
-    public static final String JAR_PROTOCOL = "jar";
-    public static final String ZIP_PROTOCOL = "zip";
-    public static final String VFS_PROTOCOL = "vfs";
-    public static final String FILE_PROTOCOL_PREFIX = "file:";
-    public static final String JAR_PROTOCOL_PREFIX = "jar:";
-    public static final String ZIP_PROTOCOL_PREFIX = "zip:";
-    public static final String VFS_PROTOCOL_PREFIX = "vfs:";
-    public static final String JAR_FILE_SEPARATOR = "!/";
 
     public static URL fileAsUrl(String file) {
         return fileAsUrl(new File(file));
@@ -42,7 +34,7 @@ public final class PathUtils {
         try {
             return file.toURI().toURL();
         } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException(e);
         }
     }
 
@@ -61,19 +53,19 @@ public final class PathUtils {
         } catch (UnsupportedEncodingException e) {
         }
 
-        if (FILE_PROTOCOL.equals(protocol)) {
+        if (Resource.URL_PROTOCOL_FILE.equals(protocol)) {
             return file;
-        } else if (JAR_PROTOCOL.equals(protocol) || ZIP_PROTOCOL.equals(protocol)) {
-            int ipos = file.indexOf(JAR_FILE_SEPARATOR);
+        } else if (Resource.URL_PROTOCOL_JAR.equals(protocol) || Resource.URL_PROTOCOL_ZIP.equals(protocol)) {
+            int ipos = file.indexOf(Resource.URL_SEPARATOR_JAR);
             if (ipos > 0) {
                 file = file.substring(0, ipos);
             }
-            if (file.startsWith(FILE_PROTOCOL_PREFIX)) {
-                file = file.substring(FILE_PROTOCOL_PREFIX.length());
+            if (file.startsWith(Resource.URL_PREFIX_FILE)) {
+                file = file.substring(Resource.URL_PREFIX_FILE.length());
             }
             return file;
-        } else if (VFS_PROTOCOL.equals(protocol)) {
-            int ipos = file.indexOf(JAR_FILE_SEPARATOR);
+        } else if (Resource.URL_PROTOCOL_VFS.equals(protocol)) {
+            int ipos = file.indexOf(Resource.URL_SEPARATOR_JAR);
             if (ipos > 0) {
                 file = file.substring(0, ipos);
             } else if (file.endsWith("/")) {
