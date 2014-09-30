@@ -25,7 +25,7 @@ import jetbrick.util.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ClassFinder {
+public final class ClassFinder {
     private static final Logger log = LoggerFactory.getLogger(ClassFinder.class);
 
     public static Set<Class<?>> getClasses(Class<? extends Annotation>[] annotations, boolean skiperrors) {

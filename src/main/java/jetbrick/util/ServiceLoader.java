@@ -41,7 +41,7 @@ import java.util.*;
  * <li>defaultService if all classnames are found.</li>
  * </ul>
  */
-public abstract class ServiceLoader {
+public final class ServiceLoader {
     private static final String DEFAULT_SERVICES_FILE = "jetbrick-services.properties";
     private static final Properties props = getServiceProperties();
 
