@@ -29,7 +29,7 @@ import java.time.*;
 import java.util.*;
 import jetbrick.io.resource.Resource;
 import jetbrick.typecast.support.*;
-import jetbrick.util.JdkVersion;
+import jetbrick.util.JdkUtils;
 
 @SuppressWarnings("unchecked")
 public final class TypeCastResolver {
@@ -86,10 +86,10 @@ public final class TypeCastResolver {
         register(Resource.class, ResourceConvertor.INSTANCE);
 
         // others
-        if (JdkVersion.IS_AT_LEAST_JAVA_7) {
+        if (JdkUtils.IS_AT_LEAST_JAVA_7) {
             registerWhenJdk7();
         }
-        if (JdkVersion.IS_AT_LEAST_JAVA_8) {
+        if (JdkUtils.IS_AT_LEAST_JAVA_8) {
             registerWhenJdk8();
         }
     }

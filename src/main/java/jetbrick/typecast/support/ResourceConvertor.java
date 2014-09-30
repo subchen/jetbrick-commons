@@ -24,7 +24,7 @@ import java.nio.file.Path;
 import jetbrick.io.resource.FileSystemResource;
 import jetbrick.io.resource.Resource;
 import jetbrick.typecast.Convertor;
-import jetbrick.util.JdkVersion;
+import jetbrick.util.JdkUtils;
 
 public final class ResourceConvertor implements Convertor<Resource> {
     public static final ResourceConvertor INSTANCE = new ResourceConvertor();
@@ -58,10 +58,10 @@ public final class ResourceConvertor implements Convertor<Resource> {
             try {
                 return Resource.create(((URI) value).toURL());
             } catch (MalformedURLException e) {
-                throw new RuntimeException(e);
+                throw new IllegalStateException(e);
             }
         }
-        if (JdkVersion.IS_AT_LEAST_JAVA_7) {
+        if (JdkUtils.IS_AT_LEAST_JAVA_7) {
             if (value instanceof Path) {
                 return new FileSystemResource(((Path) value).toFile());
             }

@@ -30,7 +30,7 @@ public final class VMUtils {
     }
 
     public static String getThreadDump() {
-        if (JdkVersion.IS_AT_LEAST_JAVA_6) {
+        if (JdkUtils.IS_AT_LEAST_JAVA_6) {
             return "Java AppVersionUtils must be equal or larger than 1.6";
         }
         String jstack = "../bin/jstack";

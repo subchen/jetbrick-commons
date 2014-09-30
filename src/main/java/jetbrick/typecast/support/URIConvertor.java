@@ -24,7 +24,7 @@ import java.nio.file.Path;
 import jetbrick.io.resource.Resource;
 import jetbrick.typecast.Convertor;
 import jetbrick.typecast.TypeCastException;
-import jetbrick.util.JdkVersion;
+import jetbrick.util.JdkUtils;
 
 public final class URIConvertor implements Convertor<URI> {
     public static final URIConvertor INSTANCE = new URIConvertor();
@@ -62,7 +62,7 @@ public final class URIConvertor implements Convertor<URI> {
         if (value instanceof Resource) {
             return ((Resource) value).getURI();
         }
-        if (JdkVersion.IS_AT_LEAST_JAVA_7) {
+        if (JdkUtils.IS_AT_LEAST_JAVA_7) {
             if (value instanceof Path) {
                 return ((Path) value).toUri();
             }

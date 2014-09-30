@@ -24,7 +24,7 @@ import java.util.Date;
 import jetbrick.typecast.Convertor;
 import jetbrick.typecast.TypeCastException;
 import jetbrick.util.DateUtils;
-import jetbrick.util.JdkVersion;
+import jetbrick.util.JdkUtils;
 
 public final class DateConvertor implements Convertor<Date> {
     public static final DateConvertor INSTANCE = new DateConvertor();
@@ -76,7 +76,7 @@ public final class DateConvertor implements Convertor<Date> {
         if (value instanceof Number) {
             return ((Number) value).longValue();
         }
-        if (JdkVersion.IS_AT_LEAST_JAVA_8) {
+        if (JdkUtils.IS_AT_LEAST_JAVA_8) {
             if (value instanceof Instant) {
                 return ((Instant) value).toEpochMilli();
             }

@@ -18,7 +18,7 @@
  */
 package jetbrick.util;
 
-public final class JdkVersion {
+public final class JdkUtils {
     public static final String JAVA_VERSION;
 
     public static final boolean IS_JAVA_5;
