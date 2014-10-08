@@ -21,7 +21,7 @@ package jetbrick.web.servlet.map;
 import java.util.Enumeration;
 import javax.servlet.http.HttpServletRequest;
 
-public class RequestAttributeMap extends StringEnumeratedMap<Object> {
+public final class RequestAttributeMap extends StringEnumeratedMap<Object> {
     private final HttpServletRequest request;
 
     public RequestAttributeMap(HttpServletRequest request) {

@@ -22,7 +22,7 @@ import java.util.Enumeration;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
-public class ServletContextAttributeMap extends StringEnumeratedMap<Object> {
+public final class ServletContextAttributeMap extends StringEnumeratedMap<Object> {
     private final ServletContext servletContext;
 
     public ServletContextAttributeMap(ServletContext servletContext) {

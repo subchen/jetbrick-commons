@@ -22,7 +22,7 @@ import java.util.Enumeration;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-public class SessionAttributeMap extends StringEnumeratedMap<Object> {
+public final class SessionAttributeMap extends StringEnumeratedMap<Object> {
     private final HttpSession session;
 
     public SessionAttributeMap(HttpSession session) {

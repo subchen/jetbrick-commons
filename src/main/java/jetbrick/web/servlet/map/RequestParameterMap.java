@@ -21,7 +21,7 @@ package jetbrick.web.servlet.map;
 import java.util.Enumeration;
 import javax.servlet.http.HttpServletRequest;
 
-public class RequestParameterMap extends StringEnumeratedMap<String> {
+public final class RequestParameterMap extends StringEnumeratedMap<String> {
     private final HttpServletRequest request;
 
     public RequestParameterMap(HttpServletRequest request) {

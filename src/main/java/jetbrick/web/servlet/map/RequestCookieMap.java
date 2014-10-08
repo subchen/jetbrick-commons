@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import jetbrick.util.concurrent.ConcurrentInitializer;
 import jetbrick.util.concurrent.LazyInitializer;
 
-public class RequestCookieMap implements Map<String, Cookie> {
+public final class RequestCookieMap implements Map<String, Cookie> {
     private final HttpServletRequest request;
 
     private final ConcurrentInitializer<Map<String, Cookie>> map = new LazyInitializer<Map<String, Cookie>>() {

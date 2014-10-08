@@ -21,7 +21,7 @@ package jetbrick.web.servlet.map;
 import java.util.*;
 import javax.servlet.http.HttpServletRequest;
 
-public class RequestHeaderValuesMap extends StringEnumeratedMap<String[]> {
+public final class RequestHeaderValuesMap extends StringEnumeratedMap<String[]> {
     private final HttpServletRequest request;
 
     public RequestHeaderValuesMap(HttpServletRequest request) {
