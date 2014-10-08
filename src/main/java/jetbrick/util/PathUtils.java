@@ -82,17 +82,34 @@ public final class PathUtils {
      * empty or "." segments or ".." segments preceded by other segment than
      * "..".
      *
-     * @param path path to normalize
+     * @param originPath path to normalize
      * @return normalize path
      */
-    public static String normalize(final String path) {
+    public static String normalize(final String originPath) {
+        String path = originPath;
+
         if (path == null) {
             return null;
         }
-        if (!path.contains("./")) {
-            return path;
+
+        if (path.indexOf('\\') != -1) {
+            path = path.replace('\\', '/');
         }
+
+        while (true) {
+            int pos = path.indexOf("./");
+            if (pos == 0) {
+                path = path.substring(2);
+                continue;
+            }
+            if (pos == -1 && !path.contains("//")) {
+                return path;
+            }
+            break;
+        }
+
         boolean absolute = path.startsWith("/");
+        boolean dir = path.endsWith("/");
         String[] elements = path.split("/");
         LinkedList<String> list = new LinkedList<String>();
         for (String e : elements) {
@@ -106,18 +123,28 @@ public final class PathUtils {
                 list.add(e);
             }
         }
+
         StringBuilder sb = new StringBuilder(path.length());
         if (absolute) {
-            sb.append("/");
+            sb.append('/');
         }
         int count = 0, last = list.size() - 1;
         for (String e : list) {
             sb.append(e);
             if (count++ < last) {
-                sb.append("/");
+                sb.append('/');
             }
         }
-        return sb.toString();
+        if (dir && list.size() > 0) {
+            sb.append('/');
+        }
+
+        path = sb.toString();
+        if (path.startsWith("/..")) {
+            throw new IllegalStateException("invalid path: " + originPath);
+        }
+
+        return path;
     }
 
     /**
