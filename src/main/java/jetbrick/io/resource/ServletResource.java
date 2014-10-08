@@ -18,13 +18,13 @@
  */
 package jetbrick.io.resource;
 
-import java.io.File;
-import java.io.InputStream;
+import java.io.*;
 import java.net.*;
 import javax.servlet.ServletContext;
+import jetbrick.io.ResourceNotFoundException;
 import jetbrick.util.Validate;
 
-public class ServletResource extends Resource {
+public final class ServletResource extends Resource {
     private final ServletContext sc;
     private final String path;
     private final URL url;
@@ -39,13 +39,20 @@ public class ServletResource extends Resource {
         try {
             this.url = sc.getResource(path);
         } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException(e);
         }
     }
 
     @Override
-    public InputStream openStream() {
-        return sc.getResourceAsStream(path);
+    public InputStream openStream() throws IllegalStateException {
+        if (url == null) {
+            throw new ResourceNotFoundException(path);
+        }
+        try {
+            return url.openStream();
+        } catch(IOException e) {
+            throw new IllegalStateException(e);
+        }
     }
 
     @Override
@@ -64,7 +71,7 @@ public class ServletResource extends Resource {
         try {
             return url.toURI();
         } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException(e);
         }
     }
 

@@ -20,9 +20,10 @@ package jetbrick.io.resource;
 
 import java.io.*;
 import java.net.*;
+import jetbrick.io.ResourceNotFoundException;
 import jetbrick.util.Validate;
 
-public class FileSystemResource extends Resource {
+public final class FileSystemResource extends Resource {
     private final File file;
 
     public static FileSystemResource create(URL url) {
@@ -31,7 +32,7 @@ public class FileSystemResource extends Resource {
         try {
             file = URLDecoder.decode(file, "utf-8");
         } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException(e);
         }
         return new FileSystemResource(new File(file));
     }
@@ -41,11 +42,11 @@ public class FileSystemResource extends Resource {
     }
 
     @Override
-    public InputStream openStream() {
+    public InputStream openStream() throws ResourceNotFoundException {
         try {
             return new FileInputStream(file);
         } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+            throw new ResourceNotFoundException(e);
         }
     }
 
@@ -64,7 +65,7 @@ public class FileSystemResource extends Resource {
         try {
             return file.toURI().toURL();
         } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException(e);
         }
     }
 

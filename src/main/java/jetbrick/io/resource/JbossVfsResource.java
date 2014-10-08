@@ -24,10 +24,11 @@ import java.lang.reflect.Method;
 import java.net.URI;
 import java.net.URL;
 import java.util.*;
+import jetbrick.io.ResourceNotFoundException;
 import jetbrick.util.ExceptionUtils;
 
 // jboss/wildfly vfs url
-public class JbossVfsResource extends Resource {
+public final class JbossVfsResource extends Resource {
     private final Object resource;
 
     public static JbossVfsResource create(URL url) {
@@ -41,7 +42,15 @@ public class JbossVfsResource extends Resource {
 
     @Override
     public InputStream openStream() {
-        return (InputStream) vfsInvokeMethod(VIRTUAL_FILE_METHOD_OPEN_STREAM, resource, EMPTY_PARAMETERS);
+        if (resource == null) {
+            throw new ResourceNotFoundException();
+        }
+        
+        InputStream is = (InputStream) vfsInvokeMethod(VIRTUAL_FILE_METHOD_OPEN_STREAM, resource, EMPTY_PARAMETERS);
+        if (is == null) {
+            throw new ResourceNotFoundException(getURL().toString());
+        }
+        return is;
     }
 
     @Override

@@ -23,9 +23,10 @@ import java.lang.reflect.Field;
 import java.net.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
+import jetbrick.io.ResourceNotFoundException;
 import jetbrick.util.*;
 
-public class ZipEntryResource extends Resource {
+public final class ZipEntryResource extends Resource {
     private final URL url;
     private final ZipFile zip;
     private final ZipEntry entry;
@@ -43,7 +44,7 @@ public class ZipEntryResource extends Resource {
                     return new ZipEntryResource(url, zip, entry, entry.getName());
                 }
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                throw new IllegalStateException(e);
             }
         } else if (URL_PROTOCOL_ZIP.equals(protocol)) {
             try {
@@ -54,7 +55,7 @@ public class ZipEntryResource extends Resource {
                     return new ZipEntryResource(url, zip, entry, entry.getName());
                 }
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                throw new IllegalStateException(e);
             }
         }
 
@@ -91,11 +92,15 @@ public class ZipEntryResource extends Resource {
     }
 
     @Override
-    public InputStream openStream() {
+    public InputStream openStream() throws ResourceNotFoundException {
         try {
-            return zip.getInputStream(entry);
+            InputStream is = zip.getInputStream(entry);
+            if (is == null) {
+                throw new ResourceNotFoundException(entryName);
+            }
+            return is;
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException(e);
         }
     }
 
@@ -109,7 +114,7 @@ public class ZipEntryResource extends Resource {
         try {
             return getURL().toURI();
         } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException(e);
         }
     }
 

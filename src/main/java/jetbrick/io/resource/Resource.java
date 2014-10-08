@@ -22,6 +22,7 @@ import java.io.*;
 import java.net.URI;
 import java.net.URL;
 import java.util.zip.ZipFile;
+import jetbrick.io.ResourceNotFoundException;
 import jetbrick.util.Validate;
 
 public abstract class Resource {
@@ -54,7 +55,7 @@ public abstract class Resource {
             try {
                 return ZipEntryResource.create(new ZipFile(file), entry);
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                throw new IllegalStateException(e);
             }
         }
         if (location.startsWith(URL_PREFIX_ZIP)) {
@@ -64,7 +65,7 @@ public abstract class Resource {
             try {
                 return ZipEntryResource.create(new ZipFile(file), entry);
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                throw new IllegalStateException(e);
             }
         }
 
@@ -88,7 +89,7 @@ public abstract class Resource {
         throw new IllegalStateException("Unknown url format: " + url);
     }
 
-    public abstract InputStream openStream() throws RuntimeException;
+    public abstract InputStream openStream() throws ResourceNotFoundException;
 
     public abstract File getFile();
 

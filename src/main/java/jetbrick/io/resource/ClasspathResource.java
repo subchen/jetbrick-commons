@@ -21,9 +21,10 @@ package jetbrick.io.resource;
 import java.io.File;
 import java.io.InputStream;
 import java.net.*;
+import jetbrick.io.ResourceNotFoundException;
 import jetbrick.util.*;
 
-public class ClasspathResource extends Resource {
+public final class ClasspathResource extends Resource {
     private final ClassLoader loader;
     private final String path;
 
@@ -39,8 +40,12 @@ public class ClasspathResource extends Resource {
     }
 
     @Override
-    public InputStream openStream() {
-        return loader.getResourceAsStream(path);
+    public InputStream openStream() throws ResourceNotFoundException {
+        InputStream is = loader.getResourceAsStream(path);
+        if (is == null) {
+            throw new ResourceNotFoundException(path);
+        }
+        return is;
     }
 
     @Override
@@ -53,7 +58,7 @@ public class ClasspathResource extends Resource {
         try {
             return getURL().toURI();
         } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException(e);
         }
     }
 

@@ -24,7 +24,7 @@ import java.net.URI;
 import java.net.URL;
 import jetbrick.util.Validate;
 
-public class InputStreamResource extends Resource {
+public final class InputStreamResource extends Resource {
     private final InputStream is;
 
     public InputStreamResource(InputStream is) {
