@@ -1,8 +1,9 @@
 /**
  * Copyright 2013-2014 Guoqiang Chen, Shanghai, China. All rights reserved.
  *
- * Email: subchen@gmail.com
- * URL: http://subchen.github.io/
+ *   Author: Guoqiang Chen
+ *    Email: subchen@gmail.com
+ *   WebURL: https://github.com/subchen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +21,7 @@ package jetbrick.util.annotation;
 
 import java.lang.annotation.*;
 
-@Target({ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE})
+@Target({ ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE })
 @Retention(RetentionPolicy.CLASS)
 @Documented
 public @interface Nullable {

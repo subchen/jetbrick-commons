@@ -1,8 +1,9 @@
 /**
  * Copyright 2013-2014 Guoqiang Chen, Shanghai, China. All rights reserved.
  *
- * Email: subchen@gmail.com
- * URL: http://subchen.github.io/
+ *   Author: Guoqiang Chen
+ *    Email: subchen@gmail.com
+ *   WebURL: https://github.com/subchen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,11 +29,11 @@ import jetbrick.util.*;
 
 public abstract class AbstractResource implements Resource {
     private String path;
-        
+
     public void setPath(String path) {
         this.path = path;
     }
-    
+
     @Override
     public String getPath() {
         return path;
@@ -47,17 +48,17 @@ public abstract class AbstractResource implements Resource {
     public char[] toCharArray(Charset charset) throws ResourceNotFoundException {
         return IoUtils.toCharArray(openStream(), charset);
     }
-    
+
     @Override
     public String toString(Charset charset) throws ResourceNotFoundException {
         return IoUtils.toString(openStream(), charset);
     }
-    
+
     @Override
     public File getFile() throws UnsupportedOperationException {
         return PathUtils.urlAsFile(getURL());
     }
-    
+
     @Override
     public URI getURI() throws UnsupportedOperationException {
         try {

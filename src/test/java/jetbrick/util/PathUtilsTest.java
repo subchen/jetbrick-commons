@@ -40,7 +40,7 @@ public class PathUtilsTest {
         Assert.assertEquals("b/c", PathUtils.normalize("./a/.//../b/c"));
         Assert.assertEquals("", PathUtils.normalize("a//b/./../c/../../"));
         Assert.assertEquals("../../", PathUtils.normalize("a/../b/./../c/../../../"));
-        
+
         Assert.assertEquals("/path/file.ext", PathUtils.normalize("/path/file.ext"));
         Assert.assertEquals("/path/file.ext", PathUtils.normalize("\\path\\file.ext"));
         Assert.assertEquals("/file.ext", PathUtils.normalize("/path/..\\file.ext"));

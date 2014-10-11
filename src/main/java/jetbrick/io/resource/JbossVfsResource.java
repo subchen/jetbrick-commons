@@ -1,8 +1,9 @@
 /**
  * Copyright 2013-2014 Guoqiang Chen, Shanghai, China. All rights reserved.
  *
- * Email: subchen@gmail.com
- * URL: http://subchen.github.io/
+ *   Author: Guoqiang Chen
+ *    Email: subchen@gmail.com
+ *   WebURL: https://github.com/subchen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,7 +45,7 @@ public final class JbossVfsResource extends AbstractResource {
         if (resource == null) {
             throw new ResourceNotFoundException();
         }
-        
+
         InputStream is = (InputStream) vfsInvokeMethod(VIRTUAL_FILE_METHOD_OPEN_STREAM, resource, EMPTY_PARAMETERS);
         if (is == null) {
             throw new ResourceNotFoundException(getURL().toString());

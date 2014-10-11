@@ -26,7 +26,7 @@ import org.junit.Test;
 
 public class ConfigTest {
     private static Config c;
-    
+
     @BeforeClass
     public static void beforeClass() {
         ConfigLoader loader = new ConfigLoader();

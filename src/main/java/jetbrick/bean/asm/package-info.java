@@ -1,8 +1,9 @@
 /**
  * Copyright 2013-2014 Guoqiang Chen, Shanghai, China. All rights reserved.
  *
- * Email: subchen@gmail.com
- * URL: http://subchen.github.io/
+ *   Author: Guoqiang Chen
+ *    Email: subchen@gmail.com
+ *   WebURL: https://github.com/subchen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +17,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * Classes for java reflect enhancement using ASM
  */
