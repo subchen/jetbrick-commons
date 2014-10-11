@@ -16,7 +16,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package jetbrick.io;
+package jetbrick.io.resource;
 
 public class ResourceNotFoundException extends RuntimeException {
     private static final long serialVersionUID = 1L;
@@ -25,15 +25,15 @@ public class ResourceNotFoundException extends RuntimeException {
         super();
     }
 
-    public ResourceNotFoundException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
     public ResourceNotFoundException(String message) {
         super(message);
     }
 
     public ResourceNotFoundException(Throwable cause) {
         super(cause);
+    }
+
+    public ResourceNotFoundException(String message, Throwable cause) {
+        super(message, cause);
     }
 }

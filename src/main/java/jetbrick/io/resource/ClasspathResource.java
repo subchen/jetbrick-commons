@@ -21,10 +21,9 @@ package jetbrick.io.resource;
 import java.io.File;
 import java.io.InputStream;
 import java.net.*;
-import jetbrick.io.ResourceNotFoundException;
 import jetbrick.util.*;
 
-public final class ClasspathResource extends Resource {
+public final class ClasspathResource extends AbstractResource {
     private final ClassLoader loader;
     private final String path;
 
@@ -37,6 +36,7 @@ public final class ClasspathResource extends Resource {
 
         this.loader = (loader != null) ? loader : ClassLoaderUtils.getDefault();
         this.path = StringUtils.removeStart(path, "/");
+        setPath(path);
     }
 
     @Override
@@ -46,20 +46,6 @@ public final class ClasspathResource extends Resource {
             throw new ResourceNotFoundException(path);
         }
         return is;
-    }
-
-    @Override
-    public File getFile() {
-        return Resource.create(getURL()).getFile();
-    }
-
-    @Override
-    public URI getURI() {
-        try {
-            return getURL().toURI();
-        } catch (URISyntaxException e) {
-            throw new IllegalStateException(e);
-        }
     }
 
     @Override
@@ -74,31 +60,22 @@ public final class ClasspathResource extends Resource {
 
     @Override
     public boolean isDirectory() {
-        return Resource.create(getURL()).isDirectory();
+        return ResourceUtils.create(getURL()).isDirectory();
     }
 
     @Override
     public boolean isFile() {
-        return Resource.create(getURL()).isFile();
-    }
-
-    @Override
-    public String getFileName() {
-        int slash = path.lastIndexOf('/');
-        if (slash >= 0) {
-            return path.substring(slash + 1);
-        }
-        return path;
+        return ResourceUtils.create(getURL()).isFile();
     }
 
     @Override
     public long length() {
-        return Resource.create(getURL()).length();
+        return ResourceUtils.create(getURL()).length();
     }
 
     @Override
     public long lastModified() {
-        return Resource.create(getURL()).lastModified();
+        return ResourceUtils.create(getURL()).lastModified();
     }
 
     @Override

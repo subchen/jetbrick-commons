@@ -24,20 +24,19 @@ import java.lang.reflect.Method;
 import java.net.URI;
 import java.net.URL;
 import java.util.*;
-import jetbrick.io.ResourceNotFoundException;
 import jetbrick.util.ExceptionUtils;
 
 // jboss/wildfly vfs url
-public final class JbossVfsResource extends Resource {
+public final class JbossVfsResource extends AbstractResource {
     private final Object resource;
 
-    public static JbossVfsResource create(URL url) {
-        Object resource = vfsInvokeMethod(VFS_METHOD_GET_ROOT_URL, null, new Object[] { url });
-        return new JbossVfsResource(resource);
+    public JbossVfsResource(URL url) {
+        this.resource = vfsInvokeMethod(VFS_METHOD_GET_ROOT_URL, null, new Object[] { url });
     }
 
     private JbossVfsResource(Object resource) {
         this.resource = resource;
+        setPath(getURL().toString());
     }
 
     @Override

@@ -19,12 +19,12 @@
 package jetbrick.io.resource;
 
 import java.io.*;
+import java.nio.charset.Charset;
 import java.net.*;
 import javax.servlet.ServletContext;
-import jetbrick.io.ResourceNotFoundException;
 import jetbrick.util.Validate;
 
-public final class ServletResource extends Resource {
+public final class ServletResource extends AbstractResource {
     private final ServletContext sc;
     private final String path;
     private final URL url;
@@ -35,6 +35,7 @@ public final class ServletResource extends Resource {
 
         this.sc = sc;
         this.path = path;
+        setPath(path);
 
         try {
             this.url = sc.getResource(path);
@@ -44,7 +45,7 @@ public final class ServletResource extends Resource {
     }
 
     @Override
-    public InputStream openStream() throws IllegalStateException {
+    public InputStream openStream() throws ResourceNotFoundException {
         if (url == null) {
             throw new ResourceNotFoundException(path);
         }
@@ -56,23 +57,14 @@ public final class ServletResource extends Resource {
     }
 
     @Override
-    public File getFile() {
+    public File getFile() throws ResourceNotFoundException {
         String file = sc.getRealPath(path);
         if (file != null) {
             return new File(file);
         } else if (url != null) {
-            return Resource.create(url).getFile();
+            return ResourceUtils.create(url).getFile();
         }
-        return null;
-    }
-
-    @Override
-    public URI getURI() {
-        try {
-            return url.toURI();
-        } catch (URISyntaxException e) {
-            throw new IllegalStateException(e);
-        }
+        throw new ResourceNotFoundException(path);
     }
 
     @Override
@@ -87,35 +79,26 @@ public final class ServletResource extends Resource {
 
     @Override
     public boolean isDirectory() {
-        return Resource.create(url).isDirectory();
+        return ResourceUtils.create(url).isDirectory();
     }
 
     @Override
     public boolean isFile() {
-        return Resource.create(url).isFile();
-    }
-
-    @Override
-    public String getFileName() {
-        int slash = path.lastIndexOf('/');
-        if (slash >= 0) {
-            return path.substring(slash + 1);
-        }
-        return path;
+        return ResourceUtils.create(url).isFile();
     }
 
     @Override
     public long length() {
-        return Resource.create(url).length();
+        return ResourceUtils.create(url).length();
     }
 
     @Override
     public long lastModified() {
-        return Resource.create(url).lastModified();
+        return ResourceUtils.create(url).lastModified();
     }
 
     @Override
     public String toString() {
-        return "servlet:" + path;
+        return "webroot:" + path;
     }
 }

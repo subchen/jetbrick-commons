@@ -23,6 +23,7 @@ import java.net.*;
 import java.nio.file.Path;
 import jetbrick.io.resource.FileSystemResource;
 import jetbrick.io.resource.Resource;
+import jetbrick.io.resource.ResourceUtils;
 import jetbrick.typecast.Convertor;
 import jetbrick.util.JdkUtils;
 
@@ -34,7 +35,7 @@ public final class ResourceConvertor implements Convertor<Resource> {
         if (value == null) {
             return null;
         }
-        return Resource.create(value);
+        return ResourceUtils.create(value);
     }
 
     @Override
@@ -46,17 +47,17 @@ public final class ResourceConvertor implements Convertor<Resource> {
             return (Resource) value;
         }
         if (value instanceof String) {
-            return Resource.create((String) value);
+            return ResourceUtils.create((String) value);
         }
         if (value instanceof File) {
             return new FileSystemResource((File) value);
         }
         if (value.getClass() == URL.class) {
-            return Resource.create((URL) value);
+            return ResourceUtils.create((URL) value);
         }
         if (value.getClass() == URI.class) {
             try {
-                return Resource.create(((URI) value).toURL());
+                return ResourceUtils.create(((URI) value).toURL());
             } catch (MalformedURLException e) {
                 throw new IllegalStateException(e);
             }

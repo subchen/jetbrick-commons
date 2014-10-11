@@ -23,25 +23,27 @@ import java.lang.reflect.Field;
 import java.net.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
-import jetbrick.io.ResourceNotFoundException;
 import jetbrick.util.*;
 
-public final class ZipEntryResource extends Resource {
+public final class ZipEntryResource extends AbstractResource {
     private final URL url;
     private final ZipFile zip;
     private final ZipEntry entry;
     private final String entryName;
 
-    public static ZipEntryResource create(URL url) {
+    public ZipEntryResource(URL url) {
+        this.url = url;
+
         String protocol = url.getProtocol();
         if (URL_PROTOCOL_JAR.equals(protocol)) {
             try {
                 URLConnection conn = url.openConnection();
                 if (conn instanceof JarURLConnection) {
                     JarURLConnection connection = (JarURLConnection) conn;
-                    ZipFile zip = connection.getJarFile();
-                    ZipEntry entry = connection.getJarEntry();
-                    return new ZipEntryResource(url, zip, entry, entry.getName());
+                    this.zip = connection.getJarFile();
+                    this.entry = connection.getJarEntry();
+                    this.entryName = entry.getName();
+                    setPath(entryName);
                 }
             } catch (IOException e) {
                 throw new IllegalStateException(e);
@@ -50,9 +52,10 @@ public final class ZipEntryResource extends Resource {
             try {
                 URLConnection conn = url.openConnection();
                 if ("weblogic.utils.zip.ZipURLConnection".equals(conn.getClass().getName())) {
-                    ZipFile zip = WeblogicZipURLConnection.getZipFile(conn);
-                    ZipEntry entry = WeblogicZipURLConnection.getZipEntry(conn);
-                    return new ZipEntryResource(url, zip, entry, entry.getName());
+                    this.zip = WeblogicZipURLConnection.getZipFile(conn);
+                    this.entry = WeblogicZipURLConnection.getZipEntry(conn);
+                    this.entryName = entry.getName();
+                    setPath(entryName);
                 }
             } catch (IOException e) {
                 throw new IllegalStateException(e);
@@ -62,21 +65,24 @@ public final class ZipEntryResource extends Resource {
         throw new IllegalStateException("Unknown url format: " + url);
     }
 
-    public static ZipEntryResource create(ZipFile zip, String entryName) {
+    public ZipEntryResource(ZipFile zip, String entryName) {
         Validate.notNull(zip);
-        return new ZipEntryResource(null, zip, zip.getEntry(entryName), entryName);
+
+        this.url = null;
+        this.zip = zip;
+        this.entry = zip.getEntry(entryName);
+        this.entryName = entryName;
+        setPath(entryName);
     }
 
-    public static ZipEntryResource create(ZipFile zip, ZipEntry entry) {
+    public ZipEntryResource(ZipFile zip, ZipEntry entry) {
         Validate.notNull(zip);
-        return new ZipEntryResource(null, zip, entry, entry.getName());
-    }
 
-    private ZipEntryResource(URL url, ZipFile zip, ZipEntry entry, String entryName) {
-        this.url = url;
+        this.url = null;
         this.zip = zip;
         this.entry = entry;
-        this.entryName = entryName;
+        this.entryName = entry.getName();
+        setPath(entryName);
     }
 
     public ZipFile getZipFile() {
@@ -128,7 +134,7 @@ public final class ZipEntryResource extends Resource {
             String path = URL_PREFIX_FILE + zip.getName() + URL_SEPARATOR_JAR + entryName;
             return new URL(URL_PROTOCOL_JAR, null, path);
         } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException(e);
         }
     }
 
@@ -159,12 +165,12 @@ public final class ZipEntryResource extends Resource {
 
     @Override
     public long length() {
-        return entry == null ? NOT_FOUND : entry.getSize();
+        return entry == null ? -1 : entry.getSize();
     }
 
     @Override
     public long lastModified() {
-        return entry == null ? NOT_FOUND : entry.getTime();
+        return entry == null ? 0 : entry.getTime();
     }
 
     @Override

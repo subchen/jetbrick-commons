@@ -24,27 +24,22 @@ import java.net.URI;
 import java.net.URL;
 import jetbrick.util.Validate;
 
-public final class InputStreamResource extends Resource {
+public final class InputStreamResource extends AbstractResource {
     private final InputStream is;
 
     public InputStreamResource(InputStream is) {
+        this(is, "(stream)");
+    }
+
+    public InputStreamResource(InputStream is, String path) {
         Validate.notNull(is);
         this.is = is;
+        setPath(path);
     }
 
     @Override
     public InputStream openStream() {
         return is;
-    }
-
-    @Override
-    public File getFile() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public URI getURI() {
-        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -58,32 +53,7 @@ public final class InputStreamResource extends Resource {
     }
 
     @Override
-    public boolean isDirectory() {
-        return false;
-    }
-
-    @Override
-    public boolean isFile() {
-        return false;
-    }
-
-    @Override
-    public String getFileName() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public long length() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public long lastModified() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public String toString() {
-        return "is:" + is.toString();
+        return "(stream):" + is.toString();
     }
 }

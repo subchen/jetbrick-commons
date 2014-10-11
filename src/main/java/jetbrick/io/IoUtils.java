@@ -19,6 +19,7 @@
 package jetbrick.io;
 
 import java.io.*;
+import java.nio.charset.Charset;
 import java.net.*;
 import java.nio.channels.Selector;
 import java.util.zip.ZipFile;
@@ -33,7 +34,7 @@ public final class IoUtils {
             is = new FileInputStream(file);
             return toByteArray(is);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException(e);
         } finally {
             closeQuietly(is);
         }
@@ -49,40 +50,50 @@ public final class IoUtils {
             }
             return out.toByteArray();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException(e);
         } finally {
             closeQuietly(out);
         }
     }
 
-    public static byte[] toByteArray(Reader reader, String encoding) {
+    public static byte[] toByteArray(Reader reader, String charsetName) {
+        return toByteArray(reader, Charset.forName(charsetName));
+    }
+
+    public static byte[] toByteArray(Reader reader, Charset charset) {
         try {
-            InputStream is = new ReaderInputStream(reader, encoding);
+            InputStream is = new ReaderInputStream(reader, charset);
             return toByteArray(is);
         } finally {
             closeQuietly(reader);
         }
     }
 
-    public static char[] toCharArray(File file, String encoding) {
+    public static char[] toCharArray(File file, String charsetName) {
+        return toCharArray(file, Charset.forName(charsetName));
+    }
+
+    public static char[] toCharArray(File file, Charset charset) {
         Reader reader = null;
         try {
-            reader = new InputStreamReader(new FileInputStream(file), encoding);
+            reader = new InputStreamReader(new FileInputStream(file), charset);
             return toCharArray(reader);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException(e);
         } finally {
             closeQuietly(reader);
         }
     }
 
-    public static char[] toCharArray(InputStream is, String encoding) {
+    public static char[] toCharArray(InputStream is, String charsetName) {
+        return toCharArray(is, Charset.forName(charsetName));
+    }
+
+    public static char[] toCharArray(InputStream is, Charset charset) {
         Reader reader = null;
         try {
-            reader = new InputStreamReader(is, encoding);
+            reader = new InputStreamReader(is, charset);
             return toCharArray(reader);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         } finally {
             closeQuietly(reader);
         }
@@ -98,30 +109,36 @@ public final class IoUtils {
             }
             return out.toCharArray();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException(e);
         } finally {
             closeQuietly(out);
         }
     }
 
-    public static String toString(File file, String encoding) {
+    public static String toString(File file, String charsetName) {
+        return toString(file, Charset.forName(charsetName));
+    }
+
+    public static String toString(File file, Charset charset) {
         Reader reader = null;
         try {
-            reader = new InputStreamReader(new FileInputStream(file), encoding);
+            reader = new InputStreamReader(new FileInputStream(file), charset);
             return toString(reader);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException(e);
         } finally {
             closeQuietly(reader);
         }
     }
 
-    public static String toString(InputStream is, String encoding) {
+    public static String toString(InputStream is, String charsetName) {
+        return toString(is, Charset.forName(charsetName));
+    }
+
+    public static String toString(InputStream is, Charset charset) {
         try {
-            InputStreamReader reader = new InputStreamReader(is, encoding);
+            InputStreamReader reader = new InputStreamReader(is, charset);
             return toString(reader);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         } finally {
             closeQuietly(is);
         }
@@ -137,7 +154,7 @@ public final class IoUtils {
             }
             return out.toString();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException(e);
         } finally {
             closeQuietly(out);
         }
@@ -149,31 +166,39 @@ public final class IoUtils {
             os = new FileOutputStream(file);
             os.write(data);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException(e);
         } finally {
             IoUtils.closeQuietly(os);
         }
     }
 
-    public static void write(char[] data, File file, String encoding) {
+    public static void write(char[] data, File file, String charsetName) {
+        write(data, file, Charset.forName(charsetName));
+    }
+
+    public static void write(char[] data, File file, Charset charset) {
         OutputStream os = null;
         try {
             os = new FileOutputStream(file);
-            os.write(new String(data).getBytes(encoding));
+            os.write(new String(data).getBytes(charset));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException(e);
         } finally {
             IoUtils.closeQuietly(os);
         }
     }
 
-    public static void write(String data, File file, String encoding) {
+    public static void write(String data, File file, String charsetName) {
+        write(data, file, Charset.forName(charsetName));
+    }
+
+    public static void write(String data, File file, Charset charset) {
         OutputStream os = null;
         try {
             os = new FileOutputStream(file);
-            os.write(data.getBytes(encoding));
+            os.write(data.getBytes(charset));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException(e);
         } finally {
             IoUtils.closeQuietly(os);
         }
@@ -190,8 +215,12 @@ public final class IoUtils {
         return count;
     }
 
-    public static long copy(InputStream input, Writer output, String encoding) throws IOException {
-        return copy(new InputStreamReader(input, encoding), output);
+    public static long copy(InputStream input, Writer output, String charsetName) throws IOException {
+        return copy(new InputStreamReader(input, Charset.forName(charsetName)), output);
+    }
+
+    public static long copy(InputStream input, Writer output, Charset charset) throws IOException {
+        return copy(new InputStreamReader(input, charset), output);
     }
 
     public static long copy(Reader input, Writer output) throws IOException {
@@ -205,8 +234,12 @@ public final class IoUtils {
         return count;
     }
 
-    public static long copy(Reader input, OutputStream output, String encoding) throws IOException {
-        return copy(new ReaderInputStream(input, encoding), output);
+    public static long copy(Reader input, OutputStream output, String charsetName) throws IOException {
+        return copy(new ReaderInputStream(input, Charset.forName(charsetName)), output);
+    }
+
+    public static long copy(Reader input, OutputStream output, Charset charset) throws IOException {
+        return copy(new ReaderInputStream(input, charset), output);
     }
 
     public static void closeQuietly(Closeable obj) {

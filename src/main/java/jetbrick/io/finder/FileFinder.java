@@ -19,6 +19,7 @@
 package jetbrick.io.finder;
 
 import java.io.*;
+import java.nio.charset.Charset;
 import java.net.*;
 import java.util.*;
 import java.util.zip.ZipEntry;
@@ -48,7 +49,7 @@ public abstract class FileFinder {
     public void lookupClasspath(List<String> packageNames, boolean recursive) {
         String[] pkgs = null;
         if (packageNames != null) {
-            pkgs = packageNames.toArray(new String[packageNames.size()]);
+            pkgs = packageNames.toArray(ArrayUtils.EMPTY_STRING_ARRAY);
         }
         lookupClasspath(pkgs, recursive);
     }
@@ -89,7 +90,7 @@ public abstract class FileFinder {
         for (URL url : urls) {
             String protocol = url.getProtocol();
             if ("file".equals(protocol)) {
-                File file = Resource.create(url).getFile();
+                File file = ResourceUtils.create(url).getFile();
                 if (file.isDirectory()) {
                     doLookupInFileSystem(file, pkg, null, recursive);
                 } else if (file.isFile()) {
@@ -117,14 +118,14 @@ public abstract class FileFinder {
                     IoUtils.closeQuietly(zip);
                 }
             } else if ("zip".equals(protocol)) {
-                ZipEntryResource resource = ZipEntryResource.create(url);
+                ZipEntryResource resource = new ZipEntryResource(url);
                 try {
                     doLookupInZipFile(resource.getZipFile(), pkg, recursive);
                 } finally {
                     IoUtils.closeQuietly(resource.getZipFile());
                 }
             } else if ("vfs".equals(protocol)) {
-                JbossVfsResource resource = JbossVfsResource.create(url);
+                JbossVfsResource resource = new JbossVfsResource(url);
                 doLookupInVfsFile(resource, pkg, null, recursive);
             } else {
                 throw new IllegalStateException("Unsupported url format: " + url.toString());
@@ -182,7 +183,7 @@ public abstract class FileFinder {
 
             ResourceEntry resourceEntry = null;
             if (rootdir == null) {
-                ZipEntryResource resource = ZipEntryResource.create(zip, entry);
+                ZipEntryResource resource = new ZipEntryResource(zip, entry);
                 String relativePathName = StringUtils.removeEnd(entryName, "/");
                 resourceEntry = new ResourceEntry(resource, qualifiedJavaName, relativePathName);
             } else {
@@ -191,7 +192,7 @@ public abstract class FileFinder {
                     if (relativePathName.length() > 1) {
                         relativePathName = StringUtils.removeEnd(relativePathName, "/");
                         if (recursive || relativePathName.lastIndexOf('/') <= 0) {
-                            ZipEntryResource resource = ZipEntryResource.create(zip, entry);
+                            ZipEntryResource resource = new ZipEntryResource(zip, entry);
                             resourceEntry = new ResourceEntry(resource, qualifiedJavaName, relativePathName);
                         }
                     }
@@ -261,7 +262,7 @@ public abstract class FileFinder {
     protected void visitFile(ResourceEntry file) {
     }
 
-    public static class ResourceEntry extends Resource {
+    public static final class ResourceEntry extends AbstractResource {
         private final Resource resource;
         private final String qualifiedJavaName;
         private final String relativePathName;
@@ -273,8 +274,28 @@ public abstract class FileFinder {
         }
 
         @Override
-        public InputStream openStream() throws RuntimeException {
+        public String getPath() {
+            return resource.getPath();
+        }
+
+        @Override
+        public InputStream openStream() throws ResourceNotFoundException {
             return resource.openStream();
+        }
+
+        @Override
+        public byte[] toByteArray() throws ResourceNotFoundException {
+            return resource.toByteArray();
+        }
+
+        @Override
+        public char[] toCharArray(Charset charset) throws ResourceNotFoundException {
+            return resource.toCharArray(charset);
+        }
+
+        @Override
+        public String toString(Charset charset) throws ResourceNotFoundException {
+            return resource.toString(charset);
         }
 
         @Override
@@ -331,7 +352,7 @@ public abstract class FileFinder {
         }
 
         public boolean isJavaClass() {
-            return isFile() && resource.getFileName().endsWith(".class");
+            return resource.getPath().endsWith(".class");
         }
 
         @Override

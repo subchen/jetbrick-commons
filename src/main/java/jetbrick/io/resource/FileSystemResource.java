@@ -20,25 +20,28 @@ package jetbrick.io.resource;
 
 import java.io.*;
 import java.net.*;
-import jetbrick.io.ResourceNotFoundException;
 import jetbrick.util.Validate;
 
-public final class FileSystemResource extends Resource {
+public final class FileSystemResource extends AbstractResource {
     private final File file;
 
-    public static FileSystemResource create(URL url) {
+    public FileSystemResource(File file) {
+        this.file = file;
+        setPath(file.getPath());
+    }
+
+    public FileSystemResource(URL url) {
         Validate.notNull(url);
+
         String file = url.getPath();
         try {
             file = URLDecoder.decode(file, "utf-8");
         } catch (UnsupportedEncodingException e) {
             throw new IllegalStateException(e);
         }
-        return new FileSystemResource(new File(file));
-    }
 
-    public FileSystemResource(File file) {
-        this.file = file;
+        this.file = new File(file);
+        setPath(file);
     }
 
     @Override
@@ -70,6 +73,11 @@ public final class FileSystemResource extends Resource {
     }
 
     @Override
+    public String getFileName() {
+        return file.getName();
+    }
+
+    @Override
     public boolean exist() {
         return file.exists();
     }
@@ -82,11 +90,6 @@ public final class FileSystemResource extends Resource {
     @Override
     public boolean isFile() {
         return file.isFile();
-    }
-
-    @Override
-    public String getFileName() {
-        return file.getName();
     }
 
     @Override

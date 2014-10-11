@@ -19,13 +19,11 @@
 package jetbrick.io.resource;
 
 import java.io.*;
+import java.nio.charset.Charset;
 import java.net.URI;
 import java.net.URL;
-import java.util.zip.ZipFile;
-import jetbrick.io.ResourceNotFoundException;
-import jetbrick.util.Validate;
 
-public abstract class Resource {
+public interface Resource {
     public static final String URL_PREFIX_CLASSPATH = "classpath:";
     public static final String URL_PREFIX_FILE = "file:";
     public static final String URL_PREFIX_JAR = "jar:";
@@ -36,77 +34,77 @@ public abstract class Resource {
     public static final String URL_PROTOCOL_VFS = "vfs";
     public static final String URL_SEPARATOR_JAR = "!/";
 
-    public static final long NOT_FOUND = -1;
+    /**
+     * 代表 Resource 名称，默认是 url/file (包含路径)
+     */
+    public String getPath();
 
-    public static Resource create(String location) {
-        Validate.notNull(location);
+    /**
+     * 打开文件输入流.
+     */
+    public InputStream openStream() throws ResourceNotFoundException;
 
-        if (location.startsWith(URL_PREFIX_CLASSPATH)) {
-            return new ClasspathResource(location.substring(URL_PREFIX_CLASSPATH.length()));
-        }
-        if (location.startsWith(URL_PREFIX_FILE)) {
-            String file = location.substring(URL_PREFIX_FILE.length());
-            return new FileSystemResource(new File(file));
-        }
-        if (location.startsWith(URL_PREFIX_JAR)) {
-            int pos = location.indexOf(URL_SEPARATOR_JAR);
-            String file = location.substring(URL_PREFIX_JAR.length(), pos);
-            String entry = location.substring(pos + 1);
-            try {
-                return ZipEntryResource.create(new ZipFile(file), entry);
-            } catch (IOException e) {
-                throw new IllegalStateException(e);
-            }
-        }
-        if (location.startsWith(URL_PREFIX_ZIP)) {
-            int pos = location.indexOf(URL_SEPARATOR_JAR);
-            String file = location.substring(URL_PREFIX_ZIP.length(), pos);
-            String entry = location.substring(pos + 1);
-            try {
-                return ZipEntryResource.create(new ZipFile(file), entry);
-            } catch (IOException e) {
-                throw new IllegalStateException(e);
-            }
-        }
+    /**
+     * 获取文件内容.
+     */
+    public byte[] toByteArray() throws ResourceNotFoundException;
 
-        // default is file
-        return new FileSystemResource(new File(location));
-    }
+    /**
+     * 获取文件内容.
+     */
+    public char[] toCharArray(Charset charset) throws ResourceNotFoundException;
 
-    public static Resource create(URL url) {
-        Validate.notNull(url);
+    /**
+     * 获取文件内容.
+     */
+    public String toString(Charset charset) throws ResourceNotFoundException;
 
-        String protocol = url.getProtocol();
-        if (URL_PROTOCOL_FILE.equals(protocol)) {
-            return FileSystemResource.create(url);
-        } else if (URL_PROTOCOL_JAR.equals(protocol)) {
-            return ZipEntryResource.create(url);
-        } else if (URL_PROTOCOL_ZIP.equals(protocol)) {
-            return ZipEntryResource.create(url);
-        } else if (URL_PROTOCOL_VFS.equals(protocol)) {
-            return JbossVfsResource.create(url);
-        }
-        throw new IllegalStateException("Unknown url format: " + url);
-    }
+    /**
+     * 文件对象.
+     */
+    public File getFile() throws UnsupportedOperationException;
 
-    public abstract InputStream openStream() throws ResourceNotFoundException;
+    /**
+     * URI 对象.
+     */
+    public URI getURI() throws UnsupportedOperationException;
 
-    public abstract File getFile();
+    /**
+     * URL 对象.
+     */
+    public URL getURL() throws UnsupportedOperationException;
 
-    public abstract URI getURI();
+    /**
+     * 文件名(不包含路径)
+     */
+    public String getFileName();
 
-    public abstract URL getURL();
+    /**
+     * 是否存在
+     */
+    public boolean exist();
 
-    public abstract boolean exist();
+    /**
+     * 是否是一个目录
+     */
+    public boolean isDirectory();
 
-    public abstract boolean isDirectory();
+    /**
+     * 是否是一个文件
+     */
+    public boolean isFile();
 
-    public abstract boolean isFile();
+    /**
+     * 文件大小 (byte 长度).
+     *
+     * @return 如果文件不存在，返回 -1.
+     */
+    public long length();
 
-    // file name without path
-    public abstract String getFileName();
-
-    public abstract long length();
-
-    public abstract long lastModified();
+    /**
+     * 最后修改时间.
+     *
+     * @return 如果文件不存在，返回 0.
+     */
+    public long lastModified();
 }
