@@ -21,7 +21,7 @@ package jetbrick.bean;
 
 /**
  * 代表一个对象的 public 属性 (Getter, Setter).
- * 
+ *
  * @author Guoqiang Chen
  */
 public final class PropertyInfo implements Getter, Setter {
@@ -115,5 +115,10 @@ public final class PropertyInfo implements Getter, Setter {
             throw new IllegalStateException("Property is not writable: " + name);
         }
         setter.invoke(object, value);
+    }
+
+    @Override
+    public String toString() {
+        return declaringKlass.getName() + '#' + name;
     }
 }
