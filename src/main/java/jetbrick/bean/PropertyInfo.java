@@ -19,6 +19,8 @@
  */
 package jetbrick.bean;
 
+import jetbrick.util.ArrayUtils;
+
 /**
  * 代表一个对象的 public 属性 (Getter, Setter).
  *
@@ -106,7 +108,7 @@ public final class PropertyInfo implements Getter, Setter {
         if (getter == null) {
             throw new IllegalStateException("Property is not readable: " + name);
         }
-        return getter.invoke(object);
+        return getter.invoke(object, ArrayUtils.EMPTY_OBJECT_ARRAY);
     }
 
     @Override
