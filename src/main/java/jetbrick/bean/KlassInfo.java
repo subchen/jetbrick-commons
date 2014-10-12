@@ -264,16 +264,16 @@ public final class KlassInfo {
                 }
             } else {
                 KlassInfo parent = klass.getSuperKlass();
-                while (parent != null) {
+                if (parent != null) {
                     for (MethodInfo method : parent.getDeclaredMethods()) {
-                        // 只加入 super class 中 非private, 非 static 的, 非 abstract 的方法 (这些方法一般是被认为可继承的)
-                        if (!method.isPrivate() && !method.isStatic() && !method.isAbstract()) {
+                        // 只加入 super class 中 public, 非 static 的, 非 abstract 的方法 (这些方法一般是被认为可继承的)
+                        if (method.isPublic() && !method.isStatic() && !method.isAbstract()) {
                             results.add(method);
                         }
                     }
-                    parent = parent.getSuperKlass();
                 }
             }
+
             results.trimToSize();
             return Collections.unmodifiableList(results);
         }
@@ -386,22 +386,21 @@ public final class KlassInfo {
             if (klass.isInterface()) {
                 for (KlassInfo parent : klass.getInterfaces()) {
                     for (FieldInfo field : parent.getDeclaredFields()) {
-                        // 只加入 super interface 中 非private， 非 static 的字段 (这些字段一般是被认为可继承的)
-                        if (!field.isPrivate() && !field.isStatic()) {
+                        // 只加入 super interface 中 public， 非 static 的字段 (这些字段一般是被认为可继承的)
+                        if (field.isPublic() && !field.isStatic()) {
                             results.add(field);
                         }
                     }
                 }
             } else {
                 KlassInfo parent = klass.getSuperKlass();
-                while (parent != null) {
+                if (parent != null) {
                     for (FieldInfo field : parent.getDeclaredFields()) {
-                        // 只加入 super class 中 非private， 非 static 的字段 (这些字段一般是被认为可继承的)
-                        if (!field.isPrivate() && !field.isStatic()) {
+                        // 只加入 super class 中 public， 非 static 的字段 (这些字段一般是被认为可继承的)
+                        if (field.isPublic() && !field.isStatic()) {
                             results.add(field);
                         }
                     }
-                    parent = parent.getSuperKlass();
                 }
             }
             results.trimToSize();
@@ -443,9 +442,7 @@ public final class KlassInfo {
             List<MethodInfo> methods = methodsGetter.get();
             Map<String, PropertyInfo> map = new HashMap<String, PropertyInfo>(methods.size());
             for (MethodInfo method : methods) {
-                if (method.isStatic()) continue;
-                if (method.isAbstract()) continue;
-                if (!method.isPublic()) continue;
+                if (method.isStatic() || !method.isPublic()) continue; // 属性必须是 public 的
 
                 if (method.isReadMethod()) {
                     String name = method.getPropertyName();
