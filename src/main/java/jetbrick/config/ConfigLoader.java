@@ -98,7 +98,7 @@ public final class ConfigLoader {
         if (location.startsWith("classpath:") || location.startsWith("file:")) {
             return load(location);
         } else {
-            if (!location.startsWith("webroot:")) {
+            if (location.startsWith("webroot:")) {
                 location = location.substring("webroot:".length());
             }
             if (!location.startsWith("/")) {
