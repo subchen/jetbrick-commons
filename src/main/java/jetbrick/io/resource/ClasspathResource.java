@@ -34,7 +34,7 @@ public final class ClasspathResource extends AbstractResource {
     public ClasspathResource(String path, ClassLoader loader) {
         Validate.notNull(path);
 
-        if (loader != null) {
+        if (loader == null) {
             loader = ClassLoaderUtils.getDefault();
         }
         path = StringUtils.removeStart(path, "/");
