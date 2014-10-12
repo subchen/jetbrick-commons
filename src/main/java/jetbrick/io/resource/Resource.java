@@ -19,10 +19,11 @@
  */
 package jetbrick.io.resource;
 
-import java.io.*;
-import java.nio.charset.Charset;
+import java.io.File;
+import java.io.InputStream;
 import java.net.URI;
 import java.net.URL;
+import java.nio.charset.Charset;
 
 public interface Resource {
     public static final String URL_PREFIX_CLASSPATH = "classpath:";

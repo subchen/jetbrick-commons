@@ -20,8 +20,8 @@
 package jetbrick.io.resource;
 
 import java.io.*;
-import java.nio.charset.Charset;
-import java.net.*;
+import java.net.MalformedURLException;
+import java.net.URL;
 import javax.servlet.ServletContext;
 import jetbrick.util.Validate;
 

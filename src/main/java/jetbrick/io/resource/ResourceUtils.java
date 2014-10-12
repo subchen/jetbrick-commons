@@ -19,8 +19,8 @@
  */
 package jetbrick.io.resource;
 
-import java.io.*;
-import java.net.URI;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.zip.ZipFile;
 import jetbrick.util.Validate;

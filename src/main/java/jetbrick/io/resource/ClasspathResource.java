@@ -19,8 +19,9 @@
  */
 package jetbrick.io.resource;
 
-import java.io.*;
-import java.net.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import jetbrick.util.*;
 
 public final class ClasspathResource extends AbstractResource {
@@ -37,7 +38,7 @@ public final class ClasspathResource extends AbstractResource {
             loader = ClassLoaderUtils.getDefault();
         }
         path = StringUtils.removeStart(path, "/");
-        
+
         this.url = loader.getResource(path);
         setPath(path);
     }
@@ -49,7 +50,7 @@ public final class ClasspathResource extends AbstractResource {
         }
         try {
             return url.openStream();
-        } catch(IOException e) {
+        } catch (IOException e) {
             throw new IllegalStateException(e);
         }
     }

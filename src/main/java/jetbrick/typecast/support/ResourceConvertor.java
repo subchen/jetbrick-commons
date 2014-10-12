@@ -22,9 +22,7 @@ package jetbrick.typecast.support;
 import java.io.File;
 import java.net.*;
 import java.nio.file.Path;
-import jetbrick.io.resource.FileSystemResource;
-import jetbrick.io.resource.Resource;
-import jetbrick.io.resource.ResourceUtils;
+import jetbrick.io.resource.*;
 import jetbrick.typecast.Convertor;
 import jetbrick.util.JdkUtils;
 

@@ -20,9 +20,9 @@
 package jetbrick.io;
 
 import java.io.*;
-import java.nio.charset.Charset;
 import java.net.*;
 import java.nio.channels.Selector;
+import java.nio.charset.Charset;
 import java.util.zip.ZipFile;
 import jetbrick.io.stream.*;
 

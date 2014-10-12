@@ -19,13 +19,12 @@
  */
 package jetbrick.io.resource;
 
-import java.io.*;
-import java.nio.charset.Charset;
+import java.io.File;
 import java.net.URI;
 import java.net.URL;
-import java.util.zip.ZipFile;
+import java.nio.charset.Charset;
 import jetbrick.io.IoUtils;
-import jetbrick.util.*;
+import jetbrick.util.PathUtils;
 
 public abstract class AbstractResource implements Resource {
     private String path;

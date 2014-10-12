@@ -19,9 +19,7 @@
  */
 package jetbrick.io.resource;
 
-import java.io.File;
 import java.io.InputStream;
-import java.net.URI;
 import java.net.URL;
 import jetbrick.util.Validate;
 

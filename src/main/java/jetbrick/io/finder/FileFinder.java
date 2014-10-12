@@ -20,8 +20,8 @@
 package jetbrick.io.finder;
 
 import java.io.*;
-import java.nio.charset.Charset;
 import java.net.*;
+import java.nio.charset.Charset;
 import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
