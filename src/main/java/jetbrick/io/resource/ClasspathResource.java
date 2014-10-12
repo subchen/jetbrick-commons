@@ -19,14 +19,12 @@
  */
 package jetbrick.io.resource;
 
-import java.io.File;
-import java.io.InputStream;
+import java.io.*;
 import java.net.*;
 import jetbrick.util.*;
 
 public final class ClasspathResource extends AbstractResource {
-    private final ClassLoader loader;
-    private final String path;
+    private final URL url;
 
     public ClasspathResource(String path) {
         this(path, null);
@@ -35,52 +33,59 @@ public final class ClasspathResource extends AbstractResource {
     public ClasspathResource(String path, ClassLoader loader) {
         Validate.notNull(path);
 
-        this.loader = (loader != null) ? loader : ClassLoaderUtils.getDefault();
-        this.path = StringUtils.removeStart(path, "/");
+        if (loader != null) {
+            loader = ClassLoaderUtils.getDefault();
+        }
+        path = StringUtils.removeStart(path, "/");
+        
+        this.url = loader.getResource(path);
         setPath(path);
     }
 
     @Override
     public InputStream openStream() throws ResourceNotFoundException {
-        InputStream is = loader.getResourceAsStream(path);
-        if (is == null) {
-            throw new ResourceNotFoundException(path);
+        if (url == null) {
+            throw new ResourceNotFoundException(getPath());
         }
-        return is;
+        try {
+            return url.openStream();
+        } catch(IOException e) {
+            throw new IllegalStateException(e);
+        }
     }
 
     @Override
     public URL getURL() {
-        return loader.getResource(path);
+        return url;
     }
 
     @Override
     public boolean exist() {
-        return getURL() != null;
+        return url != null;
     }
 
     @Override
     public boolean isDirectory() {
-        return ResourceUtils.create(getURL()).isDirectory();
+        return ResourceUtils.create(url).isDirectory();
     }
 
     @Override
     public boolean isFile() {
-        return ResourceUtils.create(getURL()).isFile();
+        return ResourceUtils.create(url).isFile();
     }
 
     @Override
     public long length() {
-        return ResourceUtils.create(getURL()).length();
+        return ResourceUtils.create(url).length();
     }
 
     @Override
     public long lastModified() {
-        return ResourceUtils.create(getURL()).lastModified();
+        return ResourceUtils.create(url).lastModified();
     }
 
     @Override
     public String toString() {
-        return URL_PREFIX_CLASSPATH + path;
+        return URL_PREFIX_CLASSPATH + getPath();
     }
 }
