@@ -70,7 +70,7 @@ public final class AsmFactory {
         try {
             return (AsmAccessor) generatedKlass.newInstance();
         } catch (Exception e) {
-            throw new RuntimeException("Error constructing access class: " + generatedKlassName, e);
+            throw new IllegalStateException("Error constructing access class: " + generatedKlassName, e);
         }
     }
 }
