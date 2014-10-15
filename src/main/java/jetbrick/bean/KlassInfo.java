@@ -254,25 +254,27 @@ public final class KlassInfo {
             List<MethodInfo> declaredMethods = klass.getDeclaredMethods();
 
             ArrayList<MethodInfo> results = new ArrayList<MethodInfo>(declaredMethods.size() + 16);
-            results.addAll(declaredMethods);
 
-            if (klass.isInterface()) {
-                for (KlassInfo parent : klass.getInterfaces()) {
-                    for (MethodInfo method : parent.getDeclaredMethods()) {
+            // 1. add interfaces
+            for (KlassInfo parent : klass.getInterfaces()) {
+                for (MethodInfo method : parent.getMethods()) {
+                    results.add(method);
+                }
+            }
+
+            // 2. add super class
+            KlassInfo parent = klass.getSuperKlass();
+            if (parent != null) {
+                for (MethodInfo method : parent.getMethods()) {
+                    // 只加入 super class 中 public, 非 static 的  (这些方法一般是被认为可继承的)
+                    if (method.isPublic() && !method.isStatic()) {
                         results.add(method);
                     }
                 }
-            } else {
-                KlassInfo parent = klass.getSuperKlass();
-                if (parent != null) {
-                    for (MethodInfo method : parent.getDeclaredMethods()) {
-                        // 只加入 super class 中 public, 非 static 的, 非 abstract 的方法 (这些方法一般是被认为可继承的)
-                        if (method.isPublic() && !method.isStatic() && !method.isAbstract()) {
-                            results.add(method);
-                        }
-                    }
-                }
             }
+
+            // 3. add self
+            results.addAll(declaredMethods);
 
             results.trimToSize();
             return Collections.unmodifiableList(results);
@@ -383,26 +385,25 @@ public final class KlassInfo {
             ArrayList<FieldInfo> results = new ArrayList<FieldInfo>(declaredFields.size() + 8);
             results.addAll(declaredFields);
 
-            if (klass.isInterface()) {
-                for (KlassInfo parent : klass.getInterfaces()) {
-                    for (FieldInfo field : parent.getDeclaredFields()) {
-                        // 只加入 super interface 中 public， 非 static 的字段 (这些字段一般是被认为可继承的)
-                        if (field.isPublic() && !field.isStatic()) {
-                            results.add(field);
-                        }
-                    }
-                }
-            } else {
-                KlassInfo parent = klass.getSuperKlass();
-                if (parent != null) {
-                    for (FieldInfo field : parent.getDeclaredFields()) {
-                        // 只加入 super class 中 public， 非 static 的字段 (这些字段一般是被认为可继承的)
-                        if (field.isPublic() && !field.isStatic()) {
-                            results.add(field);
-                        }
+            for (KlassInfo parent : klass.getInterfaces()) {
+                for (FieldInfo field : parent.getFields()) {
+                    // 只加入 super interface 中 public， 非 static 的字段 (这些字段一般是被认为可继承的)
+                    if (field.isPublic() && !field.isStatic()) {
+                        results.add(field);
                     }
                 }
             }
+
+            KlassInfo parent = klass.getSuperKlass();
+            if (parent != null) {
+                for (FieldInfo field : parent.getFields()) {
+                    // 只加入 super class 中 public， 非 static 的字段 (这些字段一般是被认为可继承的)
+                    if (field.isPublic() && !field.isStatic()) {
+                        results.add(field);
+                    }
+                }
+            }
+
             results.trimToSize();
             return Collections.unmodifiableList(results);
         }
