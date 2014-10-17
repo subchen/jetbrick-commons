@@ -54,6 +54,9 @@ public final class TimedSizeCache {
             CacheEntry entry = new CacheEntry(key, object, timeout);
             if (isFull()) {
                 pruneCache();
+                if (isFull()) {
+                    throw new IllegalStateException("exceed cache max size");
+                }
             }
             cacheMap.put(key, entry);
         } finally {
