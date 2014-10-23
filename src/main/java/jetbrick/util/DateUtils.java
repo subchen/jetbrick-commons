@@ -106,7 +106,7 @@ public final class DateUtils {
      * @return      如果无法解析，那么返回 {@code null}
      */
     public static Date parse(String date) {
-        Date d = parseUsingPatterns(date, STD_PATTERNS);
+        Date d = parse(date, STD_PATTERNS);
         if (d == null) {
             d = parseRFC822Date(date);
         }
@@ -130,7 +130,7 @@ public final class DateUtils {
      * @param pattern   see {@link java.text.SimpleDateFormat}
      * @return          如果无法解析，那么返回 {@code null}
      */
-    public static Date parseUsingPattern(String date, String pattern) {
+    public static Date parse(String date, String pattern) {
         SimpleDateFormat df = new SimpleDateFormat(pattern);
         df.setLenient(false);
 
@@ -152,7 +152,7 @@ public final class DateUtils {
      * @param patterns  多个模式，see {@link java.text.SimpleDateFormat}
      * @return          如果无法解析，那么返回 {@code null}
      */
-    public static Date parseUsingPatterns(String date, String[] patterns) {
+    public static Date parse(String date, String[] patterns) {
         if (date == null || date.length() == 0) {
             return null;
         }
@@ -180,7 +180,7 @@ public final class DateUtils {
             String post = date.substring(ipos + 3);
             date = pre + " GMT" + post;
         }
-        return parseUsingPatterns(date, RFC822_PATTENRS);
+        return parse(date, RFC822_PATTENRS);
     }
 
     public static Date parseW3CDateTime(String date) {
@@ -207,7 +207,7 @@ public final class DateUtils {
         } else {
             date += "T00:00GMT";
         }
-        return parseUsingPatterns(date, W3CDATETIME_PATTERNS);
+        return parse(date, W3CDATETIME_PATTERNS);
     }
 
     public static String formatRFC822(Date date) {
