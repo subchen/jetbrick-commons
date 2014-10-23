@@ -137,7 +137,7 @@ public final class DateUtils {
         try {
             ParsePosition pp = new ParsePosition(0);
             Date d = df.parse(date, pp);
-            if (d != null && pp.getIndex() != date.length()) {
+            if (d != null && pp.getIndex() == date.length()) {
                 return d;
             }
         } catch (Exception e) {
