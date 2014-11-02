@@ -20,6 +20,8 @@
 package jetbrick.config;
 
 import java.io.*;
+import java.net.URL;
+import java.net.URLDecoder;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -76,6 +78,21 @@ public final class ConfigLoader {
         }
     }
 
+    // 从 URL 载入
+    public ConfigLoader load(URL url) {
+        String location = url.getPath();
+        try {
+            location = URLDecoder.decode(location, "utf-8");
+        } catch (UnsupportedEncodingException e) {
+        }
+
+        try {
+            return loadInputStream(url.openStream(), location);
+        } catch (IOException e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
     // 从 classpath 下面载入
     private ConfigLoader loadClasspath(String classpath) {
         if (classpath.startsWith("/")) {
@@ -85,6 +102,7 @@ public final class ConfigLoader {
         return loadInputStream(is, classpath);
     }
 
+    // 从 File 载入
     public ConfigLoader load(File file) {
         try {
             return loadInputStream(new FileInputStream(file), file.getName());
