@@ -30,13 +30,19 @@ Dependency
 Downloads
 ---------------------------
 
-* [jetbrick-commons-2.0.jar][1]
-* [slf4j-api-1.7.7.jar][2]
-* [javax.servlet-api-3.0.1.jar][3] (optional)
+* Binarys
+    - [jetbrick-commons-2.0.jar][1]
+    - [jetbrick-commons-2.0-sources.jar][2]
+    - [jetbrick-commons-2.0-javadoc.jar][3]
+* Third-parts
+    - [slf4j-api-1.7.7.jar][4]
+    - [javax.servlet-api-3.0.1.jar][5] (optional)
 
 [1]: http://search.maven.org/remotecontent?filepath=com/github/subchen/jetbrick-commons/2.0/jetbrick-commons-2.0.jar
-[2]: http://search.maven.org/remotecontent?filepath=org/slf4j/slf4j-api/1.7.7/slf4j-api-1.7.7.jar
-[3]: http://search.maven.org/remotecontent?filepath=javax/servlet/javax.servlet-api/3.0.1/javax.servlet-api-3.0.1.jar
+[2]: http://search.maven.org/remotecontent?filepath=com/github/subchen/jetbrick-commons/2.0/jetbrick-commons-2.0-sources.jar
+[3]: http://search.maven.org/remotecontent?filepath=com/github/subchen/jetbrick-commons/2.0/jetbrick-commons-2.0-javadoc.jar
+[4]: http://search.maven.org/remotecontent?filepath=org/slf4j/slf4j-api/1.7.7/slf4j-api-1.7.7.jar
+[5]: http://search.maven.org/remotecontent?filepath=javax/servlet/javax.servlet-api/3.0.1/javax.servlet-api-3.0.1.jar
 
 
 License
