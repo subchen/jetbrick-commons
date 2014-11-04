@@ -46,7 +46,7 @@ public class KlassInfoFieldTest {
     @Test
     public void getFields() {
         KlassInfo klass = KlassInfo.create(ArrayList.class);
-        Assert.assertTrue(klass.getFields().size() > klass.getDeclaredFields().size());
+        Assert.assertTrue(klass.getFields().size() >= klass.getDeclaredFields().size());
     }
 
     @Test
@@ -60,6 +60,6 @@ public class KlassInfoFieldTest {
     public void getField() {
         KlassInfo klass = KlassInfo.create(ArrayList.class);
         Assert.assertNotNull(klass.getField("size"));
-        Assert.assertNotNull(klass.getField("modCount"));
+        Assert.assertNull(klass.getField("modCount"));
     }
 }
