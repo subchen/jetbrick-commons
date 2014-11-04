@@ -30,7 +30,7 @@ Dependency
 Downloads
 ---------------------------
 
-* Binarys
+* Binaries
     - [jetbrick-commons-2.0.jar][1]
     - [jetbrick-commons-2.0-sources.jar][2]
     - [jetbrick-commons-2.0-javadoc.jar][3]
