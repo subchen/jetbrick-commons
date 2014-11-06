@@ -43,21 +43,9 @@ public abstract class FileFinder {
         doLookupInFileSystem(dir, null, null, recursive);
     }
 
-    public void lookupClasspath() {
-        lookupClasspath((String[]) null, true);
-    }
-
-    public void lookupClasspath(List<String> packageNames, boolean recursive) {
-        String[] pkgs = null;
-        if (packageNames != null) {
-            pkgs = packageNames.toArray(ArrayUtils.EMPTY_STRING_ARRAY);
-        }
-        lookupClasspath(pkgs, recursive);
-    }
-
-    public void lookupClasspath(String[] packageNames, boolean recursive) {
+    public void lookupClasspath(Collection<String> packageNames, boolean recursive) {
         ClassLoader loader = ClassLoaderUtils.getDefault();
-        if (packageNames == null || packageNames.length == 0) {
+        if (packageNames == null || packageNames.size() == 0) {
             Collection<URL> urls = ClasspathUtils.getClasspathURLs(loader);
             doGetClasspathResources(urls, null, recursive);
         } else {

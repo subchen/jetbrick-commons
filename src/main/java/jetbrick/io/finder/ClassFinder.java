@@ -29,18 +29,7 @@ import org.slf4j.LoggerFactory;
 public final class ClassFinder {
     private static final Logger log = LoggerFactory.getLogger(ClassFinder.class);
 
-    public static Set<Class<?>> getClasses(Class<? extends Annotation>[] annotations, boolean skiperrors) {
-        return getClasses((String[]) null, true, annotations, skiperrors);
-    }
-
-    @SuppressWarnings("unchecked")
-    public static Set<Class<?>> getClasses(Collection<String> packageNames, boolean recursive, Collection<Class<? extends Annotation>> annotations, boolean skiperrors) {
-        String[] pkgs = packageNames.toArray(new String[packageNames.size()]);
-        Class<? extends Annotation>[] annos = annotations.toArray(new Class[annotations.size()]);
-        return getClasses(pkgs, recursive, annos, skiperrors);
-    }
-
-    public static Set<Class<?>> getClasses(String[] packageNames, boolean recursive, Class<? extends Annotation>[] annotations, final boolean skiperrors) {
+    public static Set<Class<?>> getClasses(Collection<String> packageNames, boolean recursive, Collection<Class<? extends Annotation>> annotations, final boolean skiperrors) {
         final AnnotationClassReader reader = new AnnotationClassReader();
         for (Class<? extends Annotation> annotation : annotations) {
             reader.addAnnotation(annotation);
