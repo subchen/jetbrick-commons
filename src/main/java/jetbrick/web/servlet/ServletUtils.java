@@ -34,10 +34,11 @@ public final class ServletUtils {
                 URL url = sc.getResource("/");
                 if (url != null && "file".equals(url.getProtocol())) {
                     dir = URLDecoder.decode(url.getFile(), "utf-8");
+                } else {
+                    throw new IllegalStateException("Can't get webroot dir, url = " + url);
                 }
-                throw new IllegalStateException("Can't get webroot dir, url = " + url);
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                throw new IllegalStateException(e);
             }
         }
         return new File(dir);
