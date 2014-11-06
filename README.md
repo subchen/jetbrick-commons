@@ -10,7 +10,7 @@ jetbrick-commons
 This is an utility classes project for jetbrick framework.
 
 
-Documents
+Documentation
 ---------------------------
 
 http://subchen.github.io/
