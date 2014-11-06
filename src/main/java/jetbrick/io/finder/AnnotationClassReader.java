@@ -23,8 +23,8 @@ import java.io.*;
 import java.lang.annotation.Annotation;
 import java.lang.annotation.ElementType;
 import java.lang.reflect.Modifier;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import jetbrick.io.IoUtils;
@@ -116,7 +116,7 @@ public final class AnnotationClassReader {
     private static final int ANNOTATION = '@';
     private static final int ARRAY = '[';
 
-    private Map<String, Class<? extends Annotation>> annotationMap = new HashMap<String, Class<? extends Annotation>>();
+    private Set<String> annotationSet = new HashSet<String>();
     private Object[] constantPool;
 
     public boolean isAnnotationed(File file) {
@@ -149,7 +149,7 @@ public final class AnnotationClassReader {
     }
 
     public void addAnnotation(Class<? extends Annotation> annoClass) {
-        annotationMap.put('L' + annoClass.getName().replace('.', '/') + ';', annoClass);
+        annotationSet.add('L' + annoClass.getName().replace('.', '/') + ';');
     }
 
     /**
@@ -301,7 +301,7 @@ public final class AnnotationClassReader {
 
         for (int i = 0; i < count; ++i) {
             String annotation = readAnnotation(di);
-            if (annotationMap.containsKey(annotation)) {
+            if (annotationSet.contains(annotation)) {
                 return true;
             }
         }
