@@ -51,10 +51,13 @@ public class ConfigTest {
     public void testObject() {
         Assert.assertThat(c.asObject("webapp.formatter"), CoreMatchers.instanceOf(java.text.SimpleDateFormat.class));
 
-        Thread thread = c.asObject("webapp.thread", Thread.class);
-        Assert.assertEquals("jetbrick_demo_webapp", thread.getName());
-        Assert.assertEquals(Boolean.TRUE, thread.isDaemon());
-        Assert.assertEquals(5, thread.getPriority());
+        Thread thread1 = c.asObject("webapp.thread.1", Thread.class);
+        Assert.assertEquals("jetbrick_demo_webapp", thread1.getName());
+        Assert.assertEquals(Boolean.TRUE, thread1.isDaemon());
+        Assert.assertEquals(5, thread1.getPriority());
+        
+        Thread thread2 = c.asObject("webapp.thread.2", Thread.class);
+        Assert.assertTrue(thread1 == thread2);
     }
 
 }

@@ -98,7 +98,7 @@ public abstract class AbstractConfig {
      * @param elementType       目标类(不允许为空)，
      *                          如果 elementType 为 Object.class，那么自动将 classname 转换为 instance.
      *                          如果 value 是 "$" 开头的引用，则返回引用对象 instance
-     * @param defaultValue      默认值
+     * @param defaultValues     默认值
      * @return                  属性值对象 List
      */
     protected <T> List<T> doGetList(String name, Class<T> elementType, String defaultValues) {
@@ -163,7 +163,7 @@ public abstract class AbstractConfig {
         throw new IllegalStateException("Cannot convert to " + targetClass + " from `" + value + "`");
     }
 
-    private <T> T aliasNameAsObject(String aliasName, Class<T> targetClass) {
+    protected <T> T aliasNameAsObject(String aliasName, Class<T> targetClass) {
         // 1. get class name and props
         String className;
         Set<String> propNames;

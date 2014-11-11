@@ -240,4 +240,30 @@ public final class Config extends AbstractConfig {
         return doGetList(name, elementType, defaultValue);
     }
 
+    // -----------------------------------------------------------------
+
+    private Map<String, Object> objectPool;
+
+    @SuppressWarnings("unchecked")
+    @Override
+    protected <T> T aliasNameAsObject(String aliasName, Class<T> targetClass) {
+        if (aliasName.startsWith("$")) {
+            if (objectPool == null) {
+                objectPool = new HashMap<String, Object>();
+            }
+
+            // get from pool
+            Object object = objectPool.get(aliasName);
+            if (object != null) {
+                return (T) object;
+            }
+
+            object = super.aliasNameAsObject(aliasName, targetClass);
+            objectPool.put(aliasName, object); // put into pool
+            return (T) object;
+        }
+
+        return super.aliasNameAsObject(aliasName, targetClass);
+    }
+
 }
