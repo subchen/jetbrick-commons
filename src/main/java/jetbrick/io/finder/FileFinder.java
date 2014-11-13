@@ -254,17 +254,11 @@ public abstract class FileFinder {
     public static final class ResourceEntry extends AbstractResource {
         private final Resource resource;
         private final String qualifiedJavaName;
-        private final String relativePathName;
 
         public ResourceEntry(Resource resource, String qualifiedJavaName, String relativePathName) {
             this.resource = resource;
             this.qualifiedJavaName = qualifiedJavaName;
             this.relativePathName = relativePathName;
-        }
-
-        @Override
-        public String getPath() {
-            return resource.getPath();
         }
 
         @Override
@@ -332,16 +326,12 @@ public abstract class FileFinder {
             return resource.lastModified();
         }
 
-        public String getRelativePathName() {
-            return relativePathName;
-        }
-
         public String getQualifiedJavaName() {
             return qualifiedJavaName;
         }
 
         public boolean isJavaClass() {
-            return resource.getPath().endsWith(".class");
+            return relativePathName.endsWith(".class");
         }
 
         @Override

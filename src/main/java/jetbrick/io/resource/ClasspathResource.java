@@ -26,6 +26,7 @@ import jetbrick.util.*;
 
 public final class ClasspathResource extends AbstractResource {
     private final URL url;
+    private final String path;
 
     public ClasspathResource(String path) {
         this(path, null);
@@ -40,13 +41,14 @@ public final class ClasspathResource extends AbstractResource {
         path = StringUtils.removeStart(path, "/");
 
         this.url = loader.getResource(path);
-        setPath(path);
+        this.path = path;
+        this.relativePathName = path;
     }
 
     @Override
     public InputStream openStream() throws ResourceNotFoundException {
         if (url == null) {
-            throw new ResourceNotFoundException(getPath());
+            throw new ResourceNotFoundException(path);
         }
         try {
             return url.openStream();
@@ -67,26 +69,40 @@ public final class ClasspathResource extends AbstractResource {
 
     @Override
     public boolean isDirectory() {
-        return ResourceUtils.create(url).isDirectory();
+        return path.endsWith("/");
     }
 
     @Override
     public boolean isFile() {
-        return ResourceUtils.create(url).isFile();
+        return !path.endsWith("/");
     }
 
     @Override
     public long length() {
-        return ResourceUtils.create(url).length();
+        if (url == null) {
+            return -1;
+        }
+        try {
+            return url.openConnection().getContentLengthLong();
+        } catch (IOException e) {
+            throw new IllegalStateException(e);
+        }
     }
 
     @Override
     public long lastModified() {
-        return ResourceUtils.create(url).lastModified();
+        if (url == null) {
+            return 0;
+        }
+        try {
+            return url.openConnection().getLastModified();
+        } catch (IOException e) {
+            throw new IllegalStateException(e);
+        }
     }
 
     @Override
     public String toString() {
-        return URL_PREFIX_CLASSPATH + getPath();
+        return URL_PREFIX_CLASSPATH + path;
     }
 }

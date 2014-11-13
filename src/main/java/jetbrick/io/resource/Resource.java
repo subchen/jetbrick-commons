@@ -39,6 +39,14 @@ public interface Resource {
     /**
      * 代表 Resource 名称，默认是 url/file (包含路径)
      */
+    public String getRelativePathName();
+
+    public void setRelativePathName(String relativePathName);
+
+    /**
+     * @deprecated replaced by {@link #getRelativePathName()}
+     */
+    @Deprecated
     public String getPath();
 
     /**

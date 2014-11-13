@@ -26,20 +26,26 @@ import javax.servlet.ServletContext;
 import jetbrick.util.Validate;
 
 public final class ServletResource extends AbstractResource {
-    private final ServletContext sc;
     private final String path;
+    private final File file;
     private final URL url;
 
     public ServletResource(ServletContext sc, String path) {
         Validate.notNull(sc);
         Validate.notNull(path);
 
-        this.sc = sc;
         this.path = path;
-        setPath(path);
+        this.relativePathName = path;
 
         try {
-            this.url = sc.getResource(path);
+            String realPath = sc.getRealPath(path);
+            if (realPath != null) {
+                this.file = new File(realPath);
+                this.url = null;
+            } else {
+                this.file = null;
+                this.url = sc.getResource(path);
+            }
         } catch (MalformedURLException e) {
             throw new IllegalStateException(e);
         }
@@ -47,11 +53,15 @@ public final class ServletResource extends AbstractResource {
 
     @Override
     public InputStream openStream() throws ResourceNotFoundException {
-        if (url == null) {
+        if (file == null && url == null) {
             throw new ResourceNotFoundException(path);
         }
         try {
-            return url.openStream();
+            if (file != null) {
+                return new FileInputStream(file);
+            } else {
+                return url.openStream();
+            }
         } catch (IOException e) {
             throw new IllegalStateException(e);
         }
@@ -59,9 +69,8 @@ public final class ServletResource extends AbstractResource {
 
     @Override
     public File getFile() throws ResourceNotFoundException {
-        String file = sc.getRealPath(path);
         if (file != null) {
-            return new File(file);
+            return file;
         } else if (url != null) {
             return ResourceUtils.create(url).getFile();
         }
@@ -70,32 +79,62 @@ public final class ServletResource extends AbstractResource {
 
     @Override
     public URL getURL() {
-        return url;
+        if (url != null) {
+            return url;
+        }
+        if (file != null) {
+        try {
+            return file.toURI().toURL();
+        } catch (MalformedURLException e) {
+            throw new IllegalStateException(e);
+        }
+        }
+        return null;
     }
 
     @Override
     public boolean exist() {
-        return url != null;
+        return file != null || url != null;
     }
 
     @Override
     public boolean isDirectory() {
-        return ResourceUtils.create(url).isDirectory();
+        return path.endsWith("/");
     }
 
     @Override
     public boolean isFile() {
-        return ResourceUtils.create(url).isFile();
+        return !path.endsWith("/");
     }
 
     @Override
     public long length() {
-        return ResourceUtils.create(url).length();
+        if (file != null) {
+            return file.length();
+        }
+        if (url != null) {
+            try {
+                return url.openConnection().getContentLengthLong();
+            } catch (IOException e) {
+                throw new IllegalStateException(e);
+            }
+        }
+        return -1;
     }
 
     @Override
     public long lastModified() {
-        return ResourceUtils.create(url).lastModified();
+        if (file != null) {
+            return file.lastModified();
+        }
+        if (url != null) {
+            try {
+                return url.openConnection().getLastModified();
+            } catch (IOException e) {
+                throw new IllegalStateException(e);
+            }
+        }
+        return 0;
     }
 
     @Override

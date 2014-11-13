@@ -19,92 +19,73 @@
  */
 package jetbrick.io.resource;
 
-import java.io.*;
-import java.net.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import jetbrick.util.Validate;
 
-public final class FileSystemResource extends AbstractResource {
-    private final File file;
+public class UrlResource extends AbstractResource {
+    protected final URL url;
 
-    public FileSystemResource(File file) {
-        this.file = file;
-        this.relativePathName = file.getPath();
-    }
-
-    public FileSystemResource(URL url) {
+    public UrlResource(URL url) {
         Validate.notNull(url);
 
-        String file = url.getPath();
-        try {
-            file = URLDecoder.decode(file, "utf-8");
-        } catch (UnsupportedEncodingException e) {
-            throw new IllegalStateException(e);
-        }
-
-        this.file = new File(file);
-        this.relativePathName = file;
+        this.url = url;
+        this.relativePathName = url.toString();
     }
 
     @Override
     public InputStream openStream() throws ResourceNotFoundException {
-        try {
-            return new FileInputStream(file);
-        } catch (FileNotFoundException e) {
-            throw new ResourceNotFoundException(e);
+        if (url == null) {
+            throw new ResourceNotFoundException(url.toString());
         }
-    }
-
-    @Override
-    public File getFile() {
-        return file;
-    }
-
-    @Override
-    public URI getURI() {
-        return file.toURI();
-    }
-
-    @Override
-    public URL getURL() {
         try {
-            return file.toURI().toURL();
-        } catch (MalformedURLException e) {
+            return url.openStream();
+        } catch (IOException e) {
             throw new IllegalStateException(e);
         }
     }
 
     @Override
-    public String getFileName() {
-        return file.getName();
+    public URL getURL() {
+        return url;
     }
 
     @Override
     public boolean exist() {
-        return file.exists();
+        return url != null;
     }
 
     @Override
     public boolean isDirectory() {
-        return file.isDirectory();
+        return relativePathName.endsWith("/");
     }
 
     @Override
     public boolean isFile() {
-        return file.isFile();
+        return !relativePathName.endsWith("/");
     }
 
     @Override
     public long length() {
-        return file.length();
+        try {
+            return url.openConnection().getContentLengthLong();
+        } catch (IOException e) {
+            throw new IllegalStateException(e);
+        }
     }
 
     @Override
     public long lastModified() {
-        return file.lastModified();
+        try {
+            return url.openConnection().getLastModified();
+        } catch (IOException e) {
+            throw new IllegalStateException(e);
+        }
     }
 
     @Override
     public String toString() {
-        return file.toString();
+        return url.toString();
     }
 }

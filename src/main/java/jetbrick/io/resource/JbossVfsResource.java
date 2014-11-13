@@ -33,11 +33,12 @@ public final class JbossVfsResource extends AbstractResource {
 
     public JbossVfsResource(URL url) {
         this.resource = vfsInvokeMethod(VFS_METHOD_GET_ROOT_URL, null, new Object[] { url });
+        this.relativePathName = getURL().toString();
     }
 
     private JbossVfsResource(Object resource) {
         this.resource = resource;
-        setPath(getURL().toString());
+        this.relativePathName = getURL().toString();
     }
 
     @Override

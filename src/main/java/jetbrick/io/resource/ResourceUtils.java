@@ -62,8 +62,9 @@ public final class ResourceUtils {
             return new ZipEntryResource(url);
         } else if (Resource.URL_PROTOCOL_VFS.equals(protocol)) {
             return new JbossVfsResource(url);
+        } else {
+            return new UrlResource(url);
         }
-        throw new IllegalStateException("Unknown url protocol: " + url);
     }
 
 }

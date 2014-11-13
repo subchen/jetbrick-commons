@@ -33,7 +33,7 @@ public final class InputStreamResource extends AbstractResource {
     public InputStreamResource(InputStream is, String path) {
         Validate.notNull(is);
         this.is = is;
-        setPath(path);
+        this.relativePathName = path;
     }
 
     @Override

@@ -27,15 +27,33 @@ import jetbrick.io.IoUtils;
 import jetbrick.util.PathUtils;
 
 public abstract class AbstractResource implements Resource {
-    private String path;
+    protected String relativePathName;
 
-    public void setPath(String path) {
-        this.path = path;
+    @Override
+    public void setRelativePathName(String relativePathName) {
+        this.relativePathName = relativePathName;
     }
 
     @Override
+    public String getRelativePathName() {
+        return relativePathName;
+    }
+
+    /**
+     * @deprecated replaced by {@link #setRelativePathName(String)}
+     */
+    @Deprecated
+    public void setPath(String path) {
+        this.relativePathName = path;
+    }
+
+    /**
+     * @deprecated replaced by {@link #getRelativePathName()}
+     */
+    @Deprecated
+    @Override
     public String getPath() {
-        return path;
+        return relativePathName;
     }
 
     @Override
@@ -74,11 +92,11 @@ public abstract class AbstractResource implements Resource {
 
     @Override
     public String getFileName() {
-        int slash = path.lastIndexOf('/');
+        int slash = relativePathName.lastIndexOf('/');
         if (slash >= 0) {
-            return path.substring(slash + 1);
+            return relativePathName.substring(slash + 1);
         }
-        return path;
+        return relativePathName;
     }
 
     @Override

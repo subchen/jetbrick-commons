@@ -44,7 +44,7 @@ public final class ZipEntryResource extends AbstractResource {
                     this.zip = connection.getJarFile();
                     this.entry = connection.getJarEntry();
                     this.entryName = entry.getName();
-                    setPath(entryName);
+                    this.relativePathName = entryName;
                 }
             } catch (IOException e) {
                 throw new IllegalStateException(e);
@@ -56,7 +56,7 @@ public final class ZipEntryResource extends AbstractResource {
                     this.zip = WeblogicZipURLConnection.getZipFile(conn);
                     this.entry = WeblogicZipURLConnection.getZipEntry(conn);
                     this.entryName = entry.getName();
-                    setPath(entryName);
+                    this.relativePathName = entryName;
                 }
             } catch (IOException e) {
                 throw new IllegalStateException(e);
@@ -73,7 +73,7 @@ public final class ZipEntryResource extends AbstractResource {
         this.zip = zip;
         this.entry = zip.getEntry(entryName);
         this.entryName = entryName;
-        setPath(entryName);
+        this.relativePathName = entryName;
     }
 
     public ZipEntryResource(ZipFile zip, ZipEntry entry) {
@@ -83,7 +83,7 @@ public final class ZipEntryResource extends AbstractResource {
         this.zip = zip;
         this.entry = entry;
         this.entryName = entry.getName();
-        setPath(entryName);
+        this.relativePathName = entryName;
     }
 
     public ZipFile getZipFile() {
