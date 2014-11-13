@@ -23,6 +23,7 @@ import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import javax.servlet.ServletContext;
+import jetbrick.util.PathUtils;
 import jetbrick.util.Validate;
 
 public final class ServletResource extends AbstractResource {
@@ -72,7 +73,7 @@ public final class ServletResource extends AbstractResource {
         if (file != null) {
             return file;
         } else if (url != null) {
-            return ResourceUtils.create(url).getFile();
+            return PathUtils.urlAsFile(url);
         }
         throw new ResourceNotFoundException(path);
     }
