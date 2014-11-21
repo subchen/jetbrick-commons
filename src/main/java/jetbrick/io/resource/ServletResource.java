@@ -95,7 +95,7 @@ public final class ServletResource extends AbstractResource {
 
     @Override
     public boolean exist() {
-        return file != null || url != null;
+        return (file!=null && file.exists()) || url != null;
     }
 
     @Override
