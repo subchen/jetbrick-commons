@@ -33,4 +33,17 @@ public final class ExceptionUtils {
         return new RuntimeException(e);
     }
 
+    /**
+     * Throw checked exceptions like runtime exceptions.
+     *
+     * see: http://blog.jooq.org/2012/09/14/throw-checked-exceptions-like-runtime-exceptions-in-java/
+     */
+    public static void rethrow(Throwable e) {
+        ExceptionUtils.<RuntimeException> rethrow0(e);
+    }
+
+    @SuppressWarnings("unchecked")
+    private static <E extends Throwable> void rethrow0(Throwable e) throws E {
+        throw (E) e;
+    }
 }
