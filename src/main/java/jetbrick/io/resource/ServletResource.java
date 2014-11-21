@@ -84,18 +84,18 @@ public final class ServletResource extends AbstractResource {
             return url;
         }
         if (file != null) {
-        try {
-            return file.toURI().toURL();
-        } catch (MalformedURLException e) {
-            throw new IllegalStateException(e);
-        }
+            try {
+                return file.toURI().toURL();
+            } catch (MalformedURLException e) {
+                throw new IllegalStateException(e);
+            }
         }
         return null;
     }
 
     @Override
     public boolean exist() {
-        return (file!=null && file.exists()) || url != null;
+        return (file != null && file.exists()) || url != null;
     }
 
     @Override

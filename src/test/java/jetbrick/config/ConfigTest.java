@@ -55,7 +55,7 @@ public class ConfigTest {
         Assert.assertEquals("jetbrick_demo_webapp", thread1.getName());
         Assert.assertEquals(Boolean.TRUE, thread1.isDaemon());
         Assert.assertEquals(5, thread1.getPriority());
-        
+
         Thread thread2 = c.asObject("webapp.thread.2", Thread.class);
         Assert.assertTrue(thread1 == thread2);
     }
