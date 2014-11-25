@@ -22,6 +22,7 @@ package jetbrick.web.servlet;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
@@ -45,7 +46,7 @@ public final class BufferedHttpServletResponse extends HttpServletResponseWrappe
         if (writer != null) {
             return writer;
         }
-        if (os != null) {
+        if (stream != null) {
             throw new IllegalStateException("the getOutputStream method has already been called for this response object");
         }
 
@@ -56,29 +57,33 @@ public final class BufferedHttpServletResponse extends HttpServletResponseWrappe
 
     @Override
     public ServletOutputStream getOutputStream() throws IOException {
-        if (os != null) {
-            return os;
+        if (stream != null) {
+            return stream;
         }
         if (writer != null) {
             throw new IllegalStateException("the getWriter method has already been called for this response object");
         }
 
         originStream = new UnsafeByteArrayOutputStream();
-        os = new ServletOutputStream() {
+        stream = new ServletOutputStream() {
             @Override
             public void write(int b) throws IOException {
                 originStream.write(b);
             }
         };
-        return os;
+        return stream;
     }
 
     public byte[] toByteArray() {
         if (originStream != null) {
             return originStream.toByteArray();
         } else if (originWriter != null) {
-            return originWriter.toString().getBytes(getCharacterEncoding());
-        } {
+            try {
+                return originWriter.toString().getBytes(getCharacterEncoding());
+            } catch(UnsupportedEncodingException e) {
+                throw new IllegalStateException(e);
+            }
+        } else {
             return ArrayUtils.EMPTY_BYTE_ARRAY;
         }
     }
@@ -87,7 +92,11 @@ public final class BufferedHttpServletResponse extends HttpServletResponseWrappe
         if (originWriter != null) {
             return originWriter.toCharArray();
         } else if (originStream != null) {
-            return originStream.toString(getCharacterEncoding()).toCharArray();
+            try {
+                return originStream.toString(getCharacterEncoding()).toCharArray();
+            } catch(UnsupportedEncodingException e) {
+                throw new IllegalStateException(e);
+            }
         } else {
             return ArrayUtils.EMPTY_CHAR_ARRAY;
         }
@@ -98,7 +107,11 @@ public final class BufferedHttpServletResponse extends HttpServletResponseWrappe
         if (originWriter != null) {
             return originWriter.toString();
         } else if (originStream != null) {
-            return originStream.toString(getCharacterEncoding());
+            try {
+                return originStream.toString(getCharacterEncoding());
+            } catch(UnsupportedEncodingException e) {
+                throw new IllegalStateException(e);
+            }
         } else {
             return "";
         }
