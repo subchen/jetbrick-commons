@@ -164,16 +164,16 @@ public final class PathUtils {
     /**
      * 计算相对路径.
      */
-    public static String getRelativePath(final String path, final String relativePath) {
-        if (relativePath.startsWith("/")) {
-            return normalize(relativePath);
+    public static String getRelativePath(final String baseFile, final String file) {
+        if (file.startsWith("/")) {
+            return normalize(file);
         }
-        int separatorIndex = path.lastIndexOf('/');
+        int separatorIndex = baseFile.lastIndexOf('/');
         if (separatorIndex != -1) {
-            String newPath = path.substring(0, separatorIndex + 1);
-            return normalize(newPath + relativePath);
+            String newPath = baseFile.substring(0, separatorIndex + 1);
+            return normalize(newPath + file);
         } else {
-            return normalize(relativePath);
+            return normalize(file);
         }
     }
 
