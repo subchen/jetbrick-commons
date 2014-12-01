@@ -22,6 +22,7 @@ package jetbrick.web.servlet;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.*;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import jetbrick.util.*;
 import jetbrick.util.codec.Base64Utils;
@@ -31,16 +32,23 @@ public final class RequestUtils {
      * 获取相对 ContextPath 的 requestURI
      */
     public static String getPathInfo(HttpServletRequest request) {
-        String path = request.getPathInfo();
-        if (path == null) {
-            path = request.getServletPath();
+        String uri = (String) request.getAttribute(RequestDispatcher.INCLUDE_SERVLET_PATH);
+        if (uri != null) {
+            String pathInfo = (String) request.getAttribute(RequestDispatcher.INCLUDE_PATH_INFO);
+            if (pathInfo != null) {
+                uri += pathInfo;
+            }
         } else {
-            path = request.getServletPath() + path;
+            uri = request.getServletPath();
+            String pathInfo = request.getPathInfo();
+            if (pathInfo != null) {
+                uri += pathInfo;
+            }
         }
-        if (path == null || path.length() == 0) {
-            path = "/";
+        if (uri == null || uri.length() == 0) {
+            uri = "/";
         }
-        return path;
+        return uri;
     }
 
     public static String getParametersAsJSON(HttpServletRequest request) {
