@@ -45,6 +45,7 @@ public final class ZipEntryResource extends AbstractResource {
                     this.entry = connection.getJarEntry();
                     this.entryName = entry.getName();
                     this.relativePathName = entryName;
+                    return;
                 }
             } catch (IOException e) {
                 throw new IllegalStateException(e);
@@ -57,6 +58,7 @@ public final class ZipEntryResource extends AbstractResource {
                     this.entry = WeblogicZipURLConnection.getZipEntry(conn);
                     this.entryName = entry.getName();
                     this.relativePathName = entryName;
+                    return;
                 }
             } catch (IOException e) {
                 throw new IllegalStateException(e);
