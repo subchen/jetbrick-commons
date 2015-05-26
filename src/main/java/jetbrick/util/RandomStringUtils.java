@@ -23,6 +23,8 @@ import java.util.Random;
 
 public final class RandomStringUtils {
     private static final Random RANDOM = new Random();
+    private static final char[] HEX_CHARS = "0123456789abcdef".toCharArray();
+    private static final char[] BASE62_CHARS = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
 
     public static String random(int count) {
         return random(count, false, false);
@@ -42,6 +44,14 @@ public final class RandomStringUtils {
 
     public static String randomNumeric(int count) {
         return random(count, false, true);
+    }
+
+    public static String randomHex(int count) {
+        return random(count, 0, HEX_CHARS.length, false, false, HEX_CHARS, RANDOM);
+    }
+
+    public static String randomBase62(int count) {
+        return random(count, 0, BASE62_CHARS.length, false, false, BASE62_CHARS, RANDOM);
     }
 
     public static String random(int count, boolean letters, boolean numbers) {
