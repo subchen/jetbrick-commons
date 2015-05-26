@@ -80,7 +80,7 @@ public final class BufferedHttpServletResponse extends HttpServletResponseWrappe
         } else if (originWriter != null) {
             try {
                 return originWriter.toString().getBytes(getCharacterEncoding());
-            } catch(UnsupportedEncodingException e) {
+            } catch (UnsupportedEncodingException e) {
                 throw new IllegalStateException(e);
             }
         } else {
@@ -94,7 +94,7 @@ public final class BufferedHttpServletResponse extends HttpServletResponseWrappe
         } else if (originStream != null) {
             try {
                 return originStream.toString(getCharacterEncoding()).toCharArray();
-            } catch(UnsupportedEncodingException e) {
+            } catch (UnsupportedEncodingException e) {
                 throw new IllegalStateException(e);
             }
         } else {
@@ -109,7 +109,7 @@ public final class BufferedHttpServletResponse extends HttpServletResponseWrappe
         } else if (originStream != null) {
             try {
                 return originStream.toString(getCharacterEncoding());
-            } catch(UnsupportedEncodingException e) {
+            } catch (UnsupportedEncodingException e) {
                 throw new IllegalStateException(e);
             }
         } else {
