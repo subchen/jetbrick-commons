@@ -18,6 +18,31 @@
     <description>jetbrick utility classes</description>
     <url>https://github.com/subchen/jetbrick-commons</url>
 
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>com.mycila.maven-license-plugin</groupId>
+                    <artifactId>maven-license-plugin</artifactId>
+                    <configuration>
+                        <excludes>
+                            <exclude>src/main/java/jetbrick/asm/**/*.java</exclude>
+                        </excludes>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>com.googlecode.maven-java-formatter-plugin</groupId>
+                    <artifactId>maven-java-formatter-plugin</artifactId>
+                    <configuration>
+                        <excludes>
+                            <exclude>jetbrick/asm/**/*.java</exclude>
+                        </excludes>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+    
     <dependencies>
         <dependency>
             <groupId>org.slf4j</groupId>
