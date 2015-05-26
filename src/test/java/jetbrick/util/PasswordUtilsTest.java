@@ -25,17 +25,17 @@ public class PasswordUtilsTest {
 
     @Test
     public void hash() {
-        Assert.assertEquals(32, PasswordUtils.hash("").length);
-        Assert.assertEquals(32, PasswordUtils.hash("admin").length);
-        Assert.assertEquals(32, PasswordUtils.hash("123").length);
-        Assert.assertEquals(32, PasswordUtils.hash("中文").length);
+        Assert.assertEquals(32, PasswordUtils.hash("").length());
+        Assert.assertEquals(32, PasswordUtils.hash("admin").length());
+        Assert.assertEquals(32, PasswordUtils.hash("123").length());
+        Assert.assertEquals(32, PasswordUtils.hash("中文").length());
     }
 
     @Test
     public void check() {
-        Assert.assertTrue(PasswordUtils.check("", "03c879c6e0b9739d0754f881bb7e5f58"));
-        Assert.assertTrue(PasswordUtils.check("admin", "7e798faac2a12f83ecbfc3e360cc738f"));
-        Assert.assertTrue(PasswordUtils.check("123", "3ed2154055328c8c6a577fc6c2478012"));
-        Assert.assertTrue(PasswordUtils.check("中文", "3c9116e0a8ca88212c9d0b97dbcc6d1b"));
+        Assert.assertEquals(true, PasswordUtils.check("", "03c879c6e0b9739d0754f881bb7e5f58"));
+        Assert.assertEquals(true, PasswordUtils.check("admin", "7e798faac2a12f83ecbfc3e360cc738f"));
+        Assert.assertEquals(true, PasswordUtils.check("123", "3ed2154055328c8c6a577fc6c2478012"));
+        Assert.assertEquals(true, PasswordUtils.check("中文", "3c9116e026d1203fea6ddfd7f56626be"));
     }
 }

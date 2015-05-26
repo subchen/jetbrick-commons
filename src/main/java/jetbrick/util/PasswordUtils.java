@@ -29,7 +29,7 @@ public final class PasswordUtils {
      * Hash a password string.
      *
      * @param passwd - the password to hash
-     * @returns hashed string
+     * @return hashed string
      */
     public static String hash(String passwd) {
         String salt = RandomStringUtils.randomHex(SALT_LENGTH);
@@ -40,13 +40,13 @@ public final class PasswordUtils {
     /**
      * Validate the password is currently.
      *
-     * @param {string} passwd - the password to check
-     * @param {string} hashed - the result of `passwd.hash()`
-     * @returns {boolean}
+     * @param passwd - the password to check
+     * @param hashed - the result of `passwd.hash()`
+     * @return
      */
     public static boolean check(String passwd, String hashed) {
         String salt = hashed.substring(0, SALT_LENGTH);
         String rehashed = MD5Utils.md5Hex(salt + passwd);
-        return hashed.substring(SALT_LENGTH) == rehashed.substring(SALT_LENGTH);
+        return hashed.substring(SALT_LENGTH).equals(rehashed.substring(SALT_LENGTH));
     }
 }
