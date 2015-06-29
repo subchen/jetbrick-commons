@@ -19,10 +19,9 @@
  */
 package jetbrick.util;
 
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public final class RandomStringUtils {
-    private static final Random RANDOM = new Random();
     private static final char[] HEX_CHARS = "0123456789abcdef".toCharArray();
     private static final char[] BASE62_CHARS = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
 
@@ -47,11 +46,11 @@ public final class RandomStringUtils {
     }
 
     public static String randomHex(int count) {
-        return random(count, 0, HEX_CHARS.length, false, false, HEX_CHARS, RANDOM);
+        return random(count, 0, HEX_CHARS.length, false, false, HEX_CHARS);
     }
 
     public static String randomBase62(int count) {
-        return random(count, 0, BASE62_CHARS.length, false, false, BASE62_CHARS, RANDOM);
+        return random(count, 0, BASE62_CHARS.length, false, false, BASE62_CHARS);
     }
 
     public static String random(int count, boolean letters, boolean numbers) {
@@ -59,14 +58,10 @@ public final class RandomStringUtils {
     }
 
     public static String random(int count, int start, int end, boolean letters, boolean numbers) {
-        return random(count, start, end, letters, numbers, null, RANDOM);
+        return random(count, start, end, letters, numbers, null);
     }
 
     public static String random(int count, int start, int end, boolean letters, boolean numbers, char[] chars) {
-        return random(count, start, end, letters, numbers, chars, RANDOM);
-    }
-
-    public static String random(int count, int start, int end, boolean letters, boolean numbers, char[] chars, Random random) {
         if (count == 0) {
             return "";
         } else if (count < 0) {
@@ -96,6 +91,7 @@ public final class RandomStringUtils {
         final char[] buffer = new char[count];
         final int gap = end - start;
 
+        ThreadLocalRandom random = ThreadLocalRandom.current();
         while (count-- != 0) {
             char ch;
             if (chars == null) {
@@ -137,15 +133,15 @@ public final class RandomStringUtils {
 
     public static String random(int count, String chars) {
         if (chars == null) {
-            return random(count, 0, 0, false, false, null, RANDOM);
+            return random(count, 0, 0, false, false, null);
         }
         return random(count, chars.toCharArray());
     }
 
     public static String random(int count, char[] chars) {
         if (chars == null) {
-            return random(count, 0, 0, false, false, null, RANDOM);
+            return random(count, 0, 0, false, false, null);
         }
-        return random(count, 0, chars.length, false, false, chars, RANDOM);
+        return random(count, 0, chars.length, false, false, chars);
     }
 }
