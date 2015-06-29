@@ -68,24 +68,24 @@ final class AsmBuilder {
 
         // constructors
         size = constructors.size();
-        mv.visitIntInsn(BIPUSH, size);
+        pushIntValue(mv, size);
         mv.visitIntInsn(NEWARRAY, T_INT);
         for (int i = 0; i < size; i++) {
             mv.visitInsn(DUP);
-            mv.visitIntInsn(BIPUSH, i);
-            mv.visitIntInsn(BIPUSH, constructors.get(i).getParameterCount());
+            pushIntValue(mv, i);
+            pushIntValue(mv, constructors.get(i).getParameterCount());
             mv.visitInsn(IASTORE);
         }
         mv.visitFieldInsn(PUTSTATIC, generatedKlassNameInternal, FIELD_EXPECTED_CONSTRUCTOR_ARGUMENT_LENGTHS, "[I");
 
         //  methods
         size = methods.size();
-        mv.visitIntInsn(BIPUSH, size);
+        pushIntValue(mv, size);
         mv.visitIntInsn(NEWARRAY, T_INT);
         for (int i = 0; i < size; i++) {
             mv.visitInsn(DUP);
-            mv.visitIntInsn(BIPUSH, i);
-            mv.visitIntInsn(BIPUSH, methods.get(i).getParameterCount());
+            pushIntValue(mv, i);
+            pushIntValue(mv, methods.get(i).getParameterCount());
             mv.visitInsn(IASTORE);
         }
         mv.visitFieldInsn(PUTSTATIC, generatedKlassNameInternal, FIELD_EXPECTED_METHOD_ARGUMENT_LENGTHS, "[I");
@@ -197,7 +197,7 @@ final class AsmBuilder {
                 Class<?>[] paramTypes = constructors.get(i).getParameterTypes();
                 for (int paramIndex = 0; paramIndex < paramTypes.length; paramIndex++) {
                     mv.visitVarInsn(ALOAD, 2);
-                    mv.visitIntInsn(BIPUSH, paramIndex);
+                    pushIntValue(mv, paramIndex);
                     mv.visitInsn(AALOAD);
 
                     Type type = Type.getType(paramTypes[paramIndex]);
@@ -259,7 +259,7 @@ final class AsmBuilder {
                 Class<?> returnType = method.getReturnType();
                 for (int paramIndex = 0; paramIndex < paramTypes.length; paramIndex++) {
                     mv.visitVarInsn(ALOAD, 3);
-                    mv.visitIntInsn(BIPUSH, paramIndex);
+                    pushIntValue(mv, paramIndex);
                     mv.visitInsn(AALOAD);
                     Type type = Type.getType(paramTypes[paramIndex]);
                     insertUnbox(mv, type);
@@ -461,5 +461,35 @@ final class AsmBuilder {
     public byte[] asByteCode() {
         cw.visitEnd();
         return cw.toByteArray();
+    }
+
+    private void pushIntValue(MethodVisitor mv, int value) {
+        switch (value) {
+        case 0:
+            mv.visitInsn(ICONST_0);
+            return;
+        case 1:
+            mv.visitInsn(ICONST_1);
+            return;
+        case 2:
+            mv.visitInsn(ICONST_2);
+            return;
+        case 3:
+            mv.visitInsn(ICONST_3);
+            return;
+        case 4:
+            mv.visitInsn(ICONST_4);
+            return;
+        case 5:
+            mv.visitInsn(ICONST_5);
+            return;
+        }
+        if (value >= Byte.MIN_VALUE && value <= Byte.MAX_VALUE) {
+            mv.visitIntInsn(BIPUSH, value);
+        } else if (value >= Short.MIN_VALUE && value <= Short.MAX_VALUE) {
+            mv.visitIntInsn(SIPUSH, value);
+        } else {
+            mv.visitLdcInsn(Integer.valueOf(value));
+        }
     }
 }
