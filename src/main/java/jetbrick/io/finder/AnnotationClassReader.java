@@ -76,7 +76,7 @@ import org.slf4j.LoggerFactory;
  * (Gentle Introduction);
  * <li><a href="http://download.oracle.com/otndocs/jcp/jcfsu-1.0-fr-eval-oth-JSpec/">Class
  * File Format Specification</a> (Java 6 version) and the
- * <a href="http://java.sun.com/docs/books/jvms/second_edition/html/ClassFile.doc.html">Java
+ * <a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-4.html">Java
  * VM Specification (Chapter 4)</a> for the real work.
  * </ul>
  * <p>
@@ -98,6 +98,9 @@ public final class AnnotationClassReader {
     private static final int CP_REF_METHOD = 10;
     private static final int CP_REF_INTERFACE = 11;
     private static final int CP_NAME_AND_TYPE = 12;
+    private static final int CP_METHOD_HANDLE = 15;
+    private static final int CP_METHOD_TYPE = 16;
+    private static final int CP_INVOKE_DYNAMIC = 18;
 
     // AnnotationElementValue
     private static final int BYTE = 'B';
@@ -121,7 +124,7 @@ public final class AnnotationClassReader {
 
     public boolean isAnnotationed(File file) {
         try {
-            return isAnnotationed(new FileInputStream(file));
+            return isAnnotationed(new FileInputStream(file), file.getName());
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -129,7 +132,7 @@ public final class AnnotationClassReader {
 
     public boolean isAnnotationed(ZipFile file, ZipEntry entry) {
         try {
-            return isAnnotationed(file.getInputStream(entry));
+            return isAnnotationed(file.getInputStream(entry), file.getName() + '!' + entry.getName());
         } catch (IOException e) {
             log.warn("IOException in load class file in jar file.", e);
             return false;
@@ -137,11 +140,15 @@ public final class AnnotationClassReader {
     }
 
     public boolean isAnnotationed(InputStream classInputStream) {
+        return isAnnotationed(classInputStream, "");
+    }
+
+    public boolean isAnnotationed(InputStream classInputStream, String details) {
         try {
             ClassFileDataInput input = new ClassFileDataInput(classInputStream);
             return readClassFile(input);
-        } catch (Exception e) {
-            log.warn("UnknownException in parsing class file.", e);
+        } catch (Throwable e) {
+            log.warn("UnknownException in parsing class file: " + details, e);
             return false;
         } finally {
             IoUtils.closeQuietly(classInputStream);
@@ -204,30 +211,35 @@ public final class AnnotationClassReader {
         final int tag = di.readUnsignedByte();
         switch (tag) {
         case CP_UTF8:
-            constantPool[index] = di.readUTF();
+            constantPool[index] = di.readUTF(); // u2 + u1[length]
             return false;
         case CP_INTEGER:
-            di.skipBytes(4); // readInt()
-            return false;
         case CP_FLOAT:
-            di.skipBytes(4); // readFloat()
+            di.skipBytes(4); // u4
             return false;
         case CP_LONG:
-            di.skipBytes(8); // readLong()
-            return true;
         case CP_DOUBLE:
-            di.skipBytes(8); // readDouble()
+            di.skipBytes(8); // u4 + u4
             return true;
         case CP_CLASS:
         case CP_STRING:
             // reference to CP_UTF8 entry. The referenced index can have a higher number!
-            constantPool[index] = di.readUnsignedShort();
+            constantPool[index] = di.readUnsignedShort(); // u2
             return false;
         case CP_REF_FIELD:
         case CP_REF_METHOD:
         case CP_REF_INTERFACE:
         case CP_NAME_AND_TYPE:
-            di.skipBytes(4); // readUnsignedShort() * 2
+            di.skipBytes(4); // u2 + u2
+            return false;
+        case CP_METHOD_HANDLE:
+            di.skipBytes(3); // u1 + u2
+            return false;
+        case CP_METHOD_TYPE:
+            di.skipBytes(2); // u2
+            return false;
+        case CP_INVOKE_DYNAMIC:
+            di.skipBytes(4); // u2 + u2
             return false;
         default:
             throw new ClassFormatError("Unknown tag value for constant pool entry: " + tag);
