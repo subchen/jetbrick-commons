@@ -83,7 +83,11 @@ public final class ClasspathResource extends AbstractResource {
             return -1;
         }
         try {
-            return url.openConnection().getContentLengthLong();
+            if (JdkUtils.IS_AT_LEAST_JAVA_7) {
+                return url.openConnection().getContentLengthLong();
+            } else {
+                return url.openConnection().getContentLength();
+            }
         } catch (IOException e) {
             throw new IllegalStateException(e);
         }
