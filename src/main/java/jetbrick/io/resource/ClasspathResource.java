@@ -19,6 +19,7 @@
  */
 package jetbrick.io.resource;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -35,14 +36,18 @@ public final class ClasspathResource extends AbstractResource {
     public ClasspathResource(String path, ClassLoader loader) {
         Validate.notNull(path);
 
+        path = StringUtils.removeStart(path, "/");
+        this.path = path;
+        this.relativePathName = path;
+
         if (loader == null) {
             loader = ClassLoaderUtils.getDefault();
         }
-        path = StringUtils.removeStart(path, "/");
-
-        this.url = loader.getResource(path);
-        this.path = path;
-        this.relativePathName = path;
+        if (loader == null) {
+            this.url = ClassLoader.getSystemResource(path);
+        } else {
+            this.url = loader.getResource(path);
+        }
     }
 
     @Override
@@ -98,6 +103,22 @@ public final class ClasspathResource extends AbstractResource {
         if (url == null) {
             return 0;
         }
+
+        String protocol = url.getProtocol();
+        if (Resource.URL_PROTOCOL_FILE.equals(protocol)) {
+            return new File(url.getFile()).lastModified();
+        } else if (Resource.URL_PROTOCOL_JAR.equals(protocol) || Resource.URL_PROTOCOL_ZIP.equals(protocol)) {
+            String file = url.getFile();
+            if (file.startsWith(Resource.URL_PREFIX_FILE)) {
+                file = file.substring(Resource.URL_PREFIX_FILE.length());
+            }
+            int pos = file.indexOf(Resource.URL_SEPARATOR_JAR);
+            if (pos != -1) {
+                file = file.substring(0, pos);
+            }
+            return new File(file).lastModified();
+        }
+
         try {
             return url.openConnection().getLastModified();
         } catch (IOException e) {
