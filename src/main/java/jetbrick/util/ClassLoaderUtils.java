@@ -40,7 +40,12 @@ public class ClassLoaderUtils {
         if (loader == null) {
             loader = ClassLoaderUtils.class.getClassLoader();
             if (loader == null) {
-                loader = ClassLoader.getSystemClassLoader();
+                try {
+                    // getClassLoader() returning null indicates the bootstrap ClassLoader
+                    loader = ClassLoader.getSystemClassLoader();
+                } catch (Exception e) {
+                    // Cannot access system ClassLoader - oh well, maybe the caller can live with null...
+                }
             }
         }
         return loader;
