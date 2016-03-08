@@ -1,3 +1,22 @@
+/**
+ * Copyright 2013-2015 Guoqiang Chen, Shanghai, China. All rights reserved.
+ *
+ *   Author: Guoqiang Chen
+ *    Email: subchen@gmail.com
+ *   WebURL: https://github.com/subchen
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package jetbrick.event;
 
 import java.util.ArrayList;
@@ -37,7 +56,7 @@ public final class AppEventPublisher {
     @SuppressWarnings("unchecked")
     public static void publishEvent(final AppEvent event) {
         // sync
-        for (AppEventListenerAgent agent: listeners) {
+        for (AppEventListenerAgent agent : listeners) {
             if (!agent.async && agent.type.isInstance(event)) {
                 agent.listener.onAppEvent(event);
             }
@@ -45,7 +64,7 @@ public final class AppEventPublisher {
 
         // async
         ExecutorService executorService = getExecutorService();
-        for (final AppEventListenerAgent agent: listeners) {
+        for (final AppEventListenerAgent agent : listeners) {
             if (agent.async && agent.type.isInstance(event)) {
                 executorService.submit(new Runnable() {
                     @Override
@@ -59,7 +78,7 @@ public final class AppEventPublisher {
 
     private static ExecutorService getExecutorService() {
         if (executorService == null) {
-            synchronized(AppEventPublisher.class) {
+            synchronized (AppEventPublisher.class) {
                 if (executorService == null) {
                     executorService = Executors.newFixedThreadPool(10);
                 }
