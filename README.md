@@ -1,6 +1,7 @@
 [![QQ Group](http://img.shields.io/badge/QQ-310491655-blue.svg)](http://shang.qq.com/wpa/qunwpa?idkey=c81a8f922d2b00422761558c4c547a4c4af778edcb0a70c99aadf9e33d80cb11)
 [![Maven](https://img.shields.io/maven-central/v/com.github.subchen/jetbrick-commons.svg?style=flat&label=jetbrick-commons)](http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22jetbrick-commons%22)
 [![Build Status](https://travis-ci.org/subchen/jetbrick-commons.svg?branch=master)](https://travis-ci.org/subchen/jetbrick-commons)
+[![Coverity Scan Build Status](https://scan.coverity.com/projects/subchen-jetbrick-commons/badge.svg?flat=1)](https://scan.coverity.com/projects/subchen-jetbrick-commons)
 [![JDK](http://img.shields.io/badge/JDK-v6.0+-yellow.svg)](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
 [![License](http://img.shields.io/badge/License-Apache_2-red.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 
