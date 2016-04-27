@@ -37,7 +37,7 @@ public class UrlResource extends AbstractResource {
     @Override
     public InputStream openStream() throws ResourceNotFoundException {
         if (url == null) {
-            throw new ResourceNotFoundException(url.toString());
+            throw new ResourceNotFoundException();
         }
         try {
             return url.openStream();
