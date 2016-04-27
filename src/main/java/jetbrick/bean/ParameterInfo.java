@@ -54,7 +54,7 @@ public final class ParameterInfo {
             synchronized (declaringklass) {
                 receiveParameterNames(declaringklass);
                 if (name == null) {
-                    name = "arg" + String.valueOf(offset);
+                    name = "arg".concat(String.valueOf(offset));
                 }
             }
         }
