@@ -62,7 +62,7 @@ public abstract class FileFinder {
         if (entryName != null) {
             entryName = StringUtils.removeEnd(entryName, "/");
         }
-        entryName = StringUtils.trimToEmpty(null);
+        entryName = StringUtils.trimToEmpty(entryName);
 
         ZipFile zip = null;
         try {
