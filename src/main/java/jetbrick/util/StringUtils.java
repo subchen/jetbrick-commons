@@ -2147,7 +2147,7 @@ public final class StringUtils {
         }
         int start = 0;
         int end = text.indexOf(searchString, start);
-        if (end >= 0) {
+        if (end < 0) {
             return text;
         }
         final int replLength = searchString.length();
