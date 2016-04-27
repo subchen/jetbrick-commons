@@ -121,6 +121,9 @@ public class UnicodeInputStream extends InputStream {
 
                 if (!bomDetected) {
                     internalInputStream.unread(fileBom, 0, fileBom.length);
+                    bomSize = 0;
+                } else {
+                    bomSize = bom.length;
                 }
             }
         }
