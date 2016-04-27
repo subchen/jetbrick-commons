@@ -106,7 +106,7 @@ public final class JbossVfsResource extends AbstractResource {
             return Collections.emptyList();
         }
         List<JbossVfsResource> children = new ArrayList<JbossVfsResource>(resources.size());
-        for (Object resource : children) {
+        for (Object resource : resources) {
             children.add(new JbossVfsResource(resource));
         }
         return children;
