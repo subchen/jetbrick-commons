@@ -29,10 +29,14 @@ public class MultiLinesFile {
     protected Properties props = new Properties();
 
     public MultiLinesFile(File file, String encoding) {
+        InputStream fs;
         try {
-            load(new BufferedReader(new InputStreamReader(new FileInputStream(file), encoding)));
+            fs = new FileInputStream(file);
+            load(new BufferedReader(new InputStreamReader(fs, encoding)));
         } catch (IOException e) {
             throw new RuntimeException(e);
+        } finally {
+            IoUtils.closeQuietly(fs);
         }
     }
 
