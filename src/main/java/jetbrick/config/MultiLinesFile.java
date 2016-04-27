@@ -21,6 +21,7 @@ package jetbrick.config;
 
 import java.io.*;
 import java.util.Properties;
+import jetbrick.io.IoUtils;
 
 /**
  * 由于 java 自带的 properties 文件格式对于多行的文本支持的不是很完善，这里以更优雅的格式进行支持。
@@ -29,7 +30,7 @@ public class MultiLinesFile {
     protected Properties props = new Properties();
 
     public MultiLinesFile(File file, String encoding) {
-        InputStream fs;
+        InputStream fs = null;
         try {
             fs = new FileInputStream(file);
             load(new BufferedReader(new InputStreamReader(fs, encoding)));
