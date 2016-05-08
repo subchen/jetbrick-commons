@@ -20,6 +20,7 @@
 package jetbrick.typecast.support;
 
 import java.nio.charset.Charset;
+
 import jetbrick.typecast.Convertor;
 
 public final class CharsetConvertor implements Convertor<Charset> {

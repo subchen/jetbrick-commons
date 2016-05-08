@@ -22,8 +22,9 @@ package jetbrick.event;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.Executors;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import jetbrick.bean.TypeResolverUtils;
 
 public final class AppEventPublisher {

@@ -19,9 +19,8 @@
 package jetbrick.io.finder;
 
 import java.io.InputStream;
-import org.hamcrest.CoreMatchers;
+
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class AnnotationClassReaderTest {

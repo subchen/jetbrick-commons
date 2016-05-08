@@ -20,11 +20,15 @@
 package jetbrick.io.finder;
 
 import java.lang.annotation.Annotation;
-import java.util.*;
-import jetbrick.util.ClassLoaderUtils;
-import jetbrick.util.ExceptionUtils;
+import java.util.Collection;
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import jetbrick.util.ClassLoaderUtils;
+import jetbrick.util.ExceptionUtils;
 
 public final class ClassFinder {
     private static final Logger log = LoggerFactory.getLogger(ClassFinder.class);

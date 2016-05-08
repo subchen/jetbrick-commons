@@ -21,6 +21,7 @@ package jetbrick.io.stream;
 
 import java.io.IOException;
 import java.io.Writer;
+
 import jetbrick.io.buffer.FastCharBuffer;
 
 public class FastCharArrayWriter extends Writer {

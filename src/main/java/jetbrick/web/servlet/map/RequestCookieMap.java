@@ -19,9 +19,14 @@
  */
 package jetbrick.web.servlet.map;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+
 import jetbrick.util.concurrent.ConcurrentInitializer;
 import jetbrick.util.concurrent.LazyInitializer;
 

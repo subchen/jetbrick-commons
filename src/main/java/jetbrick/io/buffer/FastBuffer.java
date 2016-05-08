@@ -19,7 +19,9 @@
  */
 package jetbrick.io.buffer;
 
-import java.util.*;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+import java.util.RandomAccess;
 
 /**
  * Fast, fast <code>E</code> buffer with additional features.

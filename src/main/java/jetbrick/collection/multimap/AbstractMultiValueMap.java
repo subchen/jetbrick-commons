@@ -20,7 +20,12 @@
 package jetbrick.collection.multimap;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public abstract class AbstractMultiValueMap<K, V> implements MultiValueMap<K, V>, Serializable {
     private static final long serialVersionUID = 1L;

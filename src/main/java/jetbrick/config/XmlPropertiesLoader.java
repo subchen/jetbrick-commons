@@ -21,7 +21,10 @@ package jetbrick.config;
 
 import java.io.InputStream;
 import java.util.Properties;
-import javax.xml.stream.*;
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamConstants;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
 
 final class XmlPropertiesLoader {
 

@@ -21,6 +21,7 @@ package jetbrick.typecast.support;
 
 import java.sql.Clob;
 import java.sql.SQLException;
+
 import jetbrick.typecast.Convertor;
 import jetbrick.typecast.TypeCastException;
 import jetbrick.util.ArrayUtils;

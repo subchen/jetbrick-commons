@@ -19,7 +19,10 @@
  */
 package jetbrick.collection.multimap;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public interface MultiValueMap<K, V> extends Map<K, V> {
 

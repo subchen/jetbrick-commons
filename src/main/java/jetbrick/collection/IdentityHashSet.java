@@ -19,7 +19,11 @@
  */
 package jetbrick.collection;
 
-import java.util.*;
+import java.util.AbstractSet;
+import java.util.Collection;
+import java.util.IdentityHashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 public class IdentityHashSet<E> extends AbstractSet<E> {
     private final Map<E, E> map = new IdentityHashMap<E, E>();

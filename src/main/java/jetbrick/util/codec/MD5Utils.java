@@ -21,6 +21,7 @@ package jetbrick.util.codec;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+
 import jetbrick.util.CharsetUtils;
 
 public class MD5Utils {

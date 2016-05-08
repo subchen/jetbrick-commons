@@ -20,7 +20,10 @@
 package jetbrick.bean;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.*;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.lang.reflect.Type;
+
 import jetbrick.bean.asm.AsmAccessor;
 import jetbrick.util.ExceptionUtils;
 import jetbrick.util.IdentifiedNameUtils;

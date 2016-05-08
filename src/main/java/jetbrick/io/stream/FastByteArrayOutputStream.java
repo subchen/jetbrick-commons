@@ -19,7 +19,10 @@
  */
 package jetbrick.io.stream;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+
 import jetbrick.io.buffer.FastByteBuffer;
 
 /**

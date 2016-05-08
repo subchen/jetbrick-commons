@@ -20,6 +20,7 @@
 package jetbrick.bean;
 
 import java.util.List;
+
 import jetbrick.util.ClassUtils;
 
 public final class ExecutableUtils {

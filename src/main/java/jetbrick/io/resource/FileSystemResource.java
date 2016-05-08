@@ -19,8 +19,16 @@
  */
 package jetbrick.io.resource;
 
-import java.io.*;
-import java.net.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URL;
+import java.net.URLDecoder;
+
 import jetbrick.util.Validate;
 
 public final class FileSystemResource extends AbstractResource {

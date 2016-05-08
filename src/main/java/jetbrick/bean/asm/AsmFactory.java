@@ -20,10 +20,12 @@
 package jetbrick.bean.asm;
 
 import java.io.File;
+
+import org.slf4j.LoggerFactory;
+
 import jetbrick.bean.KlassInfo;
 import jetbrick.io.IoUtils;
 import jetbrick.util.SystemUtils;
-import org.slf4j.LoggerFactory;
 
 public final class AsmFactory {
     private static int ASM_THRESHOLD_VALUE = 5;

@@ -19,7 +19,10 @@
  */
 package jetbrick.typecast.support;
 
-import java.time.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+
 import jetbrick.typecast.Convertor;
 
 public final class LocalDateTimeConvertor implements Convertor<LocalDateTime> {

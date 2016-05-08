@@ -20,7 +20,10 @@
 package jetbrick.typecast.support;
 
 import java.lang.reflect.Array;
-import java.util.*;
+import java.util.Enumeration;
+import java.util.Iterator;
+import java.util.List;
+
 import jetbrick.collection.ListUtils;
 import jetbrick.typecast.Convertor;
 import jetbrick.util.ArrayUtils;

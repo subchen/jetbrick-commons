@@ -21,6 +21,7 @@ package jetbrick.typecast.support;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+
 import jetbrick.typecast.Convertor;
 import jetbrick.typecast.TypeCastException;
 

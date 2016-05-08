@@ -19,11 +19,20 @@
  */
 package jetbrick.bean.asm;
 
-import static jetbrick.asm.Opcodes.*;
 import java.lang.reflect.Modifier;
 import java.util.List;
-import jetbrick.asm.*;
-import jetbrick.bean.*;
+
+import jetbrick.asm.ClassWriter;
+import jetbrick.asm.Label;
+import jetbrick.asm.MethodVisitor;
+import jetbrick.asm.Type;
+import jetbrick.bean.ConstructorInfo;
+import jetbrick.bean.Executable;
+import jetbrick.bean.FieldInfo;
+import jetbrick.bean.KlassInfo;
+import jetbrick.bean.MethodInfo;
+
+import static jetbrick.asm.Opcodes.*;
 
 final class AsmBuilder {
     private static final String SUN_MAGIC_ACCESSOR_KLASS = "sun/reflect/MagicAccessorImpl";

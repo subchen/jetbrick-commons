@@ -23,7 +23,11 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import jetbrick.util.*;
+
+import jetbrick.util.ClassLoaderUtils;
+import jetbrick.util.JdkUtils;
+import jetbrick.util.StringUtils;
+import jetbrick.util.Validate;
 
 public final class ClasspathResource extends AbstractResource {
     private final URL url;

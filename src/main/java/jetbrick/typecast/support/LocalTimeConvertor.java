@@ -20,6 +20,7 @@
 package jetbrick.typecast.support;
 
 import java.time.LocalTime;
+
 import jetbrick.typecast.Convertor;
 
 public final class LocalTimeConvertor implements Convertor<LocalTime> {

@@ -19,7 +19,13 @@
  */
 package jetbrick.typecast.support;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
+
 import jetbrick.collection.ListUtils;
 import jetbrick.typecast.Convertor;
 import jetbrick.util.StringUtils;

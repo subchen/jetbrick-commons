@@ -19,7 +19,9 @@
  */
 package jetbrick.collection.bidimap;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Map;
+import java.util.Set;
 
 abstract class AbstractBidiMap<K, V> implements BidiMap<K, V> {
     transient final Map<K, V> normalMap;

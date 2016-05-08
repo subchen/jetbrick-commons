@@ -19,7 +19,9 @@
  */
 package jetbrick.io.stream;
 
-import java.io.*;
+import java.io.FilterOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 
 /**
  * Output stream used for debugging purposes.

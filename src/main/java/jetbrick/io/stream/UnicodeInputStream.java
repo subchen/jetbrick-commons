@@ -19,7 +19,9 @@
  */
 package jetbrick.io.stream;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PushbackInputStream;
 
 public class UnicodeInputStream extends InputStream {
     public static final int MAX_BOM_SIZE = 4;

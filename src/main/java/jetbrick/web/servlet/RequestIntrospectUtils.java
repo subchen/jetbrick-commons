@@ -19,8 +19,11 @@
  */
 package jetbrick.web.servlet;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 import javax.servlet.ServletRequest;
+
 import jetbrick.bean.KlassInfo;
 import jetbrick.bean.PropertyInfo;
 import jetbrick.typecast.TypeCastUtils;

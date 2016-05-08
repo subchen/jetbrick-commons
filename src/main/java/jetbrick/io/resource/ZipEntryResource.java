@@ -19,12 +19,22 @@
  */
 package jetbrick.io.resource;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Field;
-import java.net.*;
+import java.net.JarURLConnection;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
-import jetbrick.util.*;
+
+import jetbrick.util.ExceptionUtils;
+import jetbrick.util.StringUtils;
+import jetbrick.util.Validate;
 
 public final class ZipEntryResource extends AbstractResource {
     private final URL url;

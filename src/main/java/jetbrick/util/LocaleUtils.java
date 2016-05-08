@@ -21,7 +21,9 @@ package jetbrick.util;
 
 import java.text.DateFormatSymbols;
 import java.text.NumberFormat;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 public final class LocaleUtils {
     private static Map<String, LocaleInfo> locales = new HashMap<String, LocaleInfo>();

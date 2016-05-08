@@ -19,12 +19,27 @@
  */
 package jetbrick.io;
 
-import java.io.*;
-import java.net.*;
+import java.io.Closeable;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.Reader;
+import java.io.Writer;
+import java.net.HttpURLConnection;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.net.URLConnection;
 import java.nio.channels.Selector;
 import java.nio.charset.Charset;
 import java.util.zip.ZipFile;
-import jetbrick.io.stream.*;
+
+import jetbrick.io.stream.ReaderInputStream;
+import jetbrick.io.stream.UnsafeByteArrayOutputStream;
+import jetbrick.io.stream.UnsafeCharArrayWriter;
 
 public final class IoUtils {
     private static final int DEFAULT_BUFFER_SIZE = 8192;

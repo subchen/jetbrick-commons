@@ -19,13 +19,25 @@
  */
 package jetbrick.config;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import jetbrick.bean.KlassInfo;
 import jetbrick.bean.PropertyInfo;
 import jetbrick.typecast.TypeCastUtils;
-import jetbrick.util.*;
+import jetbrick.util.ClassLoaderUtils;
+import jetbrick.util.ClassUtils;
+import jetbrick.util.IdentifiedNameUtils;
+import jetbrick.util.StringUtils;
 
 /**
  * properties 配置文件抽象处理类.

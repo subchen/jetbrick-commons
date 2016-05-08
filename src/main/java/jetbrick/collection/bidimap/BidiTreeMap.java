@@ -19,7 +19,10 @@
  */
 package jetbrick.collection.bidimap;
 
-import java.util.*;
+import java.util.Comparator;
+import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 public class BidiTreeMap<K, V> extends AbstractBidiSortedMap<K, V> {
 

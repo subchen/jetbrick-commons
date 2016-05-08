@@ -19,7 +19,14 @@
  */
 package jetbrick.io.finder;
 
-import java.io.*;
+import java.io.DataInput;
+import java.io.DataInputStream;
+import java.io.EOFException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.annotation.Annotation;
 import java.lang.annotation.ElementType;
 import java.lang.reflect.Modifier;
@@ -27,9 +34,11 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
-import jetbrick.io.IoUtils;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import jetbrick.io.IoUtils;
 
 /**
  * {@code AnnotationClassReader} reads Java Class File (".class") files and reports the

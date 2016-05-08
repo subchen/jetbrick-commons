@@ -19,7 +19,11 @@
  */
 package jetbrick.web.servlet.map;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 public abstract class StringEnumeratedMap<V> implements Map<String, V> {
     private volatile Map<String, V> map;

@@ -24,7 +24,12 @@ import java.io.InputStream;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 import java.util.List;
-import jetbrick.asm.*;
+
+import jetbrick.asm.ClassReader;
+import jetbrick.asm.ClassVisitor;
+import jetbrick.asm.Label;
+import jetbrick.asm.MethodVisitor;
+import jetbrick.asm.Opcodes;
 import jetbrick.util.ClassLoaderUtils;
 
 /**

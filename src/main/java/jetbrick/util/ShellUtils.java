@@ -19,8 +19,13 @@
  */
 package jetbrick.util;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.Map;
+
 import jetbrick.io.IoUtils;
 import jetbrick.io.stream.UnsafeByteArrayOutputStream;
 

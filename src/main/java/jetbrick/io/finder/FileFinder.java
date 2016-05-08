@@ -19,15 +19,32 @@
  */
 package jetbrick.io.finder;
 
-import java.io.*;
-import java.net.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.JarURLConnection;
+import java.net.URI;
+import java.net.URL;
 import java.nio.charset.Charset;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Enumeration;
+import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
+
 import jetbrick.io.IoUtils;
-import jetbrick.io.resource.*;
-import jetbrick.util.*;
+import jetbrick.io.resource.AbstractResource;
+import jetbrick.io.resource.FileSystemResource;
+import jetbrick.io.resource.JbossVfsResource;
+import jetbrick.io.resource.Resource;
+import jetbrick.io.resource.ResourceNotFoundException;
+import jetbrick.io.resource.ResourceUtils;
+import jetbrick.io.resource.ZipEntryResource;
+import jetbrick.util.ClassLoaderUtils;
+import jetbrick.util.ClasspathUtils;
+import jetbrick.util.StringUtils;
+import jetbrick.util.Validate;
 
 /**
  * 查找指定路径下面的所有匹配得文件.

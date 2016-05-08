@@ -19,10 +19,15 @@
  */
 package jetbrick.io.stream;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.Writer;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
-import java.nio.charset.*;
+import java.nio.charset.Charset;
+import java.nio.charset.CharsetDecoder;
+import java.nio.charset.CoderResult;
+import java.nio.charset.CodingErrorAction;
 
 public class WriterOutputStream extends OutputStream {
     private static final int DEFAULT_BUFFER_SIZE = 1024;

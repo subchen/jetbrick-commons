@@ -19,7 +19,12 @@
  */
 package jetbrick.collection;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+
 import jetbrick.util.tuple.NameValuePair;
 
 @SuppressWarnings("unchecked")

@@ -18,10 +18,13 @@
  */
 package jetbrick.bean.asm;
 
-import java.text.SimpleDateFormat;
-import java.util.*;
-import jetbrick.bean.*;
-import org.junit.*;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import jetbrick.bean.KlassInfo;
+import jetbrick.bean.MethodInfo;
 
 public class AsmBigClassTest {
     @Before

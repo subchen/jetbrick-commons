@@ -24,7 +24,11 @@ import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.net.URI;
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import jetbrick.util.ExceptionUtils;
 
 // jboss/wildfly vfs url

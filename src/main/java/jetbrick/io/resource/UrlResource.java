@@ -22,6 +22,7 @@ package jetbrick.io.resource;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+
 import jetbrick.util.Validate;
 
 public class UrlResource extends AbstractResource {

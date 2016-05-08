@@ -19,7 +19,10 @@
  */
 package jetbrick.util;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.IdentityHashMap;
+import java.util.Map;
+import java.util.Set;
 
 public final class ClassUtils {
     private static final Set<Class<?>> boxed_class_set;

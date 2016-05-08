@@ -19,7 +19,10 @@
  */
 package jetbrick.collection;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Locale;
+import java.util.Map;
 
 /***
  * 不区分大小写的 HashMap 实现.

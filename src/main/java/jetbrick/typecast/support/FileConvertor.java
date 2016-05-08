@@ -21,8 +21,11 @@ package jetbrick.typecast.support;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
-import java.net.*;
+import java.net.URI;
+import java.net.URL;
+import java.net.URLDecoder;
 import java.nio.file.Path;
+
 import jetbrick.io.resource.Resource;
 import jetbrick.typecast.Convertor;
 import jetbrick.typecast.TypeCastException;

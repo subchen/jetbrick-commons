@@ -22,6 +22,7 @@ package jetbrick.bean;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Type;
+
 import jetbrick.bean.asm.AsmAccessor;
 import jetbrick.util.ExceptionUtils;
 

@@ -19,7 +19,9 @@
  */
 package jetbrick.web.servlet.map;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 public final class RequestHeaderValuesMap extends StringEnumeratedMap<String[]> {

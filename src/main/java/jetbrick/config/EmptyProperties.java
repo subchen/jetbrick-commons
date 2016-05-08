@@ -19,9 +19,18 @@
  */
 package jetbrick.config;
 
-import java.io.*;
-import java.util.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Reader;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.InvalidPropertiesFormatException;
+import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Properties;
+import java.util.Set;
+
 import jetbrick.collection.EmptyEnumeration;
 
 @SuppressWarnings("serial")

@@ -19,7 +19,10 @@
  */
 package jetbrick.collection;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 /***
  * A thread-safe version of {@link Map} in which all operations that change the

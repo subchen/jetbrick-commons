@@ -22,7 +22,10 @@ package jetbrick.bean;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Type;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import jetbrick.util.ArrayUtils;
 import jetbrick.util.concurrent.ConcurrentInitializer;
 import jetbrick.util.concurrent.LazyInitializer;

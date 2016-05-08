@@ -21,7 +21,11 @@ package jetbrick.collection;
 
 import java.lang.ref.ReferenceQueue;
 import java.lang.ref.SoftReference;
-import java.util.*;
+import java.util.AbstractMap;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.Map;
+import java.util.Set;
 
 public class SoftHashMap<K, V> extends AbstractMap<K, V> {
     private final Map<K, SoftValue<V>> map;

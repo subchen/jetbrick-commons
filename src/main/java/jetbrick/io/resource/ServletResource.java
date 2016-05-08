@@ -19,10 +19,14 @@
  */
 package jetbrick.io.resource;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import javax.servlet.ServletContext;
+
 import jetbrick.util.PathUtils;
 import jetbrick.util.Validate;
 

@@ -24,7 +24,13 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Enumeration;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
+import java.util.Map;
+import java.util.Set;
 
 public final class ClasspathUtils {
     public static final String EXT_CLASS_LOADER_NAME = "sun.misc.Launcher$ExtClassLoader";

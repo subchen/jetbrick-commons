@@ -20,6 +20,7 @@
 package jetbrick.typecast.support;
 
 import java.time.Instant;
+
 import jetbrick.typecast.Convertor;
 
 public final class InstantConvertor implements Convertor<Instant> {

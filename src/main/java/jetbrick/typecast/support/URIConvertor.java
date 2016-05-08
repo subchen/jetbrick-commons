@@ -20,8 +20,11 @@
 package jetbrick.typecast.support;
 
 import java.io.File;
-import java.net.*;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.file.Path;
+
 import jetbrick.io.resource.Resource;
 import jetbrick.typecast.Convertor;
 import jetbrick.typecast.TypeCastException;

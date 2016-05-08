@@ -20,6 +20,7 @@ package jetbrick.bean;
 
 import java.util.AbstractMap;
 import java.util.HashMap;
+
 import org.junit.Assert;
 import org.junit.Test;
 

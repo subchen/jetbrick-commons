@@ -20,9 +20,14 @@
 package jetbrick.typecast.support;
 
 import java.io.File;
-import java.net.*;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URL;
 import java.nio.file.Path;
-import jetbrick.io.resource.*;
+
+import jetbrick.io.resource.FileSystemResource;
+import jetbrick.io.resource.Resource;
+import jetbrick.io.resource.ResourceUtils;
 import jetbrick.typecast.Convertor;
 import jetbrick.util.JdkUtils;
 
