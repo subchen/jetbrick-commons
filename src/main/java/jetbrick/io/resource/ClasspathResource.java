@@ -108,9 +108,11 @@ public final class ClasspathResource extends AbstractResource {
             return 0;
         }
 
+        long lastModified = 0;
+
         String protocol = url.getProtocol();
         if (Resource.URL_PROTOCOL_FILE.equals(protocol)) {
-            return new File(url.getFile()).lastModified();
+            lastModified = new File(url.getFile()).lastModified();
         } else if (Resource.URL_PROTOCOL_JAR.equals(protocol) || Resource.URL_PROTOCOL_ZIP.equals(protocol)) {
             String file = url.getFile();
             if (file.startsWith(Resource.URL_PREFIX_FILE)) {
@@ -120,14 +122,22 @@ public final class ClasspathResource extends AbstractResource {
             if (pos != -1) {
                 file = file.substring(0, pos);
             }
-            return new File(file).lastModified();
+            lastModified = new File(file).lastModified();
         }
 
-        try {
-            return url.openConnection().getLastModified();
-        } catch (IOException e) {
-            throw new IllegalStateException(e);
+        if (lastModified <= 0) {
+            try {
+                lastModified = url.openConnection().getLastModified();
+            } catch (IOException e) {
+                throw new IllegalStateException(e);
+            }
         }
+
+        // If cannot get lastModified from an exists ClasspathResource, should alwyas return 1.
+        if (lastModified <= 0) {
+            lastModified = 1;
+        }
+        return lastModified;
     }
 
     @Override
