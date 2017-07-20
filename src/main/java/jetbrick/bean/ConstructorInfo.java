@@ -50,7 +50,14 @@ public final class ConstructorInfo extends Executable implements Creater, Compar
         this.declaringKlass = declaringKlass;
         this.constructor = constructor;
         this.offset = offset;
-        constructor.setAccessible(true);
+
+        try {
+            constructor.setAccessible(true);
+        } catch(SecurityException e) {
+            // A SecurityException is raised if flag is true but accessibility of
+            // this object may not be changed (for example, if this element object
+            // is a Constructor object for the class Class).
+        }
     }
 
     @Override

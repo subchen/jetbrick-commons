@@ -46,7 +46,14 @@ public final class FieldInfo implements Comparable<FieldInfo>, Getter, Setter {
         this.declaringKlass = declaringKlass;
         this.field = field;
         this.offset = offset;
-        field.setAccessible(true);
+
+        try {
+            field.setAccessible(true);
+        } catch(SecurityException e) {
+            // A SecurityException is raised if flag is true but accessibility of
+            // this object may not be changed (for example, if this element object
+            // is a Constructor object for the class Class).
+        }
     }
 
     public KlassInfo getDeclaringKlass() {
