@@ -72,8 +72,10 @@ public final class RequestDumpUtils {
         out.println();
 
         out.println(StringUtils.center(" Request Cookies ", PADDING_SIZE, PADDING_CHAR));
-        for (Cookie cookie : request.getCookies()) {
-            out.printf(FORMAT, cookie.getName(), cookie.getValue());
+        if (request.getCookies() != null) {
+            for (Cookie cookie : request.getCookies()) {
+                out.printf(FORMAT, cookie.getName(), cookie.getValue());
+            }
         }
         out.println();
 
