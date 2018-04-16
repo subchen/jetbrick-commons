@@ -38,7 +38,7 @@ public class AsmFactoryTest {
 
     @After
     public void cleanup() {
-        AsmFactory.setThreshold(5);
+        AsmFactory.setThreshold(999);
     }
 
     @Test
