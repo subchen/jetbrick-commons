@@ -28,7 +28,7 @@ import jetbrick.io.IoUtils;
 import jetbrick.util.SystemUtils;
 
 public final class AsmFactory {
-    private static int ASM_THRESHOLD_VALUE = 5;
+    private static int ASM_THRESHOLD_VALUE = Integer.MAX_VALUE;
     private static boolean ASM_DEBUG_ENABLED = false;
 
     public static int getThreshold() {
