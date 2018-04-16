@@ -1,5 +1,5 @@
 /**
- * Copyright 2013-2016 Guoqiang Chen, Shanghai, China. All rights reserved.
+ * Copyright 2013-2018 Guoqiang Chen, Shanghai, China. All rights reserved.
  *
  *   Author: Guoqiang Chen
  *    Email: subchen@gmail.com
@@ -28,7 +28,6 @@ import java.io.IOException;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.List;
-
 import jetbrick.io.IoUtils;
 
 public class FileCopyUtils {

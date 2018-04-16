@@ -19,7 +19,6 @@
 package jetbrick.config;
 
 import java.nio.charset.Charset;
-
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.BeforeClass;

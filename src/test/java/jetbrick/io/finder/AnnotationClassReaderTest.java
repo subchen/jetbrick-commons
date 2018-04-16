@@ -19,7 +19,6 @@
 package jetbrick.io.finder;
 
 import java.io.InputStream;
-
 import org.junit.Assert;
 import org.junit.Test;
 

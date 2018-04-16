@@ -1,5 +1,5 @@
 /**
- * Copyright 2013-2016 Guoqiang Chen, Shanghai, China. All rights reserved.
+ * Copyright 2013-2018 Guoqiang Chen, Shanghai, China. All rights reserved.
  *
  *   Author: Guoqiang Chen
  *    Email: subchen@gmail.com
@@ -30,7 +30,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
 import jetbrick.bean.Filters.FieldFilter;
 import jetbrick.bean.Filters.MethodFilter;
 import jetbrick.bean.asm.AsmAccessor;

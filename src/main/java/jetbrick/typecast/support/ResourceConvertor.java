@@ -1,5 +1,5 @@
 /**
- * Copyright 2013-2016 Guoqiang Chen, Shanghai, China. All rights reserved.
+ * Copyright 2013-2018 Guoqiang Chen, Shanghai, China. All rights reserved.
  *
  *   Author: Guoqiang Chen
  *    Email: subchen@gmail.com
@@ -24,7 +24,6 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 import java.nio.file.Path;
-
 import jetbrick.io.resource.FileSystemResource;
 import jetbrick.io.resource.Resource;
 import jetbrick.io.resource.ResourceUtils;

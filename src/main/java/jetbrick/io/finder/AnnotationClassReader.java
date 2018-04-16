@@ -1,5 +1,5 @@
 /**
- * Copyright 2013-2016 Guoqiang Chen, Shanghai, China. All rights reserved.
+ * Copyright 2013-2018 Guoqiang Chen, Shanghai, China. All rights reserved.
  *
  *   Author: Guoqiang Chen
  *    Email: subchen@gmail.com
@@ -34,10 +34,8 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import jetbrick.io.IoUtils;
 
 /**

@@ -1,5 +1,5 @@
 /**
- * Copyright 2013-2016 Guoqiang Chen, Shanghai, China. All rights reserved.
+ * Copyright 2013-2018 Guoqiang Chen, Shanghai, China. All rights reserved.
  *
  *   Author: Guoqiang Chen
  *    Email: subchen@gmail.com
@@ -22,7 +22,6 @@ package jetbrick.bean;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Type;
-
 import jetbrick.bean.asm.AsmAccessor;
 import jetbrick.util.ExceptionUtils;
 
@@ -53,7 +52,7 @@ public final class ConstructorInfo extends Executable implements Creater, Compar
 
         try {
             constructor.setAccessible(true);
-        } catch(SecurityException e) {
+        } catch (SecurityException e) {
             // A SecurityException is raised if flag is true but accessibility of
             // this object may not be changed (for example, if this element object
             // is a Constructor object for the class Class).

@@ -1,5 +1,5 @@
 /**
- * Copyright 2013-2016 Guoqiang Chen, Shanghai, China. All rights reserved.
+ * Copyright 2013-2018 Guoqiang Chen, Shanghai, China. All rights reserved.
  *
  *   Author: Guoqiang Chen
  *    Email: subchen@gmail.com
@@ -23,7 +23,6 @@ import java.io.File;
 import java.net.URI;
 import java.net.URL;
 import java.nio.charset.Charset;
-
 import jetbrick.io.IoUtils;
 import jetbrick.util.PathUtils;
 

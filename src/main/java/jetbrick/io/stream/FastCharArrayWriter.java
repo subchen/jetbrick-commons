@@ -1,5 +1,5 @@
 /**
- * Copyright 2013-2016 Guoqiang Chen, Shanghai, China. All rights reserved.
+ * Copyright 2013-2018 Guoqiang Chen, Shanghai, China. All rights reserved.
  *
  *   Author: Guoqiang Chen
  *    Email: subchen@gmail.com
@@ -21,7 +21,6 @@ package jetbrick.io.stream;
 
 import java.io.IOException;
 import java.io.Writer;
-
 import jetbrick.io.buffer.FastCharBuffer;
 
 public class FastCharArrayWriter extends Writer {

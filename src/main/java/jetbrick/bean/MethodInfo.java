@@ -1,5 +1,5 @@
 /**
- * Copyright 2013-2016 Guoqiang Chen, Shanghai, China. All rights reserved.
+ * Copyright 2013-2018 Guoqiang Chen, Shanghai, China. All rights reserved.
  *
  *   Author: Guoqiang Chen
  *    Email: subchen@gmail.com
@@ -23,7 +23,6 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Type;
-
 import jetbrick.bean.asm.AsmAccessor;
 import jetbrick.util.ExceptionUtils;
 import jetbrick.util.IdentifiedNameUtils;
@@ -50,7 +49,7 @@ public final class MethodInfo extends Executable implements Invoker, Comparable<
 
         try {
             method.setAccessible(true);
-        } catch(SecurityException e) {
+        } catch (SecurityException e) {
             // A SecurityException is raised if flag is true but accessibility of
             // this object may not be changed (for example, if this element object
             // is a Constructor object for the class Class).

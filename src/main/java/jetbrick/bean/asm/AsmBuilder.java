@@ -1,5 +1,5 @@
 /**
- * Copyright 2013-2016 Guoqiang Chen, Shanghai, China. All rights reserved.
+ * Copyright 2013-2018 Guoqiang Chen, Shanghai, China. All rights reserved.
  *
  *   Author: Guoqiang Chen
  *    Email: subchen@gmail.com
@@ -21,7 +21,6 @@ package jetbrick.bean.asm;
 
 import java.lang.reflect.Modifier;
 import java.util.List;
-
 import jetbrick.asm.ClassWriter;
 import jetbrick.asm.Label;
 import jetbrick.asm.MethodVisitor;
@@ -31,7 +30,6 @@ import jetbrick.bean.Executable;
 import jetbrick.bean.FieldInfo;
 import jetbrick.bean.KlassInfo;
 import jetbrick.bean.MethodInfo;
-
 import static jetbrick.asm.Opcodes.*;
 
 final class AsmBuilder {

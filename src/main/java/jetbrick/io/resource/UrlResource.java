@@ -1,5 +1,5 @@
 /**
- * Copyright 2013-2016 Guoqiang Chen, Shanghai, China. All rights reserved.
+ * Copyright 2013-2018 Guoqiang Chen, Shanghai, China. All rights reserved.
  *
  *   Author: Guoqiang Chen
  *    Email: subchen@gmail.com
@@ -22,7 +22,6 @@ package jetbrick.io.resource;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-
 import jetbrick.util.Validate;
 
 public class UrlResource extends AbstractResource {

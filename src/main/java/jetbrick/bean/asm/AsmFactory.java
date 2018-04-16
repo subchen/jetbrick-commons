@@ -1,5 +1,5 @@
 /**
- * Copyright 2013-2016 Guoqiang Chen, Shanghai, China. All rights reserved.
+ * Copyright 2013-2018 Guoqiang Chen, Shanghai, China. All rights reserved.
  *
  *   Author: Guoqiang Chen
  *    Email: subchen@gmail.com
@@ -20,9 +20,7 @@
 package jetbrick.bean.asm;
 
 import java.io.File;
-
 import org.slf4j.LoggerFactory;
-
 import jetbrick.bean.KlassInfo;
 import jetbrick.io.IoUtils;
 import jetbrick.util.SystemUtils;

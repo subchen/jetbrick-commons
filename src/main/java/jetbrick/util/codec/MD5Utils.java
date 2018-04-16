@@ -1,5 +1,5 @@
 /**
- * Copyright 2013-2016 Guoqiang Chen, Shanghai, China. All rights reserved.
+ * Copyright 2013-2018 Guoqiang Chen, Shanghai, China. All rights reserved.
  *
  *   Author: Guoqiang Chen
  *    Email: subchen@gmail.com
@@ -21,7 +21,6 @@ package jetbrick.util.codec;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-
 import jetbrick.util.CharsetUtils;
 
 public class MD5Utils {
