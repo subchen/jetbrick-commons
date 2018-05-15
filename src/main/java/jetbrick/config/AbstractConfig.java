@@ -98,7 +98,7 @@ public abstract class AbstractConfig {
      * @return                  属性值对象
      */
     protected <T> T doGetValue(String name, Class<T> targetClass, String defaultValue) {
-        String value = config.get(name);
+        String value = getConfig(name);
         return stringAsObject(value, targetClass, defaultValue);
     }
 
@@ -113,7 +113,7 @@ public abstract class AbstractConfig {
      * @return                  属性值对象 List
      */
     protected <T> List<T> doGetList(String name, Class<T> elementType, String defaultValues) {
-        String valueList = config.get(name);
+        String valueList = getConfig(name);
 
         valueList = StringUtils.trimToNull(valueList);
         if (valueList == null) {
@@ -329,4 +329,17 @@ public abstract class AbstractConfig {
         return sb.toString();
     }
 
+    /**
+     * 读取 Config 配置，根据 SpringBoot 2.0 会自动清除配置中的特殊符号进行优化处理
+     *
+     * @param name      配置名称
+     * @return          配置内容
+     */
+    protected String getConfig(String name) {
+        String value = config.get(name);
+        if (value == null && name.startsWith("$")) {
+            value = config.get(name.substring(1));
+        }
+        return value;
+    }
 }
