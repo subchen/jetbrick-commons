@@ -182,7 +182,14 @@ public abstract class AbstractConfig {
         if (aliasName.startsWith("$")) {
             // this is a reference name
             className = doGetValue(aliasName, String.class, null);
-            propNames = keySet(aliasName.concat("."));
+            if (className != null) {
+                propNames = keySet(aliasName.concat("."));
+            } else {
+                // if no `$alias = ...`, try to load `alias = ...`
+                aliasName = aliasName.substring(1); // remove prefix '$'
+                className = doGetValue(aliasName, String.class, null);
+                propNames = keySet(aliasName.concat("."));
+            }
         } else {
             // this is a class name
             className = aliasName;

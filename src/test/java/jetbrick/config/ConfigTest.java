@@ -60,4 +60,10 @@ public class ConfigTest {
         Assert.assertTrue(thread1 == thread2);
     }
 
+    @Test
+    public void testAliasNameWithoutDollar() {
+        Thread thread3 = c.asObject("webapp.thread.3", Thread.class);
+        Assert.assertEquals("thread3", thread3.getName());
+    }
+
 }
