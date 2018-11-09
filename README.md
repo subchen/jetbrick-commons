@@ -25,7 +25,7 @@ Dependencies
 <dependency>
     <groupId>com.github.subchen</groupId>
     <artifactId>jetbrick-commons</artifactId>
-    <version>2.1.7</version>
+    <version>2.1.8</version>
 </dependency>
 ```
 
@@ -33,16 +33,16 @@ Downloads
 ---------------------------
 
 * Binaries
-    - [jetbrick-commons-2.1.7.jar][1]
-    - [jetbrick-commons-2.1.7-sources.jar][2]
-    - [jetbrick-commons-2.1.7-javadoc.jar][3]
+    - [jetbrick-commons-2.1.8.jar][1]
+    - [jetbrick-commons-2.1.8-sources.jar][2]
+    - [jetbrick-commons-2.1.8-javadoc.jar][3]
 * Dependencies
     - [slf4j-api-1.7.7.jar][4]
     - [javax.servlet-api-3.0.1.jar][5] (optional)
 
-[1]: http://search.maven.org/remotecontent?filepath=com/github/subchen/jetbrick-commons/2.1.7/jetbrick-commons-2.1.7.jar
-[2]: http://search.maven.org/remotecontent?filepath=com/github/subchen/jetbrick-commons/2.1.7/jetbrick-commons-2.1.7-sources.jar
-[3]: http://search.maven.org/remotecontent?filepath=com/github/subchen/jetbrick-commons/2.1.7/jetbrick-commons-2.1.7-javadoc.jar
+[1]: http://search.maven.org/remotecontent?filepath=com/github/subchen/jetbrick-commons/2.1.8/jetbrick-commons-2.1.8.jar
+[2]: http://search.maven.org/remotecontent?filepath=com/github/subchen/jetbrick-commons/2.1.8/jetbrick-commons-2.1.8-sources.jar
+[3]: http://search.maven.org/remotecontent?filepath=com/github/subchen/jetbrick-commons/2.1.8/jetbrick-commons-2.1.8-javadoc.jar
 [4]: http://search.maven.org/remotecontent?filepath=org/slf4j/slf4j-api/1.7.7/slf4j-api-1.7.7.jar
 [5]: http://search.maven.org/remotecontent?filepath=javax/servlet/javax.servlet-api/3.0.1/javax.servlet-api-3.0.1.jar
 
