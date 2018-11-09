@@ -20,7 +20,7 @@
 package jetbrick.util;
 
 public final class JdkUtils {
-    public static final float JAVA_MAJOR_VERSION;
+    public static final int JAVA_MAJOR_VERSION;
 
     public static final String JAVA_VERSION;
 
