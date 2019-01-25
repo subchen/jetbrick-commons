@@ -31,6 +31,7 @@ import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
+import jetbrick.bean.JdkReflectionUtils;
 
 public final class ClasspathUtils {
     public static final String EXT_CLASS_LOADER_NAME = "sun.misc.Launcher$ExtClassLoader";
@@ -151,8 +152,7 @@ public final class ClasspathUtils {
 
             // method.1 (get root urls)
             Method method = rootModuleClassLoader.getClass().getDeclaredMethod("findResources", String.class, Boolean.TYPE);
-            method.setAccessible(true);
-            Enumeration<URL> url = (Enumeration<URL>) method.invoke(rootModuleClassLoader, "", true);
+            Enumeration<URL> url = (Enumeration<URL>) JdkReflectionUtils.invoke(method, rootModuleClassLoader, "", true);
             while (url.hasMoreElements()) {
                 urls.add(url.nextElement());
             }
@@ -179,8 +179,7 @@ public final class ClasspathUtils {
             Set<URL> urls = new LinkedHashSet<URL>();
 
             Method method = moduleClassLoader.getClass().getDeclaredMethod("getResourceLoaders");
-            method.setAccessible(true);
-            Object[] resourceLoaders = (Object[]) method.invoke(moduleClassLoader); // ResourceLoader[]
+            Object[] resourceLoaders = (Object[]) JdkReflectionUtils.invoke(method, moduleClassLoader); // ResourceLoader[]
             if (resourceLoaders != null) {
                 for (Object resourceLoader : resourceLoaders) {
                     if (resourceLoader != null) {
@@ -209,8 +208,7 @@ public final class ClasspathUtils {
             while (clazz != Object.class) {
                 try {
                     java.lang.reflect.Field field = clazz.getDeclaredField(name);
-                    field.setAccessible(true);
-                    return field.get(object);
+                    return JdkReflectionUtils.get(field, object);
                 } catch (NoSuchFieldException e) {
                     clazz = clazz.getSuperclass();
                 }

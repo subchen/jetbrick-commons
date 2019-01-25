@@ -46,13 +46,7 @@ public final class FieldInfo implements Comparable<FieldInfo>, Getter, Setter {
         this.field = field;
         this.offset = offset;
 
-        try {
-            field.setAccessible(true);
-        } catch (SecurityException e) {
-            // A SecurityException is raised if flag is true but accessibility of
-            // this object may not be changed (for example, if this element object
-            // is a Constructor object for the class Class).
-        }
+        JdkReflectionUtils.setAccessible(field);
     }
 
     public KlassInfo getDeclaringKlass() {
@@ -136,7 +130,7 @@ public final class FieldInfo implements Comparable<FieldInfo>, Getter, Setter {
         AsmAccessor accessor = declaringKlass.getAsmAccessor();
         if (accessor == null) {
             try {
-                return field.get(object);
+                return JdkReflectionUtils.get(field, object);
             } catch (Exception e) {
                 throw ExceptionUtils.unchecked(e);
             }
@@ -150,7 +144,7 @@ public final class FieldInfo implements Comparable<FieldInfo>, Getter, Setter {
         AsmAccessor accessor = declaringKlass.getAsmAccessor();
         if (accessor == null) {
             try {
-                field.set(object, value);
+                JdkReflectionUtils.set(field, object, value);
             } catch (Exception e) {
                 throw ExceptionUtils.unchecked(e);
             }

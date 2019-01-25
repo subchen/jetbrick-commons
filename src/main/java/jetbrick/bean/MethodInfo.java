@@ -47,13 +47,7 @@ public final class MethodInfo extends Executable implements Invoker, Comparable<
         this.method = method;
         this.offset = offset;
 
-        try {
-            method.setAccessible(true);
-        } catch (SecurityException e) {
-            // A SecurityException is raised if flag is true but accessibility of
-            // this object may not be changed (for example, if this element object
-            // is a Constructor object for the class Class).
-        }
+        JdkReflectionUtils.setAccessible(method);
     }
 
     @Override
@@ -198,7 +192,7 @@ public final class MethodInfo extends Executable implements Invoker, Comparable<
         AsmAccessor accessor = declaringKlass.getAsmAccessor();
         if (accessor == null) {
             try {
-                return method.invoke(object, args);
+                return JdkReflectionUtils.invoke(method, object, args);
             } catch (Exception e) {
                 throw ExceptionUtils.unchecked(e);
             }

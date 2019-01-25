@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import jetbrick.bean.JdkReflectionUtils;
 import jetbrick.util.ExceptionUtils;
 
 // jboss/wildfly vfs url
@@ -163,7 +164,7 @@ public final class JbossVfsResource extends AbstractResource {
         while (type != null) {
             for (Method method : type.getDeclaredMethods()) {
                 if (name.equals(method.getName()) && (parameterTypes == null || Arrays.equals(parameterTypes, method.getParameterTypes()))) {
-                    method.setAccessible(true);
+                    JdkReflectionUtils.setAccessible(method);
                     return method;
                 }
             }
@@ -174,7 +175,7 @@ public final class JbossVfsResource extends AbstractResource {
 
     static Object vfsInvokeMethod(Method method, Object target, Object[] args) {
         try {
-            return method.invoke(target, args);
+            return JdkReflectionUtils.invoke(method, target, args);
         } catch (Exception e) {
             throw ExceptionUtils.unchecked(e);
         }

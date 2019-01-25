@@ -31,6 +31,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
+import jetbrick.bean.JdkReflectionUtils;
 import jetbrick.util.ExceptionUtils;
 import jetbrick.util.StringUtils;
 import jetbrick.util.Validate;
@@ -205,8 +206,8 @@ public final class ZipEntryResource extends AbstractResource {
                 FIELD_ZIP_FILE = klass.getDeclaredField("zip");
                 FIELD_ZIP_ENTRY = klass.getDeclaredField("ze");
 
-                FIELD_ZIP_FILE.setAccessible(true);
-                FIELD_ZIP_ENTRY.setAccessible(true);
+                JdkReflectionUtils.setAccessible(FIELD_ZIP_FILE);
+                JdkReflectionUtils.setAccessible(FIELD_ZIP_ENTRY);
             } catch (Exception e) {
                 throw new IllegalStateException("Could not detect Weblogic zip url infrastructure", e);
             }
@@ -214,7 +215,7 @@ public final class ZipEntryResource extends AbstractResource {
 
         static ZipFile getZipFile(URLConnection conn) {
             try {
-                return (ZipFile) FIELD_ZIP_FILE.get(conn);
+                return (ZipFile) JdkReflectionUtils.get(FIELD_ZIP_FILE, conn);
             } catch (Exception e) {
                 throw ExceptionUtils.unchecked(e);
             }
@@ -222,7 +223,7 @@ public final class ZipEntryResource extends AbstractResource {
 
         static ZipEntry getZipEntry(URLConnection conn) {
             try {
-                return (ZipEntry) FIELD_ZIP_ENTRY.get(conn);
+                return (ZipEntry) JdkReflectionUtils.get(FIELD_ZIP_ENTRY, conn);
             } catch (Exception e) {
                 throw ExceptionUtils.unchecked(e);
             }

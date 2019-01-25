@@ -50,13 +50,7 @@ public final class ConstructorInfo extends Executable implements Creater, Compar
         this.constructor = constructor;
         this.offset = offset;
 
-        try {
-            constructor.setAccessible(true);
-        } catch (SecurityException e) {
-            // A SecurityException is raised if flag is true but accessibility of
-            // this object may not be changed (for example, if this element object
-            // is a Constructor object for the class Class).
-        }
+        JdkReflectionUtils.setAccessible(constructor);
     }
 
     @Override
@@ -132,7 +126,7 @@ public final class ConstructorInfo extends Executable implements Creater, Compar
         AsmAccessor accessor = declaringKlass.getAsmAccessor();
         if (accessor == null) {
             try {
-                return constructor.newInstance(args);
+                return JdkReflectionUtils.newInstance(constructor, args);
             } catch (Exception e) {
                 throw ExceptionUtils.unchecked(e);
             }

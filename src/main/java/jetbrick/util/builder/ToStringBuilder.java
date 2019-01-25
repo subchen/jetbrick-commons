@@ -23,6 +23,7 @@ import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import jetbrick.bean.JdkReflectionUtils;
 
 public class ToStringBuilder {
     private final StringBuilder sb = new StringBuilder(32);
@@ -36,7 +37,6 @@ public class ToStringBuilder {
     public static String reflection(Object object, boolean formatted) {
         ToStringBuilder builder = new ToStringBuilder(object, formatted);
         Field[] fields = object.getClass().getDeclaredFields();
-        AccessibleObject.setAccessible(fields, true);
         for (Field field : fields) {
             String fieldName = field.getName();
             if (field.getName().indexOf('$') != -1) {
@@ -46,7 +46,7 @@ public class ToStringBuilder {
                 continue;
             }
             try {
-                Object fieldValue = field.get(object);
+                Object fieldValue = JdkReflectionUtils.get(field, object);
                 builder.append(fieldName, fieldValue);
             } catch (IllegalAccessException e) {
                 throw new RuntimeException(e);
