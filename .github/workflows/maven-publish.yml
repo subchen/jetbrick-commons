@@ -8,10 +8,11 @@ on:
     types: [ published ]
 
 env:
+  MAVEN_DEPLOY_USERNAME: ${{ secrets.MAVEN_DEPLOY_USERNAME }}
   MAVEN_DEPLOY_PASSWORD: ${{ secrets.MAVEN_DEPLOY_PASSWORD }}
 
 jobs:
-  release:
+  publish:
     runs-on: ubuntu-latest
 
     steps:
@@ -21,8 +22,9 @@ jobs:
           distribution: 'temurin'
           java-version: '8'
           cache: 'maven'
-          server-id: oss # Value of the distributionManagement/repository/id field of the pom.xml
-          settings-path: ${{ github.workspace }} # location for the settings.xml file
+          server-id: 'oss-staging'
+          server-username: MAVEN_DEPLOY_USERNAME
+          server-password: MAVEN_DEPLOY_PASSWORD
       - run: |
           env
-  
+          mvn clean deploy -P oss -DautoReleaseAfterClose=true
