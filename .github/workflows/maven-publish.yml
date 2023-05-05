@@ -7,10 +7,6 @@ on:
   release:
     types: [ published ]
 
-env:
-  MAVEN_DEPLOY_USERNAME: ${{ secrets.MAVEN_DEPLOY_USERNAME }}
-  MAVEN_DEPLOY_PASSWORD: ${{ secrets.MAVEN_DEPLOY_PASSWORD }}
-
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -23,8 +19,13 @@ jobs:
           java-version: '8'
           cache: 'maven'
           server-id: 'oss-staging'
-          server-username: MAVEN_DEPLOY_USERNAME
-          server-password: MAVEN_DEPLOY_PASSWORD
-      - run: |
-          env
-          mvn clean deploy -P oss -DautoReleaseAfterClose=true
+          server-username: ${{ secrets.MAVEN_DEPLOY_USERNAME }}
+          server-password: ${{ secrets.MAVEN_DEPLOY_PASSWORD }}
+          gpg-passphrase:  ${{ secrets.GPG_PASSWORD }}
+      - run: env
+      - uses: samuelmeuli/action-maven-publish@v1
+        with:
+          nexus_username: ${{ secrets.MAVEN_DEPLOY_USERNAME }}
+          nexus_password: ${{ secrets.MAVEN_DEPLOY_PASSWORD }}
+          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+          gpg_passphrase: ${{ secrets.GPG_PASSPHRASE }}
