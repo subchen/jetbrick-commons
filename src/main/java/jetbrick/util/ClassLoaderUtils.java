@@ -22,14 +22,18 @@ package jetbrick.util;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ClassLoaderUtils {
     private static final Map<String, String> abbreviationMap;
 
     /**
-     * Returns current thread's context class loader
+     * Returns default class loader (current thread's context)
      */
     public static ClassLoader getDefault() {
         ClassLoader loader = null;
@@ -44,7 +48,8 @@ public class ClassLoaderUtils {
                     // getClassLoader() returning null indicates the bootstrap ClassLoader
                     loader = ClassLoader.getSystemClassLoader();
                 } catch (Exception e) {
-                    // Cannot access system ClassLoader - oh well, maybe the caller can live with null...
+                    // Cannot access system ClassLoader - oh well, maybe the caller can live with
+                    // null...
                 }
             }
         }
@@ -52,20 +57,43 @@ public class ClassLoaderUtils {
     }
 
     /**
-     * 使用默认的 ClassLoader 去载入类.
-     * @return null if class not found
+     * Returns all default class loaders
      */
-    public static Class<?> loadClass(final String qualifiedClassName) {
-        return loadClass(qualifiedClassName, null);
+    public static List<ClassLoader> getDefaults() {
+        List<ClassLoader> loaders = new ArrayList<ClassLoader>(3);
+        ClassLoader loader = null;
+
+        try {
+            loader = Thread.currentThread().getContextClassLoader();
+            loaders.add(loader);
+        } catch (Exception e) {
+        }
+
+        loader = ClassLoaderUtils.class.getClassLoader();
+        if (loader != null) {
+            // getClassLoader() returning null indicates the bootstrap ClassLoader
+            loaders.add(loader);
+        }
+
+        try {
+            loader = ClassLoader.getSystemClassLoader();
+            loaders.add(loader);
+        } catch (Exception e) {
+            // Cannot access system ClassLoader - oh well, maybe the caller can live with
+            // null...
+        }
+
+        return loaders;
     }
 
     /**
      * 使用默认的 ClassLoader 去载入类.
+     * 
      * @return null if class not found
      */
-    public static Class<?> loadClass(final String qualifiedClassName, ClassLoader loader) {
+    public static Class<?> loadClass(final String qualifiedClassName) {
         try {
-            return loadClassEx(qualifiedClassName, loader);
+            return loadClassEx(qualifiedClassName, Collections.<ClassLoader>emptyList());
         } catch (ClassNotFoundException e) {
             return null;
         }
@@ -73,48 +101,81 @@ public class ClassLoaderUtils {
 
     /**
      * 使用默认的 ClassLoader 去载入类.
+     * 
+     * @return null if class not found
+     */
+    public static Class<?> loadClass(final String qualifiedClassName, ClassLoader loader) {
+        try {
+            return loadClassEx(qualifiedClassName, Collections.singletonList(loader));
+        } catch (ClassNotFoundException e) {
+            return null;
+        }
+    }
+
+    /**
+     * 使用默认的 ClassLoader 去载入类.
+     * 
+     * @return null if class not found
+     */
+    public static Class<?> loadClass(final String qualifiedClassName, List<ClassLoader> loaders) {
+        try {
+            return loadClassEx(qualifiedClassName, loaders);
+        } catch (ClassNotFoundException e) {
+            return null;
+        }
+    }
+
+    /**
+     * 使用默认的 ClassLoader 去载入类.
+     * 
      * @throws ClassNotFoundException
      */
     public static Class<?> loadClassEx(final String qualifiedClassName) throws ClassNotFoundException {
-        return loadClassEx(qualifiedClassName, null);
+        return loadClassEx(qualifiedClassName, Collections.<ClassLoader>emptyList());
     }
 
     /**
      * 使用指定的 ClassLoader 去载入类.
+     * 
      * @throws ClassNotFoundException
      */
-    public static Class<?> loadClassEx(final String qualifiedClassName, final ClassLoader classLoader) throws ClassNotFoundException {
+    public static Class<?> loadClassEx(final String qualifiedClassName, ClassLoader loader) throws ClassNotFoundException {
+        return loadClassEx(qualifiedClassName, Collections.singletonList(loader));
+    }
+
+    /**
+     * 使用指定的 ClassLoader 去载入类.
+     * 
+     * @throws ClassNotFoundException
+     */
+    public static Class<?> loadClassEx(final String qualifiedClassName, List<ClassLoader> loaders) throws ClassNotFoundException {
         Validate.notNull(qualifiedClassName, "qualifiedClassName must be not null");
 
-        ClassLoader loader = (classLoader == null) ? getDefault() : classLoader;
+        if (loaders == null || loaders.isEmpty()) {
+            loaders = getDefaults();
+        }
 
         // 尝试基本类型
         if (abbreviationMap.containsKey(qualifiedClassName)) {
             String className = '[' + abbreviationMap.get(qualifiedClassName);
-            return Class.forName(className, false, loader).getComponentType();
+            return doLoadClass(className, loaders).getComponentType();
         }
 
         // 尝试用 Class.forName()
         try {
             String className = getCanonicalClassName(qualifiedClassName);
-            return Class.forName(className, false, loader);
-        } catch (ClassNotFoundException e) {
-        }
-        // 尝试用 Class.forName()
-        try {
-            String className = getCanonicalClassName(qualifiedClassName);
-            return Class.forName(className);
+            return doLoadClass(className, loaders);
         } catch (ClassNotFoundException e) {
         }
 
-        // 尝试当做一个内部类去识别
+        // 尝试当做一个内部类去识别: java.util.Map.Entry --> java.util.Map$Entry
         if (qualifiedClassName.indexOf('$') == -1) {
             int ipos = qualifiedClassName.lastIndexOf('.');
             if (ipos > 0) {
                 try {
                     String className = qualifiedClassName.substring(0, ipos) + '$' + qualifiedClassName.substring(ipos + 1);
                     className = getCanonicalClassName(className);
-                    return Class.forName(className, false, loader);
+                    return doLoadClass(className, loaders);
                 } catch (ClassNotFoundException e) {
                 }
             }
@@ -123,8 +184,20 @@ public class ClassLoaderUtils {
         throw new ClassNotFoundException(qualifiedClassName);
     }
 
+    private static Class<?> doLoadClass(String className, List<ClassLoader> loaders) throws ClassNotFoundException {
+        for (ClassLoader loader : loaders) {
+            try {
+                return Class.forName(className, false, loader);
+            } catch (ClassNotFoundException e) {
+            }
+        }
+
+        throw new ClassNotFoundException(className);
+    }
+
     /**
      * 将 Java 类名转为 {@code Class.forName()} 可以载入的类名格式.
+     * 
      * <pre>
      * getCanonicalClassName("int") == "int";
      * getCanonicalClassName("int[]") == "[I";
@@ -158,8 +231,10 @@ public class ClassLoaderUtils {
 
     /**
      * Finds the resource with the given name.
+     * 
      * @param name - The resource name
-     * @return A URL object for reading the resource, or null if the resource could not be found
+     * @return A URL object for reading the resource, or null if the resource could
+     *         not be found
      */
     public static URL getResource(String name) {
         return getResource(name, null);
@@ -167,8 +242,10 @@ public class ClassLoaderUtils {
 
     /**
      * Finds the resource with the given name.
+     * 
      * @param name - The resource name
-     * @return A URL object for reading the resource, or null if the resource could not be found
+     * @return A URL object for reading the resource, or null if the resource could
+     *         not be found
      */
     public static URL getResource(String name, ClassLoader classLoader) {
         Validate.notNull(name, "resourceName must be not null");
