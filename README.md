@@ -1,6 +1,6 @@
 [![QQ Group](http://img.shields.io/badge/QQ-310491655-blue.svg)](http://shang.qq.com/wpa/qunwpa?idkey=c81a8f922d2b00422761558c4c547a4c4af778edcb0a70c99aadf9e33d80cb11)
 [![Maven](https://img.shields.io/maven-central/v/com.github.subchen/jetbrick-commons.svg?style=flat&label=jetbrick-commons)](http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22jetbrick-commons%22)
-[![Build Status](https://travis-ci.org/subchen/jetbrick-commons.svg?branch=master)](https://travis-ci.org/subchen/jetbrick-commons)
+[![Build Status](https://github.com/subchen/jetbrick-commons/actions/workflows/build.yml/badge.svg)](https://github.com/subchen/jetbrick-commons/actions/workflows/build.yml)
 [![Coverity Scan Build Status](https://scan.coverity.com/projects/subchen-jetbrick-commons/badge.svg?flat=1)](https://scan.coverity.com/projects/subchen-jetbrick-commons)
 [![JDK](http://img.shields.io/badge/JDK-v6.0+-yellow.svg)](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
 [![License](http://img.shields.io/badge/License-Apache_2-red.svg)](http://www.apache.org/licenses/LICENSE-2.0)
@@ -25,7 +25,7 @@ Dependencies
 <dependency>
     <groupId>com.github.subchen</groupId>
     <artifactId>jetbrick-commons</artifactId>
-    <version>2.1.9</version>
+    <version>2.2.0</version>
 </dependency>
 ```
 
@@ -33,16 +33,16 @@ Downloads
 ---------------------------
 
 * Binaries
-    - [jetbrick-commons-2.1.9.jar][1]
-    - [jetbrick-commons-2.1.9-sources.jar][2]
-    - [jetbrick-commons-2.1.9-javadoc.jar][3]
+    - [jetbrick-commons-2.2.0.jar][1]
+    - [jetbrick-commons-2.2.0-sources.jar][2]
+    - [jetbrick-commons-2.2.0-javadoc.jar][3]
 * Dependencies
     - [slf4j-api-1.7.7.jar][4]
     - [javax.servlet-api-3.0.1.jar][5] (optional)
 
-[1]: http://search.maven.org/remotecontent?filepath=com/github/subchen/jetbrick-commons/2.1.9/jetbrick-commons-2.1.9.jar
-[2]: http://search.maven.org/remotecontent?filepath=com/github/subchen/jetbrick-commons/2.1.9/jetbrick-commons-2.1.9-sources.jar
-[3]: http://search.maven.org/remotecontent?filepath=com/github/subchen/jetbrick-commons/2.1.9/jetbrick-commons-2.1.9-javadoc.jar
+[1]: http://search.maven.org/remotecontent?filepath=com/github/subchen/jetbrick-commons/2.2.0/jetbrick-commons-2.2.0.jar
+[2]: http://search.maven.org/remotecontent?filepath=com/github/subchen/jetbrick-commons/2.2.0/jetbrick-commons-2.2.0-sources.jar
+[3]: http://search.maven.org/remotecontent?filepath=com/github/subchen/jetbrick-commons/2.2.0/jetbrick-commons-2.2.0-javadoc.jar
 [4]: http://search.maven.org/remotecontent?filepath=org/slf4j/slf4j-api/1.7.7/slf4j-api-1.7.7.jar
 [5]: http://search.maven.org/remotecontent?filepath=javax/servlet/javax.servlet-api/3.0.1/javax.servlet-api-3.0.1.jar
 
@@ -51,7 +51,7 @@ License
 ---------------------------
 
 ```
-Copyright 2013-2019 Guoqiang Chen, Shanghai, China. All rights reserved.
+Copyright 2013-2023 Guoqiang Chen, Shanghai, China. All rights reserved.
 
   Author: Guoqiang Chen
    Email: subchen@gmail.com
