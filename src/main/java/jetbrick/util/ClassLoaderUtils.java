@@ -100,6 +100,12 @@ public class ClassLoaderUtils {
             return Class.forName(className, false, loader);
         } catch (ClassNotFoundException e) {
         }
+        // 尝试用 Class.forName()
+        try {
+            String className = getCanonicalClassName(qualifiedClassName);
+            return Class.forName(className);
+        } catch (ClassNotFoundException e) {
+        }
 
         // 尝试当做一个内部类去识别
         if (qualifiedClassName.indexOf('$') == -1) {
