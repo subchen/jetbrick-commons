@@ -25,6 +25,9 @@ jobs:
       - run: env
       - uses: samuelmeuli/action-maven-publish@v1
         with:
+          server_id: 'oss-staging'
+          maven_profiles: 'oss'
+          maven_args: '-DautoReleaseAfterClose=true'
           nexus_username: ${{ secrets.MAVEN_DEPLOY_USERNAME }}
           nexus_password: ${{ secrets.MAVEN_DEPLOY_PASSWORD }}
           gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
