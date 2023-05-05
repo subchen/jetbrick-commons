@@ -1,5 +1,5 @@
 /**
- * Copyright 2013-2019 Guoqiang Chen, Shanghai, China. All rights reserved.
+ * Copyright 2013-2023 Guoqiang Chen, Shanghai, China. All rights reserved.
  *
  *   Author: Guoqiang Chen
  *    Email: subchen@gmail.com
@@ -93,7 +93,7 @@ public class ClassLoaderUtils {
      */
     public static Class<?> loadClass(final String qualifiedClassName) {
         try {
-            return loadClassEx(qualifiedClassName, Collections.<ClassLoader>emptyList());
+            return loadClassEx(qualifiedClassName, Collections.<ClassLoader> emptyList());
         } catch (ClassNotFoundException e) {
             return null;
         }
@@ -131,7 +131,7 @@ public class ClassLoaderUtils {
      * @throws ClassNotFoundException
      */
     public static Class<?> loadClassEx(final String qualifiedClassName) throws ClassNotFoundException {
-        return loadClassEx(qualifiedClassName, Collections.<ClassLoader>emptyList());
+        return loadClassEx(qualifiedClassName, Collections.<ClassLoader> emptyList());
     }
 
     /**
